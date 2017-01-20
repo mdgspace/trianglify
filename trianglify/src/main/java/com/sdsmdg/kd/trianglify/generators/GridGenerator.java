@@ -12,14 +12,17 @@ public class GridGenerator {
     private int bleedY = 0;
     private Vector<Point> grid = new Vector<>();
 
-    public GridGenerator() {}
+    private int N_CIRCLE_POINTS = 8;
+
+    public GridGenerator() {
+    }
 
     public GridGenerator(int bleedX, int bleedY) {
         this.bleedX = bleedX;
         this.bleedY = bleedY;
     }
 
-    public Vector<Point> generateGrid (int width, int height, int cellSize, int variance) {
+    public Vector<Point> generateRectangularGrid(int width, int height, int cellSize, int variance) {
         grid.clear();
 
         int x, y;
@@ -33,4 +36,28 @@ public class GridGenerator {
 
         return grid;
     }
+
+    public Vector<Point> generateCircularGrid(int width, int height, int cellSize, int variance) {
+        grid.clear();
+
+        Point center = new Point(width / 2, height / 2);
+        int maxRadius = Math.max(width + bleedX, height + bleedY);
+        grid.add(center);
+
+        double slice, angle;
+        int x, y;
+
+        for (int radius = cellSize; radius < maxRadius; radius += cellSize) {
+            slice = 2 * Math.PI / N_CIRCLE_POINTS;
+            for (int i = 0; i < N_CIRCLE_POINTS; i++) {
+                angle = slice * i;
+                x = (int) (center.x + radius * Math.cos(angle)) + random.nextInt(variance);
+                y = (int) (center.y + radius * Math.sin(angle)) + random.nextInt(variance);
+                grid.add(new Point(x, y));
+            }
+        }
+
+        return grid;
+    }
+
 }

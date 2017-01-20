@@ -29,7 +29,8 @@ public class TrianglifyView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Vector<Point> grid = gridGenerator.generateGrid(getMeasuredWidth(), getMeasuredHeight(), 60, 30);
+        Vector<Point> grid = gridGenerator.generateRectangularGrid(
+                getMeasuredWidth(), getMeasuredHeight(), 60, 30);
 
         for (Point p : grid) {
             canvas.drawCircle(p.x, p.y, 10, mPaint);
