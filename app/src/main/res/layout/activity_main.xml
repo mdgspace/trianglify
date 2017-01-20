@@ -11,6 +11,7 @@
     tools:context="com.sdsmdg.kd.trianglifyexample.MainActivity">
 
     <com.sdsmdg.kd.trianglify.TrianglifyView
+        android:id="@+id/trianglify_main_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </RelativeLayout>

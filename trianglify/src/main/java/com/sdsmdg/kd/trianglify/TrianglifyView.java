@@ -10,8 +10,6 @@ import android.view.View;
 
 import com.sdsmdg.kd.trianglify.generators.GridGenerator;
 
-import java.util.Vector;
-
 
 public class TrianglifyView extends View {
 
@@ -29,10 +27,15 @@ public class TrianglifyView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Vector<Point> grid = gridGenerator.generateRectangularGrid(
-                getMeasuredWidth(), getMeasuredHeight(), 60, 30);
+        if (gridGenerator.currentGridtype == GridGenerator.GridType.CIRCULAR) {
+            gridGenerator.generateRectangularGrid(
+                    getMeasuredWidth(), getMeasuredHeight(), 60, 30);
+        } else if (gridGenerator.currentGridtype == GridGenerator.GridType.RECTANGULAR){
+            gridGenerator.generateCircularGrid(
+                    getMeasuredWidth(), getMeasuredHeight(), 60, 30);
+        }
 
-        for (Point p : grid) {
+        for (Point p : gridGenerator.grid) {
             canvas.drawCircle(p.x, p.y, 10, mPaint);
         }
     }
