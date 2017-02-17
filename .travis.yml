@@ -16,4 +16,5 @@ script:
  - ./gradlew build
  - ./gradlew test
 
-
+notifications:
+  slack: sdsmdg:hvFSzqFNHm3t6NDR2H2Twiio
