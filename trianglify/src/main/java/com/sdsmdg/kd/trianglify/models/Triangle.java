@@ -14,7 +14,7 @@ public class Triangle {
         this.c = c;
     }
 
-    private boolean isClockwise (Point p1, Point p2, Point p3) {
+    public boolean isClockwise (Point p1, Point p2, Point p3) {
         return (p1.x - p3.x) * (p2.y - p3.y) - (p1.y - p3.y) * (p2.x - p3.x) < 0;
     }
 
