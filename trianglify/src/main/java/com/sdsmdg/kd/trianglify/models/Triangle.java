@@ -41,4 +41,11 @@ public class Triangle {
 
         return isClockwise(a, b, c) ? determinant < 0 : determinant > 0;
     }
+
+    public Point centroidFinder(Point a, Point b, Point c){
+        Point centroid = null;
+        centroid.x = ((a.x) + (b.x) + (c.x))/3;
+        centroid.y = ((a.y) + (b.y) + (c.y))/3;
+        return centroid;
+    }
 }
