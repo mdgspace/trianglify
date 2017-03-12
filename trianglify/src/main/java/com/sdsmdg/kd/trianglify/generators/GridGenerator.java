@@ -2,6 +2,8 @@ package com.sdsmdg.kd.trianglify.generators;
 
 import android.graphics.Point;
 
+import com.sdsmdg.kd.trianglify.models.Grid;
+
 import java.util.Random;
 import java.util.Vector;
 
@@ -12,7 +14,8 @@ public class GridGenerator {
     private int bleedY = 0;
     private int pointsPerCircle = 8;
 
-    public Vector<Point> grid = new Vector<>();
+    public Vector<Point> gridPoints = new Vector<>();
+    public Grid grid;
 
     public enum GridType {CIRCULAR, RECTANGULAR}
 
@@ -27,8 +30,8 @@ public class GridGenerator {
         this.bleedY = bleedY;
     }
 
-    public void generateGrid(int width, int height, int cellSize, int variance) {
-        this.grid.clear();
+    public Grid generateGrid(int width, int height, int cellSize, int variance) {
+        this.gridPoints.clear();
         
         if (this.currentGridtype == GridType.RECTANGULAR) {
             int x, y;
@@ -36,13 +39,13 @@ public class GridGenerator {
                 for (int i = -bleedX; i < width + bleedX; i += cellSize) {
                     x = i + random.nextInt(variance);
                     y = j + random.nextInt(variance);
-                    this.grid.add(new Point(x, y));
+                    this.gridPoints.add(new Point(x, y));
                 }
             }
         } else if (this.currentGridtype == GridType.CIRCULAR) {
             Point center = new Point(width / 2, height / 2);
             int maxRadius = Math.max(width + bleedX, height + bleedY);
-            this.grid.add(center);
+            this.gridPoints.add(center);
 
             double slice, angle;
             int x, y;
@@ -53,9 +56,12 @@ public class GridGenerator {
                     angle = slice * i;
                     x = (int) (center.x + radius * Math.cos(angle)) + random.nextInt(variance);
                     y = (int) (center.y + radius * Math.sin(angle)) + random.nextInt(variance);
-                    this.grid.add(new Point(x, y));
+                    this.gridPoints.add(new Point(x, y));
                 }
             }
         }
+
+        grid = new Grid(gridPoints);
+        return grid;
     }
 }
