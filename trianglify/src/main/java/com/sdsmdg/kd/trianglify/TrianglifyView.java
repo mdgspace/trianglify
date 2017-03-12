@@ -19,9 +19,9 @@ public class TrianglifyView extends View {
 
     public Paint mPaint = new Paint();
     public GridGenerator gridGenerator = new GridGenerator();
-    Grid grid;
-    DelaunayTriangulator delaunayTriangulator = new DelaunayTriangulator();
-    Triangulation triangulation;
+    private Grid grid;
+    private DelaunayTriangulator delaunayTriangulator = new DelaunayTriangulator();
+    private Triangulation triangulation;
 
     public TrianglifyView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -36,13 +36,13 @@ public class TrianglifyView extends View {
     protected void onDraw(Canvas canvas) {
 
         grid = gridGenerator.generateGrid(getMeasuredWidth(), getMeasuredHeight(), 60, 30);
-        delaunayTriangulator.getGrid(grid);
+        delaunayTriangulator.setGrid(grid);
 
         //TODO call the methods to generate triangulation here (after the other two are done)
 
         triangulation = delaunayTriangulator.getTriangulation();
 
-        //TODO pass this triangulation to renderer, and set the color (data type int) of each triangle in the list (Kriti)
+        //TODO pass this triangulation to RENDERER, and set the color from PALETTE (data type int) of each triangle in the list (Kriti)
 
         //draw the triangulation on the view
         for (Triangle triangle : triangulation.getTriangleList()) {

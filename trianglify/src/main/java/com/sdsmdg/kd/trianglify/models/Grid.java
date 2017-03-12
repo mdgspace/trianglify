@@ -9,7 +9,7 @@ import java.util.Vector;
  */
 
 public class Grid {
-    Vector<Point> gridPoints;
+    private Vector<Point> gridPoints;
 
     public Grid(Vector<Point> gridPoints){
         this.gridPoints = gridPoints;

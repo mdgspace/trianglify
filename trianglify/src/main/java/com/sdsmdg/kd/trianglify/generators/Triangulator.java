@@ -9,7 +9,7 @@ import com.sdsmdg.kd.trianglify.models.Triangulation;
 
 public interface Triangulator  {
 
-    public void getGrid(Grid grid);
+    public void setGrid(Grid grid);
 
     public Triangulation getTriangulation();
 

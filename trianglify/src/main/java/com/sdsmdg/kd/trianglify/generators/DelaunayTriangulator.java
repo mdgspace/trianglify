@@ -8,11 +8,11 @@ import com.sdsmdg.kd.trianglify.models.Triangulation;
  */
 
 public class DelaunayTriangulator implements Triangulator {
-    Grid grid;
-    Triangulation delaunayTriangulation;
+    private Grid grid;
+    private Triangulation delaunayTriangulation;
 
     @Override
-    public void getGrid(Grid grid) {
+    public void setGrid(Grid grid) {
         this.grid = grid;
     }
 

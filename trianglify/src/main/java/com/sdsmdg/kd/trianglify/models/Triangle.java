@@ -8,7 +8,7 @@ public class Triangle {
     public Point a;
     public Point b;
     public Point c;
-    int color;
+    private int color;
 
     public Triangle (Point a, Point b, Point c) {
         this.a = a;
