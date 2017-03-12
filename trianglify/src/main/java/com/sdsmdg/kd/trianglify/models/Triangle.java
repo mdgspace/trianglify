@@ -1,12 +1,14 @@
 package com.sdsmdg.kd.trianglify.models;
 
 
+import android.graphics.Color;
 import android.graphics.Point;
 
 public class Triangle {
     public Point a;
     public Point b;
     public Point c;
+    int color;
 
     public Triangle (Point a, Point b, Point c) {
         this.a = a;
@@ -47,5 +49,13 @@ public class Triangle {
         centroid.x = ((a.x) + (b.x) + (c.x))/3;
         centroid.y = ((a.y) + (b.y) + (c.y))/3;
         return centroid;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 }
