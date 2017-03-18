@@ -2,64 +2,110 @@ package com.sdsmdg.kd.trianglify;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.sdsmdg.kd.trianglify.generators.DelaunayTriangulator;
-import com.sdsmdg.kd.trianglify.generators.GridGenerator;
-import com.sdsmdg.kd.trianglify.models.Grid;
-import com.sdsmdg.kd.trianglify.models.Triangle;
-import com.sdsmdg.kd.trianglify.models.Triangulation;
+public class TrianglifyView extends View implements TrianglifyViewInterface{
+    int bleedX;
+    int bleedY;
+    int size;
+    int TypeGrid;
+    int variance;
+    int scheme;
+    int typeColor;
+    int pattern;
+    int triangulation;
 
+    Presenter presenter;
 
-public class TrianglifyView extends View {
+    @Override
+    public int getBleedX() {
+        return bleedX;
+    }
 
-    public Paint mPaint = new Paint();
-    public GridGenerator gridGenerator = new GridGenerator();
-    private Grid grid;
-    private DelaunayTriangulator delaunayTriangulator = new DelaunayTriangulator();
-    private Triangulation triangulation;
+    public void setBleedX(int bleedX) {
+        this.bleedX = bleedX;
+    }
+
+    @Override
+    public int getBleedY() {
+        return bleedY;
+    }
+
+    public void setBleedY(int bleedY) {
+        this.bleedY = bleedY;
+    }
+
+    @Override
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    @Override
+    public int getTypeGrid() {
+        return TypeGrid;
+    }
+
+    public void setTypeGrid(int typeGrid) {
+        TypeGrid = typeGrid;
+    }
+
+    @Override
+    public int getVariance() {
+        return variance;
+    }
+
+    public void setVariance(int variance) {
+        this.variance = variance;
+    }
+
+    @Override
+    public int getScheme() {
+        return scheme;
+    }
+
+    public void setScheme(int scheme) {
+        this.scheme = scheme;
+    }
+
+    @Override
+    public int getTypeColor() {
+        return typeColor;
+    }
+
+    public void setTypeColor(int typeColor) {
+        this.typeColor = typeColor;
+    }
+
+    @Override
+    public int getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(int pattern) {
+        this.pattern = pattern;
+    }
+
+    @Override
+    public int getTriangulation() {
+        return triangulation;
+    }
+
+    public void setTriangulation(int triangulation) {
+        this.triangulation = triangulation;
+    }
 
     public TrianglifyView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-        // temporary background to check whether the view is being rendered
-        setBackgroundColor(Color.parseColor("#FF000000"));
-        mPaint.setColor(Color.parseColor("#66FFFFFF"));
+        this.presenter = new Presenter(this);
     }
-
 
     @Override
     protected void onDraw(Canvas canvas) {
-
-        grid = gridGenerator.generateGrid(getMeasuredWidth(), getMeasuredHeight(), 60, 30);
-        delaunayTriangulator.setGrid(grid);
-
-        //TODO call the methods to generate triangulation here (after the other two are done)
-
-        triangulation = delaunayTriangulator.getTriangulation();
-
-        //TODO pass this triangulation to RENDERER, and set the color from PALETTE (data type int) of each triangle in the list (Kriti)
-
-        //draw the triangulation on the view
-        for (Triangle triangle : triangulation.getTriangleList()) {
-            Paint paint = new Paint();
-            int fillColor = triangle.getColor();
-            paint.setColor(fillColor);
-            paint.setStyle(Paint.Style.FILL);
-            paint.setAntiAlias(true);
-
-            Path path = new Path();
-            path.setFillType(Path.FillType.EVEN_ODD);
-            path.moveTo(triangle.b.x, triangle.b.y);
-            path.lineTo(triangle.c.x, triangle.c.y);
-            path.lineTo(triangle.a.x, triangle.a.y);
-            path.close();
-
-            canvas.drawPath(path, paint);
-        }
+        super.onDraw(canvas);
     }
 }
