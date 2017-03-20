@@ -2,8 +2,9 @@ package com.sdsmdg.kd.trianglify;
 
 
 import android.graphics.Point;
-import com.sdsmdg.kd.trianglify.models.Grid;
 import com.sdsmdg.kd.trianglify.models.Triangulation;
+
+import java.util.List;
 import java.util.Vector;
 
 
@@ -18,12 +19,12 @@ public class Presenter {
         this.view = view;
     }
 
-    private Grid generateGrid() {
+    private List<Point> generateGrid() {
         //TODO generates Grid by querying presenter.getTypeGrid()
         return null;
     }
 
-    private Triangulation generateTriangulation(Grid inputGrid) {
+    private Triangulation generateTriangulation(List<Point> inputGrid) {
         //TODO generate Triangulation from inputGrid based on presenter.getTriangulation()
         return null;
     }
