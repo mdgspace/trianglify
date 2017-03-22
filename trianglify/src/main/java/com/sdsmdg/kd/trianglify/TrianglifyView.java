@@ -21,15 +21,23 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     int variance;
     int scheme;
     int cellSize;
+    int triangulationType;
     Palette typeColor;
     Patterns pattern;
     Triangulation triangulation;
 
     Presenter presenter;
 
-    final public static int GRID_RECTANGLE = 0;
-    final public static int GRID_CIRCLE = 1;
+    @Override
+    public int getTriangulationType() {
+        return triangulationType;
+    }
 
+    public void setTriangulationType(int triangulationType) {
+        this.triangulationType = triangulationType;
+    }
+
+    @Override
     public int getCellSize() {
         return cellSize;
     }

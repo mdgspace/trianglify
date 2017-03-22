@@ -12,8 +12,9 @@ public class DelaunayTriangulator implements Triangulator {
     private Triangulation delaunayTriangulation;
 
     @Override
-    public void setGrid(Grid grid) {
+    public Triangulator setGrid(Grid grid) {
         this.grid = grid;
+        return this;
     }
 
     @Override
