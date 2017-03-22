@@ -2,21 +2,59 @@ package com.sdsmdg.kd.trianglify;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.sdsmdg.kd.trianglify.models.Palette;
+import com.sdsmdg.kd.trianglify.models.Triangle;
+import com.sdsmdg.kd.trianglify.models.Triangulation;
+import com.sdsmdg.kd.trianglify.patterns.Patterns;
 
 public class TrianglifyView extends View implements TrianglifyViewInterface{
     int bleedX;
     int bleedY;
-    int size;
+    int gridHeight;
+    int gridWidth;
     int TypeGrid;
     int variance;
     int scheme;
-    int typeColor;
-    int pattern;
-    int triangulation;
+    int cellSize;
+    Palette typeColor;
+    Patterns pattern;
+    Triangulation triangulation;
 
     Presenter presenter;
+
+    final public static int GRID_RECTANGLE = 0;
+    final public static int GRID_CIRCLE = 1;
+
+    public int getCellSize() {
+        return cellSize;
+    }
+
+    public void setCellSize(int cellSize) {
+        this.cellSize = cellSize;
+    }
+
+    @Override
+    public int getGridHeight() {
+        return gridHeight;
+    }
+
+    public void setGridHeight(int gridHeight) {
+        this.gridHeight = gridHeight;
+    }
+
+    @Override
+    public int getGridWidth() {
+        return gridWidth;
+    }
+
+    public void setGridWidth(int gridWidth) {
+        this.gridWidth = gridWidth;
+    }
 
     @Override
     public int getBleedX() {
@@ -34,15 +72,6 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public void setBleedY(int bleedY) {
         this.bleedY = bleedY;
-    }
-
-    @Override
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
     }
 
     @Override
@@ -73,29 +102,29 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     }
 
     @Override
-    public int getTypeColor() {
+    public Palette  getTypeColor() {
         return typeColor;
     }
 
-    public void setTypeColor(int typeColor) {
+    public void setTypeColor(Palette typeColor) {
         this.typeColor = typeColor;
     }
 
     @Override
-    public int getPattern() {
+    public Patterns getPattern() {
         return pattern;
     }
 
-    public void setPattern(int pattern) {
+    public void setPattern(Patterns pattern) {
         this.pattern = pattern;
     }
 
     @Override
-    public int getTriangulation() {
+    public Triangulation getTriangulation() {
         return triangulation;
     }
 
-    public void setTriangulation(int triangulation) {
+    public void setTriangulation(Triangulation triangulation) {
         this.triangulation = triangulation;
     }
 
@@ -107,5 +136,38 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        generateAndPlot(canvas);
+    }
+
+    void generate() {
+        presenter.generateSoup();
+        this.triangulation = presenter.getSoup();
+    }
+
+    void generateAndPlot(Canvas canvas) {
+        generate();
+        plotOnCanvas(canvas);
+    }
+
+    void plotOnCanvas(Canvas canvas) {
+        if (triangulation != null) {
+            for (Triangle triangle : triangulation.getTriangleList()) {
+                Paint paint = new Paint();
+                int fillColor = triangle.getColor();
+                paint.setColor(fillColor);
+                paint.setStyle(Paint.Style.FILL);
+                paint.setAntiAlias(true);
+
+                Path path = new Path();
+                path.setFillType(Path.FillType.EVEN_ODD);
+                path.moveTo(triangle.b.x, triangle.b.y);
+                path.moveTo(triangle.b.x, triangle.b.y);
+                path.moveTo(triangle.c.x, triangle.c.y);
+                path.close();
+
+                canvas.drawPath(path, paint);
+            }
+        }
     }
 }
+

@@ -15,11 +15,11 @@ import java.util.Vector;
     private int bleedY = 0;
     private int pointsPerCircle = 8;
 
-    private int height= 0;
-    private int width= 0;
+    private int height = 0;
+    private int width = 0;
 
     private int cellSize = 0;
-    private int variance= 0;
+    private int variance = 0;
 
     public Vector<Point> gridPoints = new Vector<>();
     public Grid grid;
@@ -87,9 +87,12 @@ import java.util.Vector;
     public Circle(int bleedX, int bleedY, int pointsPerCircle, int height, int width, int cellSize, int variance) {
         this.bleedX = bleedX;
         this.bleedY = bleedY;
+
         this.pointsPerCircle = pointsPerCircle;
+
         this.height = height;
         this.width = width;
+
         this.cellSize = cellSize;
         this.variance = variance;
     }
