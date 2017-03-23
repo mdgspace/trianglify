@@ -91,7 +91,7 @@ public class Rectangle implements Patterns {
         this.grid = grid;
     }
 
-    public Rectangle(int bleedX, int bleedY, int width, int cellSize, int variance) {
+    public Rectangle(int bleedX, int bleedY, int height, int width, int cellSize, int variance) {
         this.bleedX = bleedX;
         this.bleedY = bleedY;
 
@@ -100,6 +100,9 @@ public class Rectangle implements Patterns {
 
         this.bleedX= bleedX;
         this.bleedY = bleedY;
+
+        this.height = height;
+        this.width = width;
     }
 
     @Override
