@@ -1,5 +1,7 @@
 package com.sdsmdg.kd.trianglify.utilities.colorizers;
 
+import com.sdsmdg.kd.trianglify.models.Triangulation;
+
 /**
  * <h1>Title</h1>
  * <b>Description :</b>
@@ -10,5 +12,5 @@ package com.sdsmdg.kd.trianglify.utilities.colorizers;
  */
 
 public interface Colorizer {
-
+    Triangulation getColororedTriangulation();
 }

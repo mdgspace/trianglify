@@ -1,11 +1,11 @@
 package com.sdsmdg.kd.trianglify.utilities.colorizers;
 
-import android.graphics.Point;
 import android.util.Log;
 
 import com.sdsmdg.kd.trianglify.models.Palette;
 import com.sdsmdg.kd.trianglify.models.Triangle;
 import com.sdsmdg.kd.trianglify.models.Triangulation;
+import com.sdsmdg.kd.trianglify.utilities.Point;
 
 import static android.content.ContentValues.TAG;
 
@@ -50,14 +50,16 @@ public class FixedPointsColorizer implements Colorizer {
         this.gridWidth = gridWidth;
     }
 
-    public void colorizeTriangulation(){
+    @Override
+    public Triangulation getColororedTriangulation(){
         if (triangulation != null){
             for (Triangle triangle : triangulation.getTriangleList()){
-                triangle.setColor(getColorForPoint(triangle.getCenteroid()));
+                triangle.setColor(getColorForPoint(triangle.getCentroid()));
             }
         } else {
             Log.i(TAG, "colorizeTriangulation: Triangulation cannot be null!");
         }
+        return getTriangulation();
     }
 
     /**
@@ -88,13 +90,15 @@ public class FixedPointsColorizer implements Colorizer {
      *
      * Sub-rectangle in which given point lies has four vertices, denoted by
      * Point topLeft, topRight, bottomLeft and bottomRight. Algorith then
-     * calculates wieghted mean of color corresponding to vertices (seperately
+     * calculates weighted mean of color corresponding to vertices (seperately
      * in x-axis and y-axis). Result of this calculation is returned as int.
      *
      * @param point Point to get color for
      * @return  Color corresponding to current point
      */
-    public int getColorForPoint(Point point){
+
+
+    private int getColorForPoint(Point point){
         int topLeftColor, topRightColor;
         int bottomLeftColor, bottomRightColor;
 
@@ -126,36 +130,46 @@ public class FixedPointsColorizer implements Colorizer {
 
         // Calculate corners of sub rectangle in which point is identified
         topLeft = new Point(
-                (point.x > gridWidth/2) ? gridWidth/2 : 0,
-                (point.y > gridHeight/2) ? gridHeight/2 : 0);
+                (point.x >= gridWidth/2) ? gridWidth/2 : 0,
+                (point.y >= gridHeight/2) ? gridHeight/2 : 0);
         topRight = new Point(
-                (point.x > gridWidth/2) ? gridWidth : gridWidth/2,
-                (point.y > gridHeight/2) ? gridHeight/2 : 0);
+                (point.x >= gridWidth/2) ? gridWidth : gridWidth/2,
+                (point.y >= gridHeight/2) ? gridHeight/2 : 0);
         bottomLeft = new Point(
-                (point.x > gridWidth/2) ? gridWidth/2 : 0,
-                (point.y > gridHeight/2) ? gridHeight : gridHeight/2);
+                (point.x >= gridWidth/2) ? gridWidth/2 : 0,
+                (point.y >= gridHeight/2) ? gridHeight : gridHeight/2);
         bottomRight = new Point(
-                (point.x > gridWidth/2) ? gridWidth : gridWidth/2,
-                (point.y > gridHeight/2) ? gridHeight : gridHeight/2);
+                (point.x >= gridWidth/2) ? gridWidth : gridWidth/2,
+                (point.y >= gridHeight/2) ? gridHeight : gridHeight/2);
 
         // Calculates weighted mean of colors
-        int weightedTopColor = (topLeftColor*(point.x - topLeft.x)
-                + (topRightColor)*(topRight.x - point.x))
-                / ((topRight.x - topLeft.x)/2);
-        int weightedBottomColor = (topLeftColor*(point.x - topLeft.x)
-                + (topRightColor)*(topRight.x - point.x))
-                / ((topRight.x - topLeft.x)/2);
 
-        int weightedLeftColor = (topLeftColor*(point.y - topLeft.y)
-                + (bottomLeftColor)*(bottomLeft.y - point.y))
-                / ((bottomLeft.y - topLeft.y)/2);
-        int weightedRightColor = (topRightColor*(point.y - topRight.y)
-                + (bottomRightColor)*(bottomRight.y - point.y))
-                / ((bottomRight.y - topRight.y)/2);
+        int weightedTopColor = (topRightColor*(point.x - topLeft.x)
+                + (topLeftColor)*(topRight.x - point.x))
+                / ((topRight.x - topLeft.x));
+        int weightedBottomColor = (bottomRightColor*(point.x - topLeft.x)
+                + (bottomLeftColor)*(topRight.x - point.x))
+                / ((topRight.x - topLeft.x));
+
+        int weightedLeftColor = (bottomLeftColor*(point.y - topLeft.y)
+                + (topLeftColor)*(bottomLeft.y - point.y))
+                / ((bottomLeft.y - topLeft.y));
+        int weightedRightColor = (bottomRightColor*(point.y - topRight.y)
+                + (topRightColor)*(bottomRight.y - point.y))
+                / ((bottomRight.y - topRight.y));
+
+
+
+        int weightedYColor = (weightedRightColor*(point.x - topLeft.x)
+                + (weightedLeftColor)*(topRight.x - point.x))
+                / ((topRight.x - topLeft.x));
+
+        int weightedXColor = (weightedBottomColor*(point.y - topLeft.y)
+                + (weightedTopColor)*(bottomLeft.y - point.y))
+                / ((bottomLeft.y - topLeft.y));
 
         // This comment is self explanatory
-        return avg(weightedTopColor, weightedBottomColor,
-                weightedLeftColor, weightedRightColor);
+        return avg(weightedXColor, weightedYColor);
     }
 
     /**

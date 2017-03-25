@@ -9,7 +9,7 @@ import java.util.List;
 public class Triangulation {
     private List<Triangle> triangleList;
 
-    Triangulation(List<Triangle> triangleList){
+    public Triangulation(List<Triangle> triangleList){
         this.triangleList = triangleList;
     }
 
