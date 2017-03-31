@@ -2,6 +2,9 @@ package com.sdsmdg.kd.trianglify.models;
 
 import android.graphics.Point;
 
+import com.sdsmdg.kd.trianglify.models.triangulator.Vector2D;
+
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -9,13 +12,13 @@ import java.util.Vector;
  */
 
 public class Grid {
-    private Vector<Point> gridPoints;
+    private List<Vector2D> gridPoints;
 
-    public Grid(Vector<Point> gridPoints){
+    public Grid(List<Vector2D> gridPoints){
         this.gridPoints = gridPoints;
     }
 
-    public Vector<Point> getGridPoints() {
+    public List<Vector2D> getGridPoints() {
         return gridPoints;
     }
 }

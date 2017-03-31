@@ -7,8 +7,8 @@ package com.sdsmdg.kd.trianglify.models.triangulator;
  */
 public class Vector2D {
 
-    public double x;
-    public double y;
+    public float x;
+    public float y;
 
     /**
      * Constructor of the 2D vector class used to create new vector instances.
@@ -18,7 +18,7 @@ public class Vector2D {
      * @param y
      *            The y coordinate of the new vector
      */
-    public Vector2D(double x, double y) {
+    public Vector2D(float x, float y) {
         this.x = x;
         this.y = y;
     }
@@ -52,7 +52,7 @@ public class Vector2D {
      *            The scalar to be multiplied by this
      * @return A new instance holding the result of the multiplication
      */
-    public Vector2D mult(double scalar) {
+    public Vector2D mult(float scalar) {
         return new Vector2D(this.x * scalar, this.y * scalar);
     }
 
@@ -61,8 +61,8 @@ public class Vector2D {
      * 
      * @return The magnitude of this
      */
-    public double mag() {
-        return Math.sqrt(this.x * this.x + this.y * this.y);
+    public float mag() {
+        return (float)Math.sqrt(this.x * this.x + this.y * this.y);
     }
 
     /**
@@ -72,7 +72,7 @@ public class Vector2D {
      *            The vector to be multiplied by this
      * @return A new instance holding the result of the multiplication
      */
-    public double dot(Vector2D vector) {
+    public float dot(Vector2D vector) {
         return this.x * vector.x + this.y * vector.y;
     }
 
@@ -85,7 +85,7 @@ public class Vector2D {
      *            this
      * @return A new instance holding the result of the pseudo cross product
      */
-    public double cross(Vector2D vector) {
+    public float cross(Vector2D vector) {
         return this.y * vector.x - this.x * vector.y;
     }
 

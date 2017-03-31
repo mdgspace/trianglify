@@ -1,13 +1,19 @@
 package com.sdsmdg.kd.trianglify;
 
 
-import com.sdsmdg.kd.trianglify.generators.DelaunayTriangulator;
+import com.sdsmdg.kd.trianglify.models.triangulator.DelaunayTriangulator;
 import com.sdsmdg.kd.trianglify.generators.Triangulator;
 import com.sdsmdg.kd.trianglify.models.Grid;
 import com.sdsmdg.kd.trianglify.models.Triangulation;
+import com.sdsmdg.kd.trianglify.models.triangulator.NotEnoughPointsException;
+import com.sdsmdg.kd.trianglify.models.triangulator.Vector2D;
 import com.sdsmdg.kd.trianglify.patterns.Circle;
 import com.sdsmdg.kd.trianglify.patterns.Patterns;
 import com.sdsmdg.kd.trianglify.patterns.Rectangle;
+import com.sdsmdg.kd.trianglify.utilities.colorizers.Colorizer;
+import com.sdsmdg.kd.trianglify.utilities.colorizers.FixedPointsColorizer;
+
+import java.util.List;
 
 /**
  * <h1>Presenter.java</h1>
@@ -44,7 +50,7 @@ public class Presenter {
         variance = view.getVariance();
     }
 
-    private Grid generateGrid() {
+    private List<Vector2D> generateGrid() {
         populateAttribute();
 
         int gridType = view.getTypeGrid();
@@ -67,24 +73,18 @@ public class Presenter {
         return patterns.generate();
     }
 
-    private Triangulation generateTriangulation(Grid inputGrid) {
-        Triangulation result;
-        Triangulator triangulator;
-
-        switch (view.getTriangulationType()){
-            case (TrianglifyViewInterface.TRIANGULATION_DELAUNAY):
-                triangulator = new DelaunayTriangulator();
-                break;
-            default:
-                triangulator = new DelaunayTriangulator();
-                break;
+    private Triangulation generateTriangulation(List<Vector2D> inputGrid) {
+        DelaunayTriangulator triangulator = new DelaunayTriangulator(inputGrid);
+        try {
+            triangulator.triangulate();
+        } catch (NotEnoughPointsException e){
+            e.printStackTrace();
         }
-
-        result = triangulator.setGrid(inputGrid).getTriangulation();
-        return result;
+        return new Triangulation(triangulator.getTriangles());
     }
 
     private Triangulation generateColoredSoup(Triangulation inputTriangulation) {
+        Colorizer colorizer = new FixedPointsColorizer(inputTriangulation, view.getPalette(), view.getGridHeight(), view.getGridWidth())
         // TODO generates colored soup using presenter.getPallete()
         // after colorizer is implemented
         return null;

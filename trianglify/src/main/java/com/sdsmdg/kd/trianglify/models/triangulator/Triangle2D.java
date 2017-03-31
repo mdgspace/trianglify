@@ -1,5 +1,7 @@
 package com.sdsmdg.kd.trianglify.models.triangulator;
 
+import com.sdsmdg.kd.trianglify.utilities.Point;
+
 import java.util.Arrays;
 
 /**
@@ -12,6 +14,7 @@ public class Triangle2D {
     public Vector2D a;
     public Vector2D b;
     public Vector2D c;
+    private int color;
 
     /**
      * Constructor of the 2D triangle class used to create a new triangle
@@ -196,12 +199,12 @@ public class Triangle2D {
      */
     private Vector2D computeClosestPoint(Edge2D edge, Vector2D point) {
         Vector2D ab = edge.b.sub(edge.a);
-        double t = point.sub(edge.a).dot(ab) / ab.dot(ab);
+        float t = point.sub(edge.a).dot(ab) / ab.dot(ab);
 
-        if (t < 0.0d) {
-            t = 0.0d;
-        } else if (t > 1.0d) {
-            t = 1.0d;
+        if (t < 0.0f) {
+            t = 0.0f;
+        } else if (t > 1.0f) {
+            t = 1.0f;
         }
 
         return edge.a.add(ab.mult(t));
@@ -220,9 +223,25 @@ public class Triangle2D {
         return Math.signum(a) == Math.signum(b);
     }
 
+    public void setColor(int color){
+        this.color = color;
+    }
+
+    public int getColor(){
+        return color;
+    }
+
     @Override
     public String toString() {
         return "Triangle2D[" + a + ", " + b + ", " + c + "]";
     }
 
+
+
+    public Vector2D getCentroid(){
+        Vector2D centroid = new Vector2D(0,0);
+        centroid.x = ((a.x) + (b.x) + (c.x))/3;
+        centroid.y = ((a.y) + (b.y) + (c.y))/3;
+        return centroid;
+    }
 }

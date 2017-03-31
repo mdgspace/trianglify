@@ -47,7 +47,7 @@ public class DelaunayTriangulator {
          * containing the whole point set. We have to scale the super triangle
          * to be very large. Otherwise the triangulation is not convex.
          */
-        double maxOfAnyCoordinate = 0.0d;
+        float maxOfAnyCoordinate = 0.0f;
 
         for (Vector2D vector : getPointSet()) {
             maxOfAnyCoordinate = Math.max(Math.max(vector.x, vector.y), maxOfAnyCoordinate);
@@ -55,9 +55,9 @@ public class DelaunayTriangulator {
 
         maxOfAnyCoordinate *= 16.0d;
 
-        Vector2D p1 = new Vector2D(0.0d, 3.0d * maxOfAnyCoordinate);
-        Vector2D p2 = new Vector2D(3.0d * maxOfAnyCoordinate, 0.0d);
-        Vector2D p3 = new Vector2D(-3.0d * maxOfAnyCoordinate, -3.0d * maxOfAnyCoordinate);
+        Vector2D p1 = new Vector2D(0.0f, 3.0f * maxOfAnyCoordinate);
+        Vector2D p2 = new Vector2D(3.0f * maxOfAnyCoordinate, 0.0f);
+        Vector2D p3 = new Vector2D(-3.0f * maxOfAnyCoordinate, -3.0f * maxOfAnyCoordinate);
 
         Triangle2D superTriangle = new Triangle2D(p1, p2, p3);
 
