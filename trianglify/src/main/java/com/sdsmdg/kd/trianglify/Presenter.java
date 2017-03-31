@@ -30,44 +30,30 @@ public class Presenter {
     TrianglifyViewInterface view;
     Triangulation triangulation;
 
-    int bleedX;
-    int bleedY;
-    int width;
-    int height;
-    int cellSize;
-    int variance;
-
     public Presenter(TrianglifyViewInterface view) {
         this.view = view;
     }
 
-    private void populateAttribute(){
-        bleedX = view.getBleedX();
-        bleedY = view.getBleedY();
-        width = view.getGridWidth();
-        height = view.getGridHeight();
-        cellSize = view.getCellSize();
-        variance = view.getVariance();
-    }
 
     private List<Vector2D> generateGrid() {
-        populateAttribute();
-
         int gridType = view.getTypeGrid();
         Patterns patterns;
 
         switch (gridType) {
             case TrianglifyViewInterface.GRID_RECTANGLE:
                 patterns = new Rectangle(
-                        bleedX, bleedY,height, width, cellSize, variance);
+                        view.getBleedX(), view.getBleedY(), view.getGridHeight(),
+                        view.getGridWidth(), view.getCellSize(), view.getVariance());
                 break;
             case TrianglifyViewInterface.GRID_CIRCLE:
                 patterns = new Circle(
-                        bleedX, bleedY, 8, height, width, cellSize, variance);
+                        view.getBleedX(), view.getBleedY(), 8, view.getGridHeight(),
+                        view.getGridWidth(), view.getCellSize(), view.getVariance());
                 break;
             default:
                 patterns = new Rectangle(
-                        bleedX, bleedY, height, width, cellSize, variance);
+                        view.getBleedX(), view.getBleedY(), view.getGridHeight(),
+                        view.getGridWidth(), view.getCellSize(), view.getVariance());
                 break;
         }
         return patterns.generate();
@@ -84,21 +70,18 @@ public class Presenter {
     }
 
     private Triangulation generateColoredSoup(Triangulation inputTriangulation) {
-        Colorizer colorizer = new FixedPointsColorizer(inputTriangulation, view.getPalette(), view.getGridHeight(), view.getGridWidth())
-        // TODO generates colored soup using presenter.getPallete()
-        // after colorizer is implemented
-        return null;
+        Colorizer colorizer = new FixedPointsColorizer(inputTriangulation,
+                view.getPalette(), view.getGridHeight(), view.getGridWidth());
+        return colorizer.getColororedTriangulation();
     }
 
     public void generateSoup() {
         triangulation = generateTriangulation(generateGrid());
-        //TODO Call generateColoredSoup() after Colorizer is imlemented
+        triangulation = generateColoredSoup(triangulation);
     }
 
     public Triangulation getSoup() {
-        if (triangulation == null) {
-            generateSoup();
-        }
+        generateSoup();
         return triangulation;
     }
 

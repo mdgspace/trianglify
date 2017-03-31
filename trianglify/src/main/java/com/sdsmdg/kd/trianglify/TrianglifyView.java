@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.nfc.Tag;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -29,16 +28,16 @@ import java.util.Vector;
 import static android.content.ContentValues.TAG;
 
 public class TrianglifyView extends View implements TrianglifyViewInterface{
-    int bleedX;
-    int bleedY;
-    int gridHeight;
-    int gridWidth;
-    int TypeGrid;
-    int variance;
-    int scheme;
-    int cellSize;
-    int triangulationType;
-    Palette palette;
+    int bleedX = 100;
+    int bleedY = 100;
+    int gridHeight = 800;
+    int gridWidth = 800;
+    int TypeGrid = 0;
+    int variance = 30;
+    int scheme = 0;
+    int cellSize = 50;
+    int triangulationType = 1;
+    Palette palette = Palette.Yl;
     Patterns pattern;
     Triangulation triangulation;
 
@@ -130,7 +129,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         return palette;
     }
 
-    public void setTypePalette(Palette palette) {
+    public void setPalette(Palette palette) {
         this.palette = palette;
     }
 
@@ -164,36 +163,12 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     }
 
     void generate() {
-        presenter.generateSoup();
         this.triangulation = presenter.getSoup();
     }
 
     void generateAndPlot(Canvas canvas) {
-
-        Toast.makeText(getContext(), "TJos os adkfa", Toast.LENGTH_LONG).show();
-        //generate();
-        //plotOnCanvas(canvas);
-        Vector<Vector2D> pointSet = new Vector<>();
-
-        Patterns newPatterns = new Rectangle(50, 50, 1600, 800, 50, 20);
-        List<Vector2D> newGrid = newPatterns.generate();
-
-        DelaunayTriangulator triangulator = new DelaunayTriangulator(newGrid);
-
-        try {
-            triangulator.triangulate();
-        } catch (NotEnoughPointsException e){
-            e.printStackTrace();
-        }
-
-        Triangulation newTriangulation = new Triangulation(triangulator.getTriangles());
-
-        Colorizer newColorizer = new FixedPointsColorizer(newTriangulation, Palette.GnBu, 1800, 1000);
-        newTriangulation = newColorizer.getColororedTriangulation();
-        for (int i = 0; i < newTriangulation.getTriangleList().size(); i++){
-            drawTriangle(canvas, newTriangulation.getTriangleList().get(i));
-        }
-
+        generate();
+        plotOnCanvas(canvas);
     }
 
     public void drawTriangle(Canvas canvas, Triangle2D triangle2D) {
@@ -222,25 +197,9 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     }
 
     void plotOnCanvas(Canvas canvas) {
-        if (triangulation != null) {
-            for (Triangle2D triangle : triangulation.getTriangleList()) {
-                Paint paint = new Paint();
-                int fillColor = triangle.getColor();
-                paint.setColor(fillColor);
-                paint.setStrokeWidth(4);
-                paint.setStyle(Paint.Style.FILL_AND_STROKE);
-                paint.setAntiAlias(true);
-
-                Path path = new Path();
-                path.setFillType(Path.FillType.EVEN_ODD);
-
-                path.moveTo(triangle.b.x, triangle.b.y);
-                path.moveTo(triangle.b.x, triangle.b.y);
-                path.moveTo(triangle.c.x, triangle.c.y);
-                path.close();
-
-                canvas.drawPath(path, paint);
-            }
+        for (int i = 0; i < triangulation.getTriangleList().size(); i++){
+            drawTriangle(canvas, triangulation.getTriangleList().get(i));
         }
+
     }
 }
