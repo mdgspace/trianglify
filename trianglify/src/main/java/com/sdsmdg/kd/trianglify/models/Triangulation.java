@@ -1,5 +1,7 @@
 package com.sdsmdg.kd.trianglify.models;
 
+import com.sdsmdg.kd.trianglify.models.Triangle;
+
 import java.util.List;
 
 /**

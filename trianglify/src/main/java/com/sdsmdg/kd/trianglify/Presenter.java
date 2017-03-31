@@ -1,8 +1,6 @@
 package com.sdsmdg.kd.trianglify;
 
 
-import android.graphics.Point;
-
 import com.sdsmdg.kd.trianglify.generators.DelaunayTriangulator;
 import com.sdsmdg.kd.trianglify.generators.Triangulator;
 import com.sdsmdg.kd.trianglify.models.Grid;
@@ -10,8 +8,6 @@ import com.sdsmdg.kd.trianglify.models.Triangulation;
 import com.sdsmdg.kd.trianglify.patterns.Circle;
 import com.sdsmdg.kd.trianglify.patterns.Patterns;
 import com.sdsmdg.kd.trianglify.patterns.Rectangle;
-
-import java.util.Vector;
 
 /**
  * <h1>Presenter.java</h1>
