@@ -52,9 +52,9 @@ public class ColorizerTest {
         testColorizer = new FixedPointsColorizer(
                 mockTriangulation, Palette.RdYlBu, 100, 100);
 
-        int expectedColors[] = {Palette.RdYlBu.get_c9(),
-            avg(Palette.RdYlBu.get_c1(), Palette.RdYlBu.get_c2(),
-                    Palette.RdYlBu.get_c8(), Palette.RdYlBu.get_c9())};
+        int expectedColors[] = {Palette.RdYlBu.getC9(),
+            avg(Palette.RdYlBu.getC1(), Palette.RdYlBu.getC2(),
+                    Palette.RdYlBu.getC8(), Palette.RdYlBu.getC9())};
 
         assertTrue(expectedColors.length == mockTriangleList.size());
 

@@ -24,6 +24,8 @@ interface TrianglifyViewInterface {
     int getScheme();
     int getCellSize();
     int getTriangulationType();
+    boolean isFillTrianlge();
+    boolean isStrokeTrianlge();
     Palette getPalette();
     Patterns getPattern();
     Triangulation getTriangulation();

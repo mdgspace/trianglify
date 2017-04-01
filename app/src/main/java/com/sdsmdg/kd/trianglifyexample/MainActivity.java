@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.Checkable;
+import android.widget.CompoundButton;
 import android.widget.SeekBar;
 
 import com.sdsmdg.kd.trianglify.TrianglifyView;
@@ -20,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar varianceSeekBar;
     private SeekBar cellSizeSeekBar;
     private SeekBar paletteSeekBar;
+    private CheckBox strokeCheckBox;
+    private CheckBox fillCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         paletteSeekBar = (SeekBar) findViewById(R.id.palette_seekbar);
-        paletteSeekBar.setMax(palettes.length);
+        paletteSeekBar.setMax(palettes.length-1);
         paletteSeekBar.setProgress(1);
         paletteSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -93,5 +98,26 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        strokeCheckBox = (CheckBox) findViewById(R.id.draw_stroke_checkbox);
+        strokeCheckBox.setChecked(trianglifyView.isStrokeTrianlge());
+        strokeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                trianglifyView.setStrokeTrianlge(isChecked);
+                trianglifyView.invalidate();
+            }
+        });
+
+        fillCheckBox = (CheckBox) findViewById(R.id.draw_fill_checkbox);
+        fillCheckBox.setChecked(trianglifyView.isStrokeTrianlge());
+        fillCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                trianglifyView.setFillTrianlge(isChecked);
+                trianglifyView.invalidate();
+            }
+        });
+
     }
 }

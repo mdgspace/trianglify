@@ -37,6 +37,8 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     int scheme = 0;
     int cellSize = 50;
     int triangulationType = 1;
+    boolean fillTrianlge = true;
+    boolean strokeTrianlge = true;
     Palette palette = Palette.Yl;
     Patterns pattern;
     Triangulation triangulation;
@@ -151,6 +153,24 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         this.triangulation = triangulation;
     }
 
+    @Override
+    public boolean isFillTrianlge() {
+        return fillTrianlge;
+    }
+
+    public void setFillTrianlge(boolean fillTrianlge) {
+        this.fillTrianlge = fillTrianlge;
+    }
+
+    @Override
+    public boolean isStrokeTrianlge() {
+        return strokeTrianlge;
+    }
+
+    public void setStrokeTrianlge(boolean strokeTrianlge) {
+        this.strokeTrianlge = strokeTrianlge;
+    }
+
     public TrianglifyView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.presenter = new Presenter(this);
@@ -181,7 +201,15 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
         paint.setColor(color);
         paint.setStrokeWidth(4);
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        if (isFillTrianlge() && isStrokeTrianlge()) {
+            paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        } else if (isFillTrianlge()) {
+            paint.setStyle(Paint.Style.FILL);
+        } else if (isStrokeTrianlge()) {
+            paint.setStyle(Paint.Style.STROKE);
+        } else {
+            paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        }
         paint.setAntiAlias(true);
 
         Path path = new Path();

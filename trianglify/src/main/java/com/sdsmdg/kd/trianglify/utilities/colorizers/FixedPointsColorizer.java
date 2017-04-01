@@ -1,11 +1,13 @@
 package com.sdsmdg.kd.trianglify.utilities.colorizers;
 
+import android.graphics.Color;
 import android.util.Log;
 
 import com.sdsmdg.kd.trianglify.models.Palette;
 import com.sdsmdg.kd.trianglify.models.Triangulation;
 import com.sdsmdg.kd.trianglify.models.triangulator.Triangle2D;
 import com.sdsmdg.kd.trianglify.models.triangulator.Vector2D;
+import com.sdsmdg.kd.trianglify.utilities.ExtendedColor;
 import com.sdsmdg.kd.trianglify.utilities.Point;
 
 import static android.content.ContentValues.TAG;
@@ -100,33 +102,33 @@ public class FixedPointsColorizer implements Colorizer {
 
 
     private int getColorForPoint(Vector2D point){
-        int topLeftColor, topRightColor;
-        int bottomLeftColor, bottomRightColor;
+        ExtendedColor topLeftColor, topRightColor;
+        ExtendedColor bottomLeftColor, bottomRightColor;
 
         Point topLeft, topRight;
         Point bottomLeft, bottomRight;
 
         // Following if..else identifies which sub-rectangle given point lies
         if (point.x < gridWidth/2 && point.y < gridHeight/2) {
-            topLeftColor = colorPalette.get_c1(); // Seriously? underscore in Java method names! kriti--
-            topRightColor = colorPalette.get_c2();
-            bottomLeftColor = colorPalette.get_c8();
-            bottomRightColor = colorPalette.get_c9();
+            topLeftColor = new ExtendedColor(colorPalette.getC1());
+            topRightColor = new ExtendedColor(colorPalette.getC2());
+            bottomLeftColor = new ExtendedColor(colorPalette.getC8());
+            bottomRightColor = new ExtendedColor(colorPalette.getC9());
         } else if (point.x >= gridWidth/2 && point.y < gridHeight/2) {
-            topLeftColor = colorPalette.get_c2();
-            topRightColor = colorPalette.get_c3();
-            bottomLeftColor = colorPalette.get_c9();
-            bottomRightColor = colorPalette.get_c4();
+            topLeftColor = new ExtendedColor(colorPalette.getC2());
+            topRightColor = new ExtendedColor(colorPalette.getC3());
+            bottomLeftColor = new ExtendedColor(colorPalette.getC9());
+            bottomRightColor = new ExtendedColor(colorPalette.getC4());
         } else if (point.x >= gridWidth/2 && point.y >= gridHeight/2) {
-            topLeftColor = colorPalette.get_c9();
-            topRightColor = colorPalette.get_c4();
-            bottomLeftColor = colorPalette.get_c6();
-            bottomRightColor = colorPalette.get_c5();
+            topLeftColor = new ExtendedColor(colorPalette.getC9());
+            topRightColor = new ExtendedColor(colorPalette.getC4());
+            bottomLeftColor = new ExtendedColor(colorPalette.getC6());
+            bottomRightColor = new ExtendedColor(colorPalette.getC5());
         } else {
-            topLeftColor = colorPalette.get_c8();
-            topRightColor = colorPalette.get_c9();
-            bottomLeftColor = colorPalette.get_c7();
-            bottomRightColor = colorPalette.get_c6();
+            topLeftColor = new ExtendedColor(colorPalette.getC8());
+            topRightColor = new ExtendedColor(colorPalette.getC9());
+            bottomLeftColor = new ExtendedColor(colorPalette.getC7());
+            bottomRightColor = new ExtendedColor(colorPalette.getC6());
         }
 
         // Calculate corners of sub rectangle in which point is identified
@@ -145,32 +147,73 @@ public class FixedPointsColorizer implements Colorizer {
 
         // Calculates weighted mean of colors
 
-        float weightedTopColor = (topRightColor*(point.x - topLeft.x)
-                + (topLeftColor)*(topRight.x - point.x))
-                / ((topRight.x - topLeft.x));
-        float weightedBottomColor = (bottomRightColor*(point.x - topLeft.x)
-                + (bottomLeftColor)*(topRight.x - point.x))
-                / ((topRight.x - topLeft.x));
+        ExtendedColor weightedTopColor = new ExtendedColor(
+                (int)((topRightColor.r*(point.x - topLeft.x) + (topLeftColor.r)*(topRight.x - point.x))
+                        / ((topRight.x - topLeft.x))),
+                (int)((topRightColor.g*(point.x - topLeft.x) + (topLeftColor.g)*(topRight.x - point.x))
+                        / ((topRight.x - topLeft.x))),
+                (int)((topRightColor.b*(point.x - topLeft.x) + (topLeftColor.b)*(topRight.x - point.x))
+                        / ((topRight.x - topLeft.x)))
+        );
+        ExtendedColor weightedBottomColor = new ExtendedColor(
+                (int) ((bottomRightColor.r*(point.x - topLeft.x) + (bottomLeftColor.r)*(topRight.x - point.x))
+                        / ((topRight.x - topLeft.x))),
+                (int)((bottomRightColor.g*(point.x - topLeft.x) + (bottomLeftColor.g)*(topRight.x - point.x))
+                        / ((topRight.x - topLeft.x))),
+                (int)((bottomRightColor.b*(point.x - topLeft.x) + (bottomLeftColor.b)*(topRight.x - point.x))
+                        / ((topRight.x - topLeft.x)))
 
-        float weightedLeftColor = (bottomLeftColor*(point.y - topLeft.y)
-                + (topLeftColor)*(bottomLeft.y - point.y))
-                / ((bottomLeft.y - topLeft.y));
-        float weightedRightColor = (bottomRightColor*(point.y - topRight.y)
-                + (topRightColor)*(bottomRight.y - point.y))
-                / ((bottomRight.y - topRight.y));
+        );
+        ExtendedColor weightedLeftColor = new ExtendedColor(
+                (int)((bottomLeftColor.r*(point.y - topLeft.y) + (topLeftColor.r)*(bottomLeft.y - point.y))
+                        / ((bottomLeft.y - topLeft.y))),
+                (int)((bottomLeftColor.g*(point.y - topLeft.y) + (topLeftColor.g)*(bottomLeft.y - point.y))
+                        / ((bottomLeft.y - topLeft.y))),
+                (int)((bottomLeftColor.b*(point.y - topLeft.y) + (topLeftColor.b)*(bottomLeft.y - point.y))
+                        / ((bottomLeft.y - topLeft.y)))
+        );
+
+        ExtendedColor weightedRightColor = new ExtendedColor(
+                (int)((bottomRightColor.r*(point.y - topRight.y)
+                        + (topRightColor.r)*(bottomRight.y - point.y))
+                        / ((bottomRight.y - topRight.y))),
+                (int)((bottomRightColor.g*(point.y - topRight.y)
+                        + (topRightColor.g)*(bottomRight.y - point.y))
+                        / ((bottomRight.y - topRight.y))),
+                (int)((bottomRightColor.b*(point.y - topRight.y)
+                        + (topRightColor.b)*(bottomRight.y - point.y))
+                        / ((bottomRight.y - topRight.y)))
+        );
 
 
+        ExtendedColor weightedYColor = new ExtendedColor(
+                (int)((weightedRightColor.r*(point.x - topLeft.x)
+                        + (weightedLeftColor.r)*(topRight.x - point.x))
+                        / ((topRight.x - topLeft.x))),
+                (int)((weightedRightColor.g*(point.x - topLeft.x)
+                        + (weightedLeftColor.g)*(topRight.x - point.x))
+                        / ((topRight.x - topLeft.x))),
+                (int)((weightedRightColor.b*(point.x - topLeft.x)
+                        + (weightedLeftColor.b)*(topRight.x - point.x))
+                    / ((topRight.x - topLeft.x)))
+        );
 
-        float weightedYColor = (weightedRightColor*(point.x - topLeft.x)
-                + (weightedLeftColor)*(topRight.x - point.x))
-                / ((topRight.x - topLeft.x));
 
-        float weightedXColor = (weightedBottomColor*(point.y - topLeft.y)
-                + (weightedTopColor)*(bottomLeft.y - point.y))
-                / ((bottomLeft.y - topLeft.y));
+        ExtendedColor weightedXColor = new ExtendedColor(
+                (int)((weightedBottomColor.r*(point.y - topLeft.y)
+                        + (weightedTopColor.r)*(bottomLeft.y - point.y))
+                        / ((bottomLeft.y - topLeft.y))),
+                (int)((weightedBottomColor.g*(point.y - topLeft.y)
+                        + (weightedTopColor.g)*(bottomLeft.y - point.y))
+                        / ((bottomLeft.y - topLeft.y))),
+                (int)((weightedBottomColor.b*(point.y - topLeft.y)
+                        + (weightedTopColor.b)*(bottomLeft.y - point.y))
+                        / ((bottomLeft.y - topLeft.y)))
+
+        );
 
         // This comment is self explanatory
-        return avg((int)weightedXColor, (int)weightedYColor);
+        return ExtendedColor.avg(weightedXColor, weightedYColor).toInt();
     }
 
     /**

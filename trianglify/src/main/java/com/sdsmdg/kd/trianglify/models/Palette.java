@@ -54,39 +54,39 @@ public enum Palette {
         this.c9 = c9;
     }
 
-    public int get_c1() {
+    public int getC1() {
         return c1;
     }
 
-    public int get_c2() {
+    public int getC2() {
         return c2;
     }
 
-    public int get_c3() {
+    public int getC3() {
         return c3;
     }
 
-    public int get_c4() {
+    public int getC4() {
         return c4;
     }
 
-    public int get_c5() {
+    public int getC5() {
         return c5;
     }
 
-    public int get_c6() {
+    public int getC6() {
         return c6;
     }
 
-    public int get_c7() {
+    public int getC7() {
         return c7;
     }
 
-    public int get_c8() {
+    public int getC8() {
         return c8;
     }
 
-    public int get_c9() {
+    public int getC9() {
         return c9;
     }
 
@@ -96,4 +96,6 @@ public enum Palette {
             System.exit(-1);
         }
     }
+
+
 }
