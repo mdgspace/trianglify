@@ -2,27 +2,42 @@ package com.sdsmdg.kd.trianglify;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import com.sdsmdg.kd.trianglify.models.Grid;
 import com.sdsmdg.kd.trianglify.models.Palette;
-import com.sdsmdg.kd.trianglify.models.Triangle;
 import com.sdsmdg.kd.trianglify.models.Triangulation;
+import com.sdsmdg.kd.trianglify.models.triangulator.DelaunayTriangulator;
+import com.sdsmdg.kd.trianglify.models.triangulator.NotEnoughPointsException;
+import com.sdsmdg.kd.trianglify.models.triangulator.Triangle2D;
+import com.sdsmdg.kd.trianglify.models.triangulator.Vector2D;
 import com.sdsmdg.kd.trianglify.patterns.Patterns;
+import com.sdsmdg.kd.trianglify.patterns.Rectangle;
+import com.sdsmdg.kd.trianglify.utilities.colorizers.Colorizer;
+import com.sdsmdg.kd.trianglify.utilities.colorizers.FixedPointsColorizer;
+
+import java.util.List;
+import java.util.Vector;
+
+import static android.content.ContentValues.TAG;
 
 public class TrianglifyView extends View implements TrianglifyViewInterface{
-    int bleedX;
-    int bleedY;
-    int gridHeight;
-    int gridWidth;
-    int TypeGrid;
-    int variance;
-    int scheme;
-    int cellSize;
-    int triangulationType;
-    Palette typeColor;
+    int bleedX = 100;
+    int bleedY = 100;
+    int gridHeight = 800;
+    int gridWidth = 800;
+    int TypeGrid = 0;
+    int variance = 30;
+    int scheme = 0;
+    int cellSize = 50;
+    int triangulationType = 1;
+    Palette palette = Palette.Yl;
     Patterns pattern;
     Triangulation triangulation;
 
@@ -110,12 +125,12 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     }
 
     @Override
-    public Palette  getTypeColor() {
-        return typeColor;
+    public Palette  getPalette() {
+        return palette;
     }
 
-    public void setTypeColor(Palette typeColor) {
-        this.typeColor = typeColor;
+    public void setPalette(Palette palette) {
+        this.palette = palette;
     }
 
     @Override
@@ -148,7 +163,6 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     }
 
     void generate() {
-        presenter.generateSoup();
         this.triangulation = presenter.getSoup();
     }
 
@@ -157,25 +171,35 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         plotOnCanvas(canvas);
     }
 
+    public void drawTriangle(Canvas canvas, Triangle2D triangle2D) {
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        int color = triangle2D.getColor();
+
+        //Right shifts number by 8 bits (2 hex for alpha)
+        color <<= 8;
+        color += 255;
+
+        paint.setColor(color);
+        paint.setStrokeWidth(4);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        paint.setAntiAlias(true);
+
+        Path path = new Path();
+        path.setFillType(Path.FillType.EVEN_ODD);
+
+        path.moveTo((float)triangle2D.a.x, (float)triangle2D.a.y);
+        path.lineTo((float)triangle2D.b.x, (float)triangle2D.b.y);
+        path.lineTo((float)triangle2D.c.x, (float)triangle2D.c.y);
+        path.lineTo((float)triangle2D.a.x, (float)triangle2D.a.y);
+        path.close();
+
+        canvas.drawPath(path, paint);
+    }
+
     void plotOnCanvas(Canvas canvas) {
-        if (triangulation != null) {
-            for (Triangle triangle : triangulation.getTriangleList()) {
-                Paint paint = new Paint();
-                int fillColor = triangle.getColor();
-                paint.setColor(fillColor);
-                paint.setStyle(Paint.Style.FILL);
-                paint.setAntiAlias(true);
-
-                Path path = new Path();
-                path.setFillType(Path.FillType.EVEN_ODD);
-                path.moveTo(triangle.b.x, triangle.b.y);
-                path.moveTo(triangle.b.x, triangle.b.y);
-                path.moveTo(triangle.c.x, triangle.c.y);
-                path.close();
-
-                canvas.drawPath(path, paint);
-            }
+        for (int i = 0; i < triangulation.getTriangleList().size(); i++){
+            drawTriangle(canvas, triangulation.getTriangleList().get(i));
         }
+
     }
 }
-

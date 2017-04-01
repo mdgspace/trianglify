@@ -3,8 +3,9 @@ package com.sdsmdg.kd.trianglify.utilities.colorizers;
 import android.util.Log;
 
 import com.sdsmdg.kd.trianglify.models.Palette;
-import com.sdsmdg.kd.trianglify.models.Triangle;
 import com.sdsmdg.kd.trianglify.models.Triangulation;
+import com.sdsmdg.kd.trianglify.models.triangulator.Triangle2D;
+import com.sdsmdg.kd.trianglify.models.triangulator.Vector2D;
 import com.sdsmdg.kd.trianglify.utilities.Point;
 
 import static android.content.ContentValues.TAG;
@@ -13,7 +14,7 @@ import static android.content.ContentValues.TAG;
  * <h1>Fixed Point Colorizer</h1>
  * <b>Description :</b>
  * Fixed point colorizer contains methods that colorize triangles
- * based on the color palette provided in the constructer.
+ * based on the color palette provided in the constructor.
  *
  * @author suyash
  * @since 24/3/17.
@@ -53,7 +54,7 @@ public class FixedPointsColorizer implements Colorizer {
     @Override
     public Triangulation getColororedTriangulation(){
         if (triangulation != null){
-            for (Triangle triangle : triangulation.getTriangleList()){
+            for (Triangle2D triangle : triangulation.getTriangleList()){
                 triangle.setColor(getColorForPoint(triangle.getCentroid()));
             }
         } else {
@@ -98,7 +99,7 @@ public class FixedPointsColorizer implements Colorizer {
      */
 
 
-    private int getColorForPoint(Point point){
+    private int getColorForPoint(Vector2D point){
         int topLeftColor, topRightColor;
         int bottomLeftColor, bottomRightColor;
 
@@ -144,32 +145,32 @@ public class FixedPointsColorizer implements Colorizer {
 
         // Calculates weighted mean of colors
 
-        int weightedTopColor = (topRightColor*(point.x - topLeft.x)
+        float weightedTopColor = (topRightColor*(point.x - topLeft.x)
                 + (topLeftColor)*(topRight.x - point.x))
                 / ((topRight.x - topLeft.x));
-        int weightedBottomColor = (bottomRightColor*(point.x - topLeft.x)
+        float weightedBottomColor = (bottomRightColor*(point.x - topLeft.x)
                 + (bottomLeftColor)*(topRight.x - point.x))
                 / ((topRight.x - topLeft.x));
 
-        int weightedLeftColor = (bottomLeftColor*(point.y - topLeft.y)
+        float weightedLeftColor = (bottomLeftColor*(point.y - topLeft.y)
                 + (topLeftColor)*(bottomLeft.y - point.y))
                 / ((bottomLeft.y - topLeft.y));
-        int weightedRightColor = (bottomRightColor*(point.y - topRight.y)
+        float weightedRightColor = (bottomRightColor*(point.y - topRight.y)
                 + (topRightColor)*(bottomRight.y - point.y))
                 / ((bottomRight.y - topRight.y));
 
 
 
-        int weightedYColor = (weightedRightColor*(point.x - topLeft.x)
+        float weightedYColor = (weightedRightColor*(point.x - topLeft.x)
                 + (weightedLeftColor)*(topRight.x - point.x))
                 / ((topRight.x - topLeft.x));
 
-        int weightedXColor = (weightedBottomColor*(point.y - topLeft.y)
+        float weightedXColor = (weightedBottomColor*(point.y - topLeft.y)
                 + (weightedTopColor)*(bottomLeft.y - point.y))
                 / ((bottomLeft.y - topLeft.y));
 
         // This comment is self explanatory
-        return avg(weightedXColor, weightedYColor);
+        return avg((int)weightedXColor, (int)weightedYColor);
     }
 
     /**

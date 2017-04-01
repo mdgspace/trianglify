@@ -1,5 +1,7 @@
 package com.sdsmdg.kd.trianglify.models;
 
+import com.sdsmdg.kd.trianglify.models.triangulator.Triangle2D;
+
 import java.util.List;
 
 /**
@@ -7,13 +9,13 @@ import java.util.List;
  */
 
 public class Triangulation {
-    private List<Triangle> triangleList;
+    private List<Triangle2D> triangleList;
 
-    public Triangulation(List<Triangle> triangleList){
+    public Triangulation(List<Triangle2D> triangleList){
         this.triangleList = triangleList;
     }
 
-    public List<Triangle> getTriangleList() {
+    public List<Triangle2D> getTriangleList() {
         return triangleList;
     }
 }

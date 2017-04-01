@@ -1,7 +1,11 @@
 package com.sdsmdg.kd.trianglify.patterns;
 
+
 import android.graphics.Point;
 import com.sdsmdg.kd.trianglify.models.Grid;
+import com.sdsmdg.kd.trianglify.models.triangulator.Vector2D;
+
+import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
@@ -21,8 +25,7 @@ import java.util.Vector;
     private int cellSize = 0;
     private int variance = 0;
 
-    public Vector<Point> gridPoints = new Vector<>();
-    public Grid grid;
+    public List<Vector2D> grid;
 
     public Random getRandom() {
         return random;
@@ -97,10 +100,13 @@ import java.util.Vector;
         this.variance = variance;
     }
 
-    public Grid generate() {
-        Point center = new Point(width / 2, height / 2);
+    public List<Vector2D> generate() {
+        Vector2D center = new Vector2D(width / 2, height / 2);
+
+        grid.clear();
+
         int maxRadius = Math.max(width + bleedX, height + bleedY);
-        this.gridPoints.add(center);
+        this.grid.add(center);
 
         double slice, angle;
         int x, y;
@@ -111,11 +117,10 @@ import java.util.Vector;
                 angle = slice * i;
                 x = (int) (center.x + radius * Math.cos(angle)) + random.nextInt(variance);
                 y = (int) (center.y + radius * Math.sin(angle)) + random.nextInt(variance);
-                this.gridPoints.add(new Point(x, y));
+                this.grid.add(new Vector2D(x, y));
             }
         }
 
-        grid = new Grid(gridPoints);
         return grid;
     }
 }
