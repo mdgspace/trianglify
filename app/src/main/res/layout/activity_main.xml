@@ -43,12 +43,28 @@
         android:layout_below="@+id/cell_size_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <CheckBox
+        android:id="@+id/draw_stroke_checkbox"
+        android:layout_below="@+id/palette_seekbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:text="Draw storkes"
+        />
+    <CheckBox
+        android:id="@+id/draw_fill_checkbox"
+        android:layout_below="@+id/draw_stroke_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:text="Fill Triangles"
+        />
 
     <com.sdsmdg.kd.trianglify.TrianglifyView
         android:id="@+id/trianglify_main_view"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/cell_size_seekbar"
+        android:layout_below="@+id/draw_fill_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         />

@@ -201,7 +201,15 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
         paint.setColor(color);
         paint.setStrokeWidth(4);
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        if (isFillTrianlge() && isStrokeTrianlge()) {
+            paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        } else if (isFillTrianlge()) {
+            paint.setStyle(Paint.Style.FILL);
+        } else if (isStrokeTrianlge()) {
+            paint.setStyle(Paint.Style.STROKE);
+        } else {
+            paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        }
         paint.setAntiAlias(true);
 
         Path path = new Path();
