@@ -100,21 +100,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
         strokeCheckBox = (CheckBox) findViewById(R.id.draw_stroke_checkbox);
-        strokeCheckBox.setChecked(trianglifyView.isStrokeTrianlge());
+        strokeCheckBox.setChecked(trianglifyView.isFillStroke());
         strokeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                trianglifyView.setStrokeTrianlge(isChecked);
+                trianglifyView.setFillStroke(isChecked);
                 trianglifyView.invalidate();
             }
         });
 
         fillCheckBox = (CheckBox) findViewById(R.id.draw_fill_checkbox);
-        fillCheckBox.setChecked(trianglifyView.isStrokeTrianlge());
+        fillCheckBox.setChecked(trianglifyView.isFillTriangle());
         fillCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                trianglifyView.setFillTrianlge(isChecked);
+                trianglifyView.setFillStroke(isChecked);
                 trianglifyView.invalidate();
             }
         });

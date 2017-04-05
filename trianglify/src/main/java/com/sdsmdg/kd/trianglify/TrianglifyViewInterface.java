@@ -21,12 +21,10 @@ interface TrianglifyViewInterface {
     int getGridWidth();
     int getGridHeight();
     int getVariance();
-    int getScheme();
     int getCellSize();
-    int getTriangulationType();
-    boolean isFillTrianlge();
-    boolean isStrokeTrianlge();
+    boolean isFillTriangle();
+    boolean isFillStroke();
+    int getPaletteNumber();
     Palette getPalette();
-    Patterns getPattern();
     Triangulation getTriangulation();
 }

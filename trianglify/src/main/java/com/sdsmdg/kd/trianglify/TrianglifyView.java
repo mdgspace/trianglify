@@ -1,6 +1,7 @@
 package com.sdsmdg.kd.trianglify;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -28,31 +29,66 @@ import java.util.Vector;
 import static android.content.ContentValues.TAG;
 
 public class TrianglifyView extends View implements TrianglifyViewInterface{
-    int bleedX = 100;
-    int bleedY = 100;
-    int gridHeight = 800;
-    int gridWidth = 800;
-    int TypeGrid = 0;
-    int variance = 30;
-    int scheme = 0;
-    int cellSize = 50;
-    int triangulationType = 1;
-    boolean fillTrianlge = true;
-    boolean strokeTrianlge = true;
-    Palette palette = Palette.Yl;
-    Patterns pattern;
+    int bleedX;
+    int bleedY;
+    int gridHeight;
+    int gridWidth;
+    int typeGrid;
+    int variance;
+    int cellSize;
+    boolean fillTriangle;
+    boolean fillStroke;
+    int paletteNumber;
+    Palette palettesArray[] = {Palette.YlGn, Palette.YlGnBu, Palette.GnBu, Palette.BuGn, Palette.PuBuGn,
+            Palette.PuBu, Palette.BuPu, Palette.RdPu, Palette.PuRd, Palette.OrRd, Palette.YlOrRd,
+            Palette.YlOrBr, Palette.Purples, Palette.Blues, Palette.Greens, Palette.Oranges,
+            Palette.Reds, Palette.Greys, Palette.PuOr, Palette.BrBG, Palette.PRGn, Palette.PiYG,
+            Palette.RdBu, Palette.RdGy, Palette.RdYlBu, Palette.Spectral, Palette.RdYlGn};
+    Palette palette;
     Triangulation triangulation;
 
     Presenter presenter;
 
-    @Override
-    public int getTriangulationType() {
-        return triangulationType;
+    public TrianglifyView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.TrianglifyView, 0, 0);
+        attributeSetter(a);
+        this.presenter = new Presenter(this);
     }
 
-    public void setTriangulationType(int triangulationType) {
-        this.triangulationType = triangulationType;
+    public Palette getPalette() {
+        return palette;
     }
+
+    public void setPalette(Palette palette) {
+        this.palette = palette;
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+
+        gridWidth = w;
+        gridHeight =h;
+    }
+
+    public void attributeSetter(TypedArray typedArray){
+        try{
+            bleedX = (int) typedArray.getDimension(R.styleable.TrianglifyView_bleedX, 0);
+            bleedY = (int) typedArray.getDimension(R.styleable.TrianglifyView_bleedY, 0);
+            variance = (int) typedArray.getDimension(R.styleable.TrianglifyView_variance, 10);
+            cellSize = (int) typedArray.getDimension(R.styleable.TrianglifyView_cellSize, 40);
+            typeGrid = typedArray.getInt(R.styleable.TrianglifyView_gridType, 0);
+            fillTriangle = typedArray.getBoolean(R.styleable.TrianglifyView_fillTriangle, true);
+            fillStroke = typedArray.getBoolean(R.styleable.TrianglifyView_fillStrokes, true);
+            paletteNumber = typedArray.getInt(R.styleable.TrianglifyView_palette, 0);
+            palette = palettesArray[paletteNumber];
+        }finally {
+            typedArray.recycle();
+        }
+    }
+
+
 
     @Override
     public int getCellSize() {
@@ -101,11 +137,11 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     @Override
     public int getTypeGrid() {
-        return TypeGrid;
+        return typeGrid;
     }
 
     public void setTypeGrid(int typeGrid) {
-        TypeGrid = typeGrid;
+        typeGrid = typeGrid;
     }
 
     @Override
@@ -117,31 +153,12 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         this.variance = variance;
     }
 
-    @Override
-    public int getScheme() {
-        return scheme;
+    public int getPaletteNumber() {
+        return paletteNumber;
     }
 
-    public void setScheme(int scheme) {
-        this.scheme = scheme;
-    }
-
-    @Override
-    public Palette  getPalette() {
-        return palette;
-    }
-
-    public void setPalette(Palette palette) {
-        this.palette = palette;
-    }
-
-    @Override
-    public Patterns getPattern() {
-        return pattern;
-    }
-
-    public void setPattern(Patterns pattern) {
-        this.pattern = pattern;
+    public void setPaletteNumber(int paletteNumber) {
+        this.paletteNumber = paletteNumber;
     }
 
     @Override
@@ -154,27 +171,23 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     }
 
     @Override
-    public boolean isFillTrianlge() {
-        return fillTrianlge;
+    public boolean isFillTriangle() {
+        return fillTriangle;
     }
 
-    public void setFillTrianlge(boolean fillTrianlge) {
-        this.fillTrianlge = fillTrianlge;
+    public void setFillTriangle(boolean fillTriangle) {
+        this.fillTriangle = fillTriangle;
     }
 
     @Override
-    public boolean isStrokeTrianlge() {
-        return strokeTrianlge;
+    public boolean isFillStroke() {
+        return fillStroke;
     }
 
-    public void setStrokeTrianlge(boolean strokeTrianlge) {
-        this.strokeTrianlge = strokeTrianlge;
+    public void setFillStroke(boolean fillStroke) {
+        this.fillStroke = fillStroke;
     }
 
-    public TrianglifyView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.presenter = new Presenter(this);
-    }
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -201,11 +214,11 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
         paint.setColor(color);
         paint.setStrokeWidth(4);
-        if (isFillTrianlge() && isStrokeTrianlge()) {
+        if (isFillTriangle() && isFillStroke()) {
             paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        } else if (isFillTrianlge()) {
+        } else if (isFillTriangle()) {
             paint.setStyle(Paint.Style.FILL);
-        } else if (isStrokeTrianlge()) {
+        } else if (isFillStroke()) {
             paint.setStyle(Paint.Style.STROKE);
         } else {
             paint.setStyle(Paint.Style.FILL_AND_STROKE);
