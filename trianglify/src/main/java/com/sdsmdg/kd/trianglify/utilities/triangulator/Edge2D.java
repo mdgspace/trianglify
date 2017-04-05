@@ -1,4 +1,4 @@
-package com.sdsmdg.kd.trianglify.models.triangulator;
+package com.sdsmdg.kd.trianglify.utilities.triangulator;
 
 /**
  * 2D edge class implementation.

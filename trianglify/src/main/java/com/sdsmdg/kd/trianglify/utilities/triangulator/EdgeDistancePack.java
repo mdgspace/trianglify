@@ -1,4 +1,4 @@
-package com.sdsmdg.kd.trianglify.models.triangulator;
+package com.sdsmdg.kd.trianglify.utilities.triangulator;
 
 /**
  * Edge distance pack class implementation used to describe the distance to a

@@ -1,4 +1,4 @@
-package com.sdsmdg.kd.trianglify.models.triangulator;
+package com.sdsmdg.kd.trianglify.utilities.triangulator;
 
 //import Triangulation.Triagulation;
 

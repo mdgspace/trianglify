@@ -2,7 +2,7 @@
 //
 //
 //
-//import com.sdsmdg.kd.trianglify.utilities.Point;
+//import com.sdsmdg.kd.trianglify.utilities.colorizers.Point;
 //import org.junit.Test;
 //
 //import static org.junit.Assert.assertFalse;

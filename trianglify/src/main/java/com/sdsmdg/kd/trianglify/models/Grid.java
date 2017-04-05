@@ -1,11 +1,8 @@
 package com.sdsmdg.kd.trianglify.models;
 
-import android.graphics.Point;
-
-import com.sdsmdg.kd.trianglify.models.triangulator.Vector2D;
+import com.sdsmdg.kd.trianglify.utilities.triangulator.Vector2D;
 
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Created by shyam on 12-Mar-17.

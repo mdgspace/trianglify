@@ -39,6 +39,7 @@
             <enum name="RdYlBu" value="24"/>
             <enum name="Spectral" value="25"/>
             <enum name="RdYlGn" value="26"/>
+            <enum name="YL" value="27"/>
         </attr>
     </declare-styleable>
 </resources>

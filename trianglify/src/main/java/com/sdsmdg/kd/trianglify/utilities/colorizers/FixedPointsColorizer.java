@@ -1,14 +1,11 @@
 package com.sdsmdg.kd.trianglify.utilities.colorizers;
 
-import android.graphics.Color;
 import android.util.Log;
 
 import com.sdsmdg.kd.trianglify.models.Palette;
 import com.sdsmdg.kd.trianglify.models.Triangulation;
-import com.sdsmdg.kd.trianglify.models.triangulator.Triangle2D;
-import com.sdsmdg.kd.trianglify.models.triangulator.Vector2D;
-import com.sdsmdg.kd.trianglify.utilities.ExtendedColor;
-import com.sdsmdg.kd.trianglify.utilities.Point;
+import com.sdsmdg.kd.trianglify.utilities.triangulator.Triangle2D;
+import com.sdsmdg.kd.trianglify.utilities.triangulator.Vector2D;
 
 import static android.content.ContentValues.TAG;
 
