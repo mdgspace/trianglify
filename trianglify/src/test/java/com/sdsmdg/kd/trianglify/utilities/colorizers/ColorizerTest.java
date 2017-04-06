@@ -4,7 +4,6 @@ package com.sdsmdg.kd.trianglify.utilities.colorizers;
 import com.sdsmdg.kd.trianglify.models.Palette;
 import com.sdsmdg.kd.trianglify.models.Triangle;
 import com.sdsmdg.kd.trianglify.models.Triangulation;
-import com.sdsmdg.kd.trianglify.utilities.Point;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,6 +1,6 @@
 package com.sdsmdg.kd.trianglify.models;
 
-import com.sdsmdg.kd.trianglify.models.triangulator.Triangle2D;
+import com.sdsmdg.kd.trianglify.utilities.triangulator.Triangle2D;
 
 import java.util.List;
 

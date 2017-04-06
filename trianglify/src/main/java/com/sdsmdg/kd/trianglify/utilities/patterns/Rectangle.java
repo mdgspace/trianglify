@@ -1,14 +1,10 @@
-package com.sdsmdg.kd.trianglify.patterns;
+package com.sdsmdg.kd.trianglify.utilities.patterns;
 
-import android.graphics.Point;
-import com.sdsmdg.kd.trianglify.models.Grid;
-import com.sdsmdg.kd.trianglify.models.triangulator.Triangle2D;
-import com.sdsmdg.kd.trianglify.models.triangulator.Vector2D;
+import com.sdsmdg.kd.trianglify.utilities.triangulator.Vector2D;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Vector;
 
 /**
  * Created by suyash on 12/3/17.
@@ -33,9 +29,6 @@ public class Rectangle implements Patterns {
 
         this.variance = variance;
         this.cellSize = cellSize;
-
-        this.bleedX= bleedX;
-        this.bleedY = bleedY;
 
         this.height = height;
         this.width = width;

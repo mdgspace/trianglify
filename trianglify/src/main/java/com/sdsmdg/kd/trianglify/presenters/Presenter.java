@@ -1,17 +1,16 @@
-package com.sdsmdg.kd.trianglify;
+package com.sdsmdg.kd.trianglify.presenters;
 
 
-import com.sdsmdg.kd.trianglify.models.triangulator.DelaunayTriangulator;
-import com.sdsmdg.kd.trianglify.generators.Triangulator;
-import com.sdsmdg.kd.trianglify.models.Grid;
+import com.sdsmdg.kd.trianglify.utilities.triangulator.DelaunayTriangulator;
 import com.sdsmdg.kd.trianglify.models.Triangulation;
-import com.sdsmdg.kd.trianglify.models.triangulator.NotEnoughPointsException;
-import com.sdsmdg.kd.trianglify.models.triangulator.Vector2D;
-import com.sdsmdg.kd.trianglify.patterns.Circle;
-import com.sdsmdg.kd.trianglify.patterns.Patterns;
-import com.sdsmdg.kd.trianglify.patterns.Rectangle;
+import com.sdsmdg.kd.trianglify.utilities.triangulator.NotEnoughPointsException;
+import com.sdsmdg.kd.trianglify.utilities.triangulator.Vector2D;
+import com.sdsmdg.kd.trianglify.utilities.patterns.Circle;
+import com.sdsmdg.kd.trianglify.utilities.patterns.Patterns;
+import com.sdsmdg.kd.trianglify.utilities.patterns.Rectangle;
 import com.sdsmdg.kd.trianglify.utilities.colorizers.Colorizer;
 import com.sdsmdg.kd.trianglify.utilities.colorizers.FixedPointsColorizer;
+import com.sdsmdg.kd.trianglify.views.TrianglifyViewInterface;
 
 import java.util.List;
 
@@ -33,7 +32,6 @@ public class Presenter {
     public Presenter(TrianglifyViewInterface view) {
         this.view = view;
     }
-
 
     private List<Vector2D> generateGrid() {
         int gridType = view.getTypeGrid();
@@ -59,6 +57,16 @@ public class Presenter {
         return patterns.generate();
     }
 
+    public Triangulation getSoup() {
+        generateSoup();
+        return triangulation;
+    }
+
+    public void generateSoup() {
+        triangulation = generateTriangulation(generateGrid());
+        triangulation = generateColoredSoup(triangulation);
+    }
+
     private Triangulation generateTriangulation(List<Vector2D> inputGrid) {
         DelaunayTriangulator triangulator = new DelaunayTriangulator(inputGrid);
         try {
@@ -73,16 +81,6 @@ public class Presenter {
         Colorizer colorizer = new FixedPointsColorizer(inputTriangulation,
                 view.getPalette(), view.getGridHeight(), view.getGridWidth());
         return colorizer.getColororedTriangulation();
-    }
-
-    public void generateSoup() {
-        triangulation = generateTriangulation(generateGrid());
-        triangulation = generateColoredSoup(triangulation);
-    }
-
-    public Triangulation getSoup() {
-        generateSoup();
-        return triangulation;
     }
 
     public void clearSoup() {

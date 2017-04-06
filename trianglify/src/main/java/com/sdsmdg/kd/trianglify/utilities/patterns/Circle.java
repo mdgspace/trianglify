@@ -1,13 +1,10 @@
-package com.sdsmdg.kd.trianglify.patterns;
+package com.sdsmdg.kd.trianglify.utilities.patterns;
 
 
-import android.graphics.Point;
-import com.sdsmdg.kd.trianglify.models.Grid;
-import com.sdsmdg.kd.trianglify.models.triangulator.Vector2D;
+import com.sdsmdg.kd.trianglify.utilities.triangulator.Vector2D;
 
 import java.util.List;
 import java.util.Random;
-import java.util.Vector;
 
 /**
  * Created by suyash on 12/3/17.

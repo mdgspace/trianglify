@@ -1,6 +1,4 @@
-package com.sdsmdg.kd.trianglify.models.triangulator;
-
-import com.sdsmdg.kd.trianglify.utilities.Point;
+package com.sdsmdg.kd.trianglify.utilities.triangulator;
 
 import java.util.Arrays;
 

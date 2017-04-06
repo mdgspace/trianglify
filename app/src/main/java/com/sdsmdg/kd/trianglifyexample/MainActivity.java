@@ -3,13 +3,11 @@ package com.sdsmdg.kd.trianglifyexample;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.CheckBox;
-import android.widget.Checkable;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 
-import com.sdsmdg.kd.trianglify.TrianglifyView;
+import com.sdsmdg.kd.trianglify.views.TrianglifyView;
 import com.sdsmdg.kd.trianglify.models.Palette;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
             Palette.PuBu, Palette.BuPu, Palette.RdPu, Palette.PuRd, Palette.OrRd, Palette.YlOrRd,
             Palette.YlOrBr, Palette.Purples, Palette.Blues, Palette.Greens, Palette.Oranges,
             Palette.Reds, Palette.Greys, Palette.PuOr, Palette.BrBG, Palette.PRGn, Palette.PiYG,
-            Palette.RdBu, Palette.RdGy, Palette.RdYlBu, Palette.Spectral, Palette.RdYlGn};
+            Palette.RdBu, Palette.RdGy, Palette.RdYlBu, Palette.Spectral, Palette.RdYlGn, Palette.Yl};
 
     public TrianglifyView trianglifyView;
     private SeekBar varianceSeekBar;
@@ -100,21 +98,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
         strokeCheckBox = (CheckBox) findViewById(R.id.draw_stroke_checkbox);
-        strokeCheckBox.setChecked(trianglifyView.isStrokeTrianlge());
+        strokeCheckBox.setChecked(trianglifyView.isFillStroke());
         strokeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                trianglifyView.setStrokeTrianlge(isChecked);
+                trianglifyView.setFillStroke(isChecked);
                 trianglifyView.invalidate();
             }
         });
 
         fillCheckBox = (CheckBox) findViewById(R.id.draw_fill_checkbox);
-        fillCheckBox.setChecked(trianglifyView.isStrokeTrianlge());
+        fillCheckBox.setChecked(trianglifyView.isFillTriangle());
         fillCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                trianglifyView.setFillTrianlge(isChecked);
+                trianglifyView.setFillTriangle(isChecked);
                 trianglifyView.invalidate();
             }
         });
