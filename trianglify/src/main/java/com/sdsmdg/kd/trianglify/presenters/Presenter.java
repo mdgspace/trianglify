@@ -79,7 +79,7 @@ public class Presenter {
 
     private Triangulation generateColoredSoup(Triangulation inputTriangulation) {
         Colorizer colorizer = new FixedPointsColorizer(inputTriangulation,
-                view.getPalette(), view.getGridHeight(), view.getGridWidth());
+                view.getPalette(), view.getGridHeight() + 2*view.getBleedY(), view.getGridWidth() + 2*view.getBleedX());
         return colorizer.getColororedTriangulation();
     }
 

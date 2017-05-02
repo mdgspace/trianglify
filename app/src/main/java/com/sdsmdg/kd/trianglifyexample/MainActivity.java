@@ -30,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         trianglifyView = (TrianglifyView) findViewById(R.id.trianglify_main_view);
+
+        trianglifyView.setGridWidth(trianglifyView.getWidth());
+        trianglifyView.setGridHeight(trianglifyView.getHeight());
+
         varianceSeekBar = (SeekBar) findViewById(R.id.variance_seekbar);
         varianceSeekBar.setMax(100);
         varianceSeekBar.setProgress(trianglifyView.getVariance());
@@ -51,9 +55,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         cellSizeSeekBar = (SeekBar) findViewById(R.id.cell_size_seekbar);
-        int maxCellSize = trianglifyView.getGridHeight() > trianglifyView.getGridWidth()
-                ? trianglifyView.getGridHeight()
-                : trianglifyView.getGridWidth();
+        int maxCellSize = 150;
 
         cellSizeSeekBar.setMax(maxCellSize);
         cellSizeSeekBar.setProgress(trianglifyView.getCellSize());

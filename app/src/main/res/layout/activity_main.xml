@@ -9,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#D3D3D3"
     tools:context="com.sdsmdg.kd.trianglifyexample.MainActivity">
     <TextView
         android:id="@+id/variance_textview"
@@ -70,11 +71,12 @@
         android:layout_height="400dp"
         app:cellSize="20dp"
         app:variance="5dp"
-        app:bleedX="30dp"
-        app:bleedY="30dp"
+        app:bleedX="50dp"
+        app:bleedY="50dp"
         app:gridType="rectangle"
         app:palette="Oranges"
         app:fillStrokes="true"
         app:fillTriangle="true"
+        android:clipChildren="true"
         />
 </RelativeLayout>

@@ -41,8 +41,8 @@ public class Rectangle implements Patterns {
         grid.clear();
 
         float x, y;
-        for (int j = -bleedY; j < height + bleedY; j += cellSize) {
-            for (int i = -bleedX; i < width + bleedX; i += cellSize) {
+        for (int j = 0; j < height + 2*bleedY; j += cellSize) {
+            for (int i = 0; i < width + 2*bleedX; i += cellSize) {
                 x = i + random.nextInt(variance);
                 y = j + random.nextInt(variance);
                 this.grid.add(new Vector2D(x, y));

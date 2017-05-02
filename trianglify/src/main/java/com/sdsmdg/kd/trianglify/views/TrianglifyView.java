@@ -5,6 +5,8 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
+import android.graphics.Region;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -219,10 +221,10 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         Path path = new Path();
         path.setFillType(Path.FillType.EVEN_ODD);
 
-        path.moveTo((float)triangle2D.a.x, (float)triangle2D.a.y);
-        path.lineTo((float)triangle2D.b.x, (float)triangle2D.b.y);
-        path.lineTo((float)triangle2D.c.x, (float)triangle2D.c.y);
-        path.lineTo((float)triangle2D.a.x, (float)triangle2D.a.y);
+        path.moveTo((float)triangle2D.a.x - bleedX, (float)triangle2D.a.y - bleedY);
+        path.lineTo((float)triangle2D.b.x - bleedX, (float)triangle2D.b.y - bleedY);
+        path.lineTo((float)triangle2D.c.x - bleedX, (float)triangle2D.c.y - bleedY);
+        path.lineTo((float)triangle2D.a.x - bleedX, (float)triangle2D.a.y - bleedY);
         path.close();
 
         canvas.drawPath(path, paint);
