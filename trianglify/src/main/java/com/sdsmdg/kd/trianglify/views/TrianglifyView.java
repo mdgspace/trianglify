@@ -209,6 +209,11 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         }
     }
 
+    /**
+     * Draws triangle on the canvas object passed using the parameters of current view instance
+     * @param canvas Canvas to paint on
+     * @param triangle2D Triangle to draw on canvas
+     */
     public void drawTriangle(Canvas canvas, Triangle2D triangle2D) {
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         int color = triangle2D.getColor();

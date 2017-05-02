@@ -1,4 +1,4 @@
-package com.sdsmdg.kd.trianglify.utilities.colorizers;
+package com.sdsmdg.kd.trianglify.utilities;
 
 /**
  * <h1>Title</h1>

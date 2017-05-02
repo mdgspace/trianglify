@@ -33,6 +33,10 @@ public class Presenter {
         this.view = view;
     }
 
+    /**
+     * Generates a grid on basis of selected grid type
+     * @return Grid of Vector2D
+     */
     private List<Vector2D> generateGrid() {
         int gridType = view.getTypeGrid();
         Patterns patterns;
@@ -57,16 +61,28 @@ public class Presenter {
         return patterns.generate();
     }
 
+    /**
+     * Generates soup and returns triangulation
+     * @return triangulation corresponding to current instance parameters
+     */
     public Triangulation getSoup() {
         generateSoup();
         return triangulation;
     }
 
+    /**
+     * Generates colored triangulation.
+     */
     public void generateSoup() {
         triangulation = generateTriangulation(generateGrid());
         triangulation = generateColoredSoup(triangulation);
     }
 
+    /**
+     * Creates triangles from a list of points
+     * @param inputGrid Grid of points for generating triangles
+     * @return List of Triangles generated from list of input points
+     */
     private Triangulation generateTriangulation(List<Vector2D> inputGrid) {
         DelaunayTriangulator triangulator = new DelaunayTriangulator(inputGrid);
         try {
@@ -77,6 +93,11 @@ public class Presenter {
         return new Triangulation(triangulator.getTriangles());
     }
 
+    /**
+     * Colors each triangle in triangulation and stores color as triangle's color variable
+     * @param inputTriangulation triangulation to color
+     * @return Colored triangulation of input triangulation
+     */
     private Triangulation generateColoredSoup(Triangulation inputTriangulation) {
         Colorizer colorizer = new FixedPointsColorizer(inputTriangulation,
                 view.getPalette(), view.getGridHeight() + 2*view.getBleedY(),

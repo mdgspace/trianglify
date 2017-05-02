@@ -1,18 +1,15 @@
 package com.sdsmdg.kd.trianglify.utilities.colorizers;
 
-import android.os.Debug;
-import android.os.SystemClock;
 import android.util.Log;
 
 import com.sdsmdg.kd.trianglify.models.Palette;
 import com.sdsmdg.kd.trianglify.models.Triangulation;
+import com.sdsmdg.kd.trianglify.utilities.ExtendedColor;
+import com.sdsmdg.kd.trianglify.utilities.Point;
 import com.sdsmdg.kd.trianglify.utilities.triangulator.Triangle2D;
 import com.sdsmdg.kd.trianglify.utilities.triangulator.Vector2D;
 
 import com.sdsmdg.kd.trianglify.utilities.ThreadLocalRandom;
-
-import java.sql.Time;
-import java.util.Date;
 
 import static android.content.ContentValues.TAG;
 
@@ -121,7 +118,7 @@ public class FixedPointsColorizer implements Colorizer {
     //       |     o \
     //      / o      |
     //     /    o    |
-    //     \__o___o__/
+    //     \______o__/
     //
 
     private int getColorForPoint(Vector2D point){
