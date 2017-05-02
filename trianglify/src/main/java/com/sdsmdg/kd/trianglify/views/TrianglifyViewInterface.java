@@ -19,7 +19,8 @@ public interface TrianglifyViewInterface {
     int getVariance();
     int getCellSize();
     boolean isFillTriangle();
-    boolean isFillStroke();
+    boolean isDrawStrokeEnabled();
+    boolean isRandomColoringEnabled();
     int getPaletteNumber();
     Palette getPalette();
     Triangulation getTriangulation();

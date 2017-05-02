@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar paletteSeekBar;
     private CheckBox strokeCheckBox;
     private CheckBox fillCheckBox;
+    private CheckBox randomColoring;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +31,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         trianglifyView = (TrianglifyView) findViewById(R.id.trianglify_main_view);
+
+        trianglifyView.setGridWidth(trianglifyView.getWidth());
+        trianglifyView.setGridHeight(trianglifyView.getHeight());
+
         varianceSeekBar = (SeekBar) findViewById(R.id.variance_seekbar);
         varianceSeekBar.setMax(100);
         varianceSeekBar.setProgress(trianglifyView.getVariance());
         varianceSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                trianglifyView.setVariance(progress);
+                trianglifyView.setVariance(progress+1);
                 trianglifyView.invalidate();
             }
 
@@ -51,16 +56,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         cellSizeSeekBar = (SeekBar) findViewById(R.id.cell_size_seekbar);
-        int maxCellSize = trianglifyView.getGridHeight() > trianglifyView.getGridWidth()
-                ? trianglifyView.getGridHeight()
-                : trianglifyView.getGridWidth();
+        int maxCellSize = 150;
 
         cellSizeSeekBar.setMax(maxCellSize);
         cellSizeSeekBar.setProgress(trianglifyView.getCellSize());
         cellSizeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                trianglifyView.setCellSize(progress);
+                trianglifyView.setCellSize(progress+100);
                 trianglifyView.invalidate();
             }
 
@@ -82,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 trianglifyView.setPalette(palettes[progress]);
-                Log.e("error", palettes[progress].toString());
                 trianglifyView.invalidate();
             }
 
@@ -98,11 +100,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         strokeCheckBox = (CheckBox) findViewById(R.id.draw_stroke_checkbox);
-        strokeCheckBox.setChecked(trianglifyView.isFillStroke());
+        strokeCheckBox.setChecked(trianglifyView.isDrawStrokeEnabled());
         strokeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                trianglifyView.setFillStroke(isChecked);
+                trianglifyView.setDrawStrokeEnabled(isChecked);
                 trianglifyView.invalidate();
             }
         });
@@ -117,5 +119,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        randomColoring = (CheckBox) findViewById(R.id.random_coloring_checkbox);
+        randomColoring.setChecked(trianglifyView.isFillTriangle());
+        randomColoring.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                trianglifyView.setRandomColoring(isChecked);
+                trianglifyView.invalidate();
+            }
+        });
     }
 }

@@ -1,7 +1,10 @@
 package com.sdsmdg.kd.trianglify.models;
 
 
+import android.util.Log;
+
 public enum Palette {
+
     Yl(0xFFFFE0, 0xFFFFCC, 0xFFFACD, 0xFFFF00, 0xFFEF00, 0xFFD300, 0xF8DE7E, 0xFFD700, 0xC3B091),
     YlGn(0xffffe5, 0xf7fcb9, 0xd9f0a3, 0xaddd8e, 0x78c679, 0x41ab5d, 0x238443, 0x006837, 0x004529),
     YlGnBu(0xffffd9, 0xedf8b1, 0xc7e9b4, 0x7fcdbb, 0x41b6c4, 0x1d91c0, 0x225ea8, 0x253494, 0x081d58),
@@ -88,6 +91,33 @@ public enum Palette {
 
     public int getC9() {
         return c9;
+    }
+
+    public int getColor(int index){
+        switch (index){
+            case 1:
+                return c1;
+            case 2:
+                return c2;
+            case 3:
+                return c3;
+            case 4:
+                return c4;
+            case 5:
+                return c5;
+            case 6:
+                return c6;
+            case 7:
+                return c7;
+            case 8:
+                return c8;
+            case 9:
+                return c9;
+            default:
+                Log.i("Palette", "Invalid index");
+                break;
+        }
+        return c1;
     }
 
     public static void main(String[] args) {

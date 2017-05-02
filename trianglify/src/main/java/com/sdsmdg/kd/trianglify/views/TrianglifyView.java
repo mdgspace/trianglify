@@ -22,15 +22,20 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     int typeGrid;
     int variance;
     int cellSize;
+
     boolean fillTriangle;
-    boolean fillStroke;
+    boolean drawStroke;
+    boolean randomColoring;
+
     int paletteNumber;
+
     Palette palettesArray[] = {Palette.YlGn, Palette.YlGnBu, Palette.GnBu, Palette.BuGn, Palette.PuBuGn,
             Palette.PuBu, Palette.BuPu, Palette.RdPu, Palette.PuRd, Palette.OrRd, Palette.YlOrRd,
             Palette.YlOrBr, Palette.Purples, Palette.Blues, Palette.Greens, Palette.Oranges,
             Palette.Reds, Palette.Greys, Palette.PuOr, Palette.BrBG, Palette.PRGn, Palette.PiYG,
             Palette.RdBu, Palette.RdGy, Palette.RdYlBu, Palette.Spectral, Palette.RdYlGn};
     Palette palette;
+
     Triangulation triangulation;
     Presenter presenter;
 
@@ -57,9 +62,10 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
             cellSize = (int) typedArray.getDimension(R.styleable.TrianglifyView_cellSize, 40);
             typeGrid = typedArray.getInt(R.styleable.TrianglifyView_gridType, 0);
             fillTriangle = typedArray.getBoolean(R.styleable.TrianglifyView_fillTriangle, true);
-            fillStroke = typedArray.getBoolean(R.styleable.TrianglifyView_fillStrokes, true);
+            drawStroke = typedArray.getBoolean(R.styleable.TrianglifyView_fillStrokes, true);
             paletteNumber = typedArray.getInt(R.styleable.TrianglifyView_palette, 0);
             palette = palettesArray[paletteNumber];
+            randomColoring = typedArray.getBoolean(R.styleable.TrianglifyView_randomColoring, false);
         }finally {
             typedArray.recycle();
         }
@@ -165,14 +171,22 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     }
 
     @Override
-    public boolean isFillStroke() {
-        return fillStroke;
+    public boolean isDrawStrokeEnabled() {
+        return drawStroke;
     }
 
-    public void setFillStroke(boolean fillStroke) {
-        this.fillStroke = fillStroke;
+    public void setDrawStrokeEnabled(boolean drawStroke) {
+        this.drawStroke = drawStroke;
     }
 
+    @Override
+    public boolean isRandomColoringEnabled() {
+        return randomColoring;
+    }
+
+    public void setRandomColoring(boolean randomColoring) {
+        this.randomColoring = randomColoring;
+    }
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -199,17 +213,20 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         int color = triangle2D.getColor();
 
-        //Right shifts number by 8 bits (2 hex for alpha)
+        /*
+         * Right shifts number by 8 bits (2 hex for alpha) since color received in triangle2D
+         * is without alpha channel.
+         */
         color <<= 8;
         color += 255;
 
         paint.setColor(color);
         paint.setStrokeWidth(4);
-        if (isFillTriangle() && isFillStroke()) {
+        if (isFillTriangle() && isDrawStrokeEnabled()) {
             paint.setStyle(Paint.Style.FILL_AND_STROKE);
         } else if (isFillTriangle()) {
             paint.setStyle(Paint.Style.FILL);
-        } else if (isFillStroke()) {
+        } else if (isDrawStrokeEnabled()) {
             paint.setStyle(Paint.Style.STROKE);
         } else {
             paint.setStyle(Paint.Style.FILL_AND_STROKE);
@@ -219,10 +236,10 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         Path path = new Path();
         path.setFillType(Path.FillType.EVEN_ODD);
 
-        path.moveTo((float)triangle2D.a.x, (float)triangle2D.a.y);
-        path.lineTo((float)triangle2D.b.x, (float)triangle2D.b.y);
-        path.lineTo((float)triangle2D.c.x, (float)triangle2D.c.y);
-        path.lineTo((float)triangle2D.a.x, (float)triangle2D.a.y);
+        path.moveTo(triangle2D.a.x - bleedX, triangle2D.a.y - bleedY);
+        path.lineTo(triangle2D.b.x - bleedX, triangle2D.b.y - bleedY);
+        path.lineTo(triangle2D.c.x - bleedX, triangle2D.c.y - bleedY);
+        path.lineTo(triangle2D.a.x - bleedX, triangle2D.a.y - bleedY);
         path.close();
 
         canvas.drawPath(path, paint);
