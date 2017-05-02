@@ -34,7 +34,7 @@ public enum Palette {
     Spectral(0x9e0142, 0xd53e4f, 0xf46d43, 0xfdae61, 0xfee08b, 0xffffbf, 0xe6f598, 0xabdda4, 0x66c2a5),
     RdYlGn(0xa50026, 0xd73027, 0xf46d43, 0xfdae61, 0xfee08b, 0xffffbf, 0xd9ef8b, 0xa6d96a, 0x66bd63);
 
-
+    private final int c0;
     private final int c1;
     private final int c2;
     private final int c3;
@@ -43,9 +43,9 @@ public enum Palette {
     private final int c6;
     private final int c7;
     private final int c8;
-    private final int c9;
 
-    Palette(int c1, int c2, int c3, int c4, int c5, int c6, int c7, int c8, int c9) {
+    Palette(int c0, int c1, int c2, int c3, int c4, int c5, int c6, int c7, int c8) {
+        this.c0 = c0;
         this.c1 = c1;
         this.c2 = c2;
         this.c3 = c3;
@@ -54,47 +54,12 @@ public enum Palette {
         this.c6 = c6;
         this.c7 = c7;
         this.c8 = c8;
-        this.c9 = c9;
-    }
-
-    public int getC1() {
-        return c1;
-    }
-
-    public int getC2() {
-        return c2;
-    }
-
-    public int getC3() {
-        return c3;
-    }
-
-    public int getC4() {
-        return c4;
-    }
-
-    public int getC5() {
-        return c5;
-    }
-
-    public int getC6() {
-        return c6;
-    }
-
-    public int getC7() {
-        return c7;
-    }
-
-    public int getC8() {
-        return c8;
-    }
-
-    public int getC9() {
-        return c9;
     }
 
     public int getColor(int index){
         switch (index){
+            case 0:
+                return c0;
             case 1:
                 return c1;
             case 2:
@@ -111,8 +76,6 @@ public enum Palette {
                 return c7;
             case 8:
                 return c8;
-            case 9:
-                return c9;
             default:
                 Log.i("Palette", "Invalid index");
                 break;
@@ -126,6 +89,4 @@ public enum Palette {
             System.exit(-1);
         }
     }
-
-
 }

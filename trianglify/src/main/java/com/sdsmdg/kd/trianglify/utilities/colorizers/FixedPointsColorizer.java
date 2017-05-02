@@ -85,17 +85,17 @@ public class FixedPointsColorizer implements Colorizer {
      * depicted in the following figure:
      *
      *(c1 are corresponding int values representing color in ColorPalette.java)
-     *    c1              c2                c3
+     *    c0              c1                c2
      *       +-------------+--------------+
      *       |             |              |
      *       |     r1      |      r2      |
      *       |             |              |
-     *    c8 +------------c9--------------+ c4
+     *    c7 +------------c8--------------+ c3
      *       |             |              |
      *       |     r3      |      r4      |
      *       |             |              |
      *       +-------------+--------------+
-     *    c7              c6                c5
+     *    c6              c5                c4
      *
      *
      * <b>Algorithm</b>
@@ -134,25 +134,25 @@ public class FixedPointsColorizer implements Colorizer {
 
             // Following if..else identifies which sub-rectangle given point lies
             if (point.x < gridWidth/2 && point.y < gridHeight/2) {
-                topLeftColor = new ExtendedColor(colorPalette.getC1());
-                topRightColor = new ExtendedColor(colorPalette.getC2());
-                bottomLeftColor = new ExtendedColor(colorPalette.getC8());
-                bottomRightColor = new ExtendedColor(colorPalette.getC9());
+                topLeftColor = new ExtendedColor(colorPalette.getColor(0));
+                topRightColor = new ExtendedColor(colorPalette.getColor(1));
+                bottomLeftColor = new ExtendedColor(colorPalette.getColor(7));
+                bottomRightColor = new ExtendedColor(colorPalette.getColor(8));
             } else if (point.x >= gridWidth/2 && point.y < gridHeight/2) {
-                topLeftColor = new ExtendedColor(colorPalette.getC2());
-                topRightColor = new ExtendedColor(colorPalette.getC3());
-                bottomLeftColor = new ExtendedColor(colorPalette.getC9());
-                bottomRightColor = new ExtendedColor(colorPalette.getC4());
+                topLeftColor = new ExtendedColor(colorPalette.getColor(1));
+                topRightColor = new ExtendedColor(colorPalette.getColor(2));
+                bottomLeftColor = new ExtendedColor(colorPalette.getColor(8));
+                bottomRightColor = new ExtendedColor(colorPalette.getColor(3));
             } else if (point.x >= gridWidth/2 && point.y >= gridHeight/2) {
-                topLeftColor = new ExtendedColor(colorPalette.getC9());
-                topRightColor = new ExtendedColor(colorPalette.getC4());
-                bottomLeftColor = new ExtendedColor(colorPalette.getC6());
-                bottomRightColor = new ExtendedColor(colorPalette.getC5());
+                topLeftColor = new ExtendedColor(colorPalette.getColor(8));
+                topRightColor = new ExtendedColor(colorPalette.getColor(3));
+                bottomLeftColor = new ExtendedColor(colorPalette.getColor(5));
+                bottomRightColor = new ExtendedColor(colorPalette.getColor(4));
             } else {
-                topLeftColor = new ExtendedColor(colorPalette.getC8());
-                topRightColor = new ExtendedColor(colorPalette.getC9());
-                bottomLeftColor = new ExtendedColor(colorPalette.getC7());
-                bottomRightColor = new ExtendedColor(colorPalette.getC6());
+                topLeftColor = new ExtendedColor(colorPalette.getColor(7));
+                topRightColor = new ExtendedColor(colorPalette.getColor(8));
+                bottomLeftColor = new ExtendedColor(colorPalette.getColor(6));
+                bottomRightColor = new ExtendedColor(colorPalette.getColor(5));
             }
 
             // Calculate corners of sub rectangle in which point is identified
@@ -170,7 +170,6 @@ public class FixedPointsColorizer implements Colorizer {
                     (point.y >= gridHeight/2) ? gridHeight : gridHeight/2);
 
             // Calculates weighted mean of colors
-
             ExtendedColor weightedTopColor = new ExtendedColor(
                     (int)((topRightColor.r*(point.x - topLeft.x) + (topLeftColor.r)*(topRight.x - point.x))
                             / ((topRight.x - topLeft.x))),
