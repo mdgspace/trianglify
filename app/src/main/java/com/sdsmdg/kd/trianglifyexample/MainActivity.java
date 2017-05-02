@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar paletteSeekBar;
     private CheckBox strokeCheckBox;
     private CheckBox fillCheckBox;
+    private CheckBox randomColoring;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         varianceSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                trianglifyView.setVariance(progress);
+                trianglifyView.setVariance(progress+1);
                 trianglifyView.invalidate();
             }
 
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         cellSizeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                trianglifyView.setCellSize(progress);
+                trianglifyView.setCellSize(progress+100);
                 trianglifyView.invalidate();
             }
 
@@ -84,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 trianglifyView.setPalette(palettes[progress]);
-                Log.e("error", palettes[progress].toString());
                 trianglifyView.invalidate();
             }
 
@@ -100,11 +100,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         strokeCheckBox = (CheckBox) findViewById(R.id.draw_stroke_checkbox);
-        strokeCheckBox.setChecked(trianglifyView.isFillStroke());
+        strokeCheckBox.setChecked(trianglifyView.isDrawStrokeEnabled());
         strokeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                trianglifyView.setFillStroke(isChecked);
+                trianglifyView.setDrawStrokeEnabled(isChecked);
                 trianglifyView.invalidate();
             }
         });
@@ -119,5 +119,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        randomColoring = (CheckBox) findViewById(R.id.random_coloring_checkbox);
+        randomColoring.setChecked(trianglifyView.isFillTriangle());
+        randomColoring.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                trianglifyView.setRandomColoring(isChecked);
+                trianglifyView.invalidate();
+            }
+        });
     }
 }

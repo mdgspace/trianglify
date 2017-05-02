@@ -46,8 +46,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <CheckBox
-        android:id="@+id/draw_stroke_checkbox"
+        android:id="@+id/random_coloring_checkbox"
         android:layout_below="@+id/palette_seekbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:text="Random Coloring"
+        />
+    <CheckBox
+        android:id="@+id/draw_stroke_checkbox"
+        android:layout_below="@+id/random_coloring_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -67,8 +75,8 @@
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/draw_fill_checkbox"
-        android:layout_width="200dp"
-        android:layout_height="400dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:cellSize="20dp"
         app:variance="5dp"
         app:bleedX="50dp"

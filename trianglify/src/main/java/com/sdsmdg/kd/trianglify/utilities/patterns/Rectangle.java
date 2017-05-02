@@ -5,13 +5,14 @@ import com.sdsmdg.kd.trianglify.utilities.triangulator.Vector2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import com.sdsmdg.kd.trianglify.utilities.ThreadLocalRandom;
 
 /**
  * Created by suyash on 12/3/17.
  */
 
 public class Rectangle implements Patterns {
-    private final Random random = new Random();
+    private final ThreadLocalRandom random = new ThreadLocalRandom();
     private int bleedX = 0;
     private int bleedY = 0;
 
@@ -40,7 +41,7 @@ public class Rectangle implements Patterns {
     public List<Vector2D> generate(){
         grid.clear();
 
-        float x, y;
+        int x, y;
         for (int j = 0; j < height + 2*bleedY; j += cellSize) {
             for (int i = 0; i < width + 2*bleedX; i += cellSize) {
                 x = i + random.nextInt(variance);
