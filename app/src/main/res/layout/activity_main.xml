@@ -85,6 +85,7 @@
         app:palette="Oranges"
         app:fillStrokes="true"
         app:fillTriangle="true"
+
         android:clipChildren="true"
         />
 </RelativeLayout>
