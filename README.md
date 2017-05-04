@@ -7,19 +7,7 @@ Trianglify is an Android library that helps creates views with beautiful pattern
 ## Documentation
 ### Using TrianglifyView
 
-#### Java
-    trianglifyView = (TrianglifyView) findViewById(R.id.trianglify_main_view);  
-    trianglifyView.setGridWidth(trianglifyView.getWidth())
-                .setGridHeight(trianglifyView.getHeight())
-                .setBleedX(50)
-                .setBleedY(50)
-                .setCellSize(20)
-                .setVariance(10)
-                .setTypeGrid(0)
-                .setPalette(26)
-                .setDrawStrokeEnabled(false);
-
-#### XML
+#### Attributes
 
 | Java method | XML Attributes       | Description |
 |-------------|-----------------|-------------|
@@ -34,9 +22,28 @@ Trianglify is an Android library that helps creates views with beautiful pattern
 |.setDrawStrokes(...)| draw_strokes    | Draws triangle's border with neighboring triangle's color           |
 |.setPalette(...)| palette         | Set of existing colors to color triangles|
 |.setRandomColoring(...)| random_coloring | If random coloring is on triangles will be colored randomly instead of linear interpolation|
+<p>
+
+##### Explanation of bleed, gridHeight and visible area
+Following image demonstrates region covered by gridHeight, gridWidth, bleedX and bleedY  
+
+<img src="resources/default_pattern_explained.jpg" alt="Drawing" style="width: 400px;"/>  
+
+### Example Usages
 
 
-##### Example Usages
+#### Java
+    trianglifyView = (TrianglifyView) findViewById(R.id.trianglify_main_view);  
+    trianglifyView.setGridWidth(trianglifyView.getWidth())
+                .setGridHeight(trianglifyView.getHeight())
+                .setBleedX(50)
+                .setBleedY(50)
+                .setCellSize(20)
+                .setVariance(10)
+                .setTypeGrid(0)
+                .setPalette(26)
+                .setDrawStrokeEnabled(false);
+#### XML
     <com.sdsmdg.kd.trianglify.views.TrianglifyView
         android:id="@+id/trianglify_main_view"
         android:layout_marginTop="20dp"

@@ -17,7 +17,7 @@ public class ThreadLocalRandom {
     }
 
     /**
-     * Generates a psuedoRandom integer that have ccomputational costs of several instructions less
+     * Generates a psuedoRandom integer that have computational costs of several instructions less
      * then that of java.util.random.nextInt().
      * @param mod limit for generation of pseudo random number
      * @return Random number between 0 and mod (exclusive)
