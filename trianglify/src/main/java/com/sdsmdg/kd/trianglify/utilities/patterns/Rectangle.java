@@ -37,6 +37,11 @@ public class Rectangle implements Patterns {
         grid = new ArrayList<>();
     }
 
+    /**
+     * Generates array of points arranged in a grid of rectangles with deviation from their positions
+     * on the basis of bleed value.
+     * @return List of Vector2D containing points that resembles rectangular grid
+     */
     @Override
     public List<Vector2D> generate(){
         grid.clear();

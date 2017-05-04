@@ -1,8 +1,8 @@
-package com.sdsmdg.kd.trianglify.utilities.colorizers;
+package com.sdsmdg.kd.trianglify.utilities;
 
 /**
  * <h1>Title</h1>
- * <b>Description :</b>
+ * <b>Description : Extends android.graphics.Color to add function that helps colorizer work.</b>
  * <p>
  *
  * @author suyash

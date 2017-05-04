@@ -33,7 +33,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
             Palette.PuBu, Palette.BuPu, Palette.RdPu, Palette.PuRd, Palette.OrRd, Palette.YlOrRd,
             Palette.YlOrBr, Palette.Purples, Palette.Blues, Palette.Greens, Palette.Oranges,
             Palette.Reds, Palette.Greys, Palette.PuOr, Palette.BrBG, Palette.PRGn, Palette.PiYG,
-            Palette.RdBu, Palette.RdGy, Palette.RdYlBu, Palette.Spectral, Palette.RdYlGn};
+                Palette.RdBu, Palette.RdGy, Palette.RdYlBu, Palette.Spectral, Palette.RdYlGn};
     Palette palette;
 
     Triangulation triangulation;
@@ -65,6 +65,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
             drawStroke = typedArray.getBoolean(R.styleable.TrianglifyView_fillStrokes, true);
             paletteNumber = typedArray.getInt(R.styleable.TrianglifyView_palette, 0);
             palette = palettesArray[paletteNumber];
+            typeGrid = GRID_RECTANGLE;
             randomColoring = typedArray.getBoolean(R.styleable.TrianglifyView_randomColoring, false);
         }finally {
             typedArray.recycle();
@@ -76,8 +77,9 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         return palette;
     }
 
-    public void setPalette(Palette palette) {
+    public TrianglifyView setPalette(Palette palette) {
         this.palette = palette;
+        return this;
     }
 
     @Override
@@ -85,8 +87,9 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         return cellSize;
     }
 
-    public void setCellSize(int cellSize) {
+    public TrianglifyView setCellSize(int cellSize) {
         this.cellSize = cellSize;
+        return this;
     }
 
     @Override
@@ -94,8 +97,9 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         return gridHeight;
     }
 
-    public void setGridHeight(int gridHeight) {
+    public TrianglifyView setGridHeight(int gridHeight) {
         this.gridHeight = gridHeight;
+        return this;
     }
 
     @Override
@@ -103,8 +107,9 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         return gridWidth;
     }
 
-    public void setGridWidth(int gridWidth) {
+    public TrianglifyView setGridWidth(int gridWidth) {
         this.gridWidth = gridWidth;
+        return this;
     }
 
     @Override
@@ -112,8 +117,9 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         return bleedX;
     }
 
-    public void setBleedX(int bleedX) {
+    public TrianglifyView setBleedX(int bleedX) {
         this.bleedX = bleedX;
+        return this;
     }
 
     @Override
@@ -121,8 +127,9 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         return bleedY;
     }
 
-    public void setBleedY(int bleedY) {
+    public TrianglifyView setBleedY(int bleedY) {
         this.bleedY = bleedY;
+        return this;
     }
 
     @Override
@@ -130,8 +137,9 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         return typeGrid;
     }
 
-    public void setTypeGrid(int typeGrid) {
+    public TrianglifyView setTypeGrid(int typeGrid) {
         typeGrid = typeGrid;
+        return this;
     }
 
     @Override
@@ -139,8 +147,9 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         return variance;
     }
 
-    public void setVariance(int variance) {
+    public TrianglifyView setVariance(int variance) {
         this.variance = variance;
+        return this;
     }
 
     @Override
@@ -148,8 +157,9 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         return paletteNumber;
     }
 
-    public void setPaletteNumber(int paletteNumber) {
+    public TrianglifyView setPaletteNumber(int paletteNumber) {
         this.paletteNumber = paletteNumber;
+        return this;
     }
 
     @Override
@@ -166,8 +176,9 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         return fillTriangle;
     }
 
-    public void setFillTriangle(boolean fillTriangle) {
+    public TrianglifyView setFillTriangle(boolean fillTriangle) {
         this.fillTriangle = fillTriangle;
+        return this;
     }
 
     @Override
@@ -175,8 +186,9 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         return drawStroke;
     }
 
-    public void setDrawStrokeEnabled(boolean drawStroke) {
+    public TrianglifyView setDrawStrokeEnabled(boolean drawStroke) {
         this.drawStroke = drawStroke;
+        return this;
     }
 
     @Override
@@ -184,8 +196,9 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         return randomColoring;
     }
 
-    public void setRandomColoring(boolean randomColoring) {
+    public TrianglifyView setRandomColoring(boolean randomColoring) {
         this.randomColoring = randomColoring;
+        return this;
     }
 
     @Override
@@ -209,6 +222,11 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         }
     }
 
+    /**
+     * Draws triangle on the canvas object passed using the parameters of current view instance
+     * @param canvas Canvas to paint on
+     * @param triangle2D Triangle to draw on canvas
+     */
     public void drawTriangle(Canvas canvas, Triangle2D triangle2D) {
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         int color = triangle2D.getColor();
