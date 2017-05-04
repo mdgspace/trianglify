@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
         trianglifyView = (TrianglifyView) findViewById(R.id.trianglify_main_view);
 
-        trianglifyView.setGridWidth(trianglifyView.getWidth());
-        trianglifyView.setGridHeight(trianglifyView.getHeight());
+        trianglifyView.setGridWidth(trianglifyView.getWidth())
+                .setGridHeight(trianglifyView.getHeight());
 
         varianceSeekBar = (SeekBar) findViewById(R.id.variance_seekbar);
         varianceSeekBar.setMax(100);
