@@ -3,9 +3,13 @@ package com.sdsmdg.kd.trianglifyexample;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import com.sdsmdg.kd.trianglify.views.TrianglifyView;
 import com.sdsmdg.kd.trianglify.models.Palette;
@@ -128,5 +132,31 @@ public class MainActivity extends AppCompatActivity {
                 trianglifyView.invalidate();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // action with ID action_about was selected
+            case R.id.action_about:
+                Toast.makeText(this, "SDS, MDG", Toast.LENGTH_SHORT)
+                        .show();
+                break;
+            // action with ID action_refresh was selected
+            case R.id.action_refresh:
+                trianglifyView.invalidate();
+                break;
+            default:
+                break;
+        }
+
+        return true;
     }
 }
