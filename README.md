@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.com/sdsmdg/trianglify.svg?token=tRURwj39jsSs5JWUTxs6&branch=develop)](https://travis-ci.com/sdsmdg/trianglify)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+<div style="text-align:center"><img src="resources/trianglify-logo-180.png" data-canonical-src="trianglify-logo-180.png" width="154" height="154" /></div>
+
 # Trianglify
 Trianglify is an Android library that helps creates views with beautiful patterns. Trianglify is based on MVP architecture and licensed under MIT license
 
