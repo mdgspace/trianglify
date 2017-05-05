@@ -3,6 +3,8 @@ package com.sdsmdg.kd.trianglifyexample;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.DateUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,6 +16,12 @@ import android.widget.Toast;
 
 import com.sdsmdg.kd.trianglify.views.TrianglifyView;
 import com.sdsmdg.kd.trianglify.models.Palette;
+
+import java.sql.Time;
+import java.util.Date;
+import java.util.Random;
+
+import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity {
     Palette palettes[] = {Palette.YlGn, Palette.YlGnBu, Palette.GnBu, Palette.BuGn, Palette.PuBuGn,
@@ -28,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar paletteSeekBar;
     private CheckBox strokeCheckBox;
     private CheckBox fillCheckBox;
-    private CheckBox randomColoring;
+    private CheckBox randomColoringCheckbox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,9 +132,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        randomColoring = (CheckBox) findViewById(R.id.random_coloring_checkbox);
-        randomColoring.setChecked(trianglifyView.isFillTriangle());
-        randomColoring.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        randomColoringCheckbox = (CheckBox) findViewById(R.id.random_coloring_checkbox);
+        randomColoringCheckbox.setChecked(trianglifyView.isFillTriangle());
+        randomColoringCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 trianglifyView.setRandomColoring(isChecked);
@@ -142,6 +150,36 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    public void updateUIElements(TrianglifyView trianglifyView){
+        fillCheckBox.setChecked(trianglifyView.isFillTriangle());
+        strokeCheckBox.setChecked(trianglifyView.isDrawStrokeEnabled());
+        randomColoringCheckbox.setChecked(trianglifyView.isRandomColoringEnabled());
+
+        varianceSeekBar.setProgress(trianglifyView.getVariance());
+        cellSizeSeekBar.setProgress(trianglifyView.getCellSize());
+        paletteSeekBar.setProgress(Palette.indexOf(trianglifyView.getPalette()));
+    }
+
+    public void randomizeTrianglifyParameters(TrianglifyView trianglifyView){
+        Random rnd = new Random(System.currentTimeMillis());
+        trianglifyView.setCellSize(dpToPx(rnd.nextInt(10) + 35))
+                .setPalette(Palette.values()[rnd.nextInt(10)])
+                .setRandomColoring(rnd.nextInt(2) == 0)
+                .setFillTriangle(rnd.nextInt(2) == 0)
+                .setVariance(rnd.nextInt(60));
+        updateUIElements(trianglifyView);
+    }
+
+    public int dpToPx(int dp) {
+        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+        return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+    }
+
+    public int pxToDp(int px) {
+        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+        return Math.round(px / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -152,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             // action with ID action_refresh was selected
             case R.id.action_refresh:
+                randomizeTrianglifyParameters(trianglifyView);
                 trianglifyView.invalidate();
                 break;
             default:

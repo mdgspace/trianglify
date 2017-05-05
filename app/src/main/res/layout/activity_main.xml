@@ -82,14 +82,14 @@
         android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cellSize="20dp"
+        app:cellSize="30dp"
         app:variance="5dp"
         app:bleedX="50dp"
         app:bleedY="50dp"
         app:gridType="rectangle"
         app:palette="Oranges"
-        app:fillStrokes="true"
+        app:fillStrokes="false"
         app:fillTriangle="true"
-
+        app:randomColoring="false"
         />
 </RelativeLayout>
