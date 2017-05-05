@@ -1,5 +1,6 @@
 package com.sdsmdg.kd.trianglifyexample;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -146,8 +147,8 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // action with ID action_about was selected
             case R.id.action_about:
-                Toast.makeText(this, "SDS, MDG", Toast.LENGTH_SHORT)
-                        .show();
+                Intent aboutActivityIntent = new Intent(this, AboutActivity.class);
+                startActivity(aboutActivityIntent);
                 break;
             // action with ID action_refresh was selected
             case R.id.action_refresh:
