@@ -27,12 +27,12 @@ TrianglifyView should be invalidated on change of any of the parameter for chang
 ### 1.1 Java
 
 Import Statements
-```
+```java
 import com.sdsmdg.kd.trianglify.views.TrianglifyView;
 import com.sdsmdg.kd.trianglify.models.Palette;
 ```
 Code for using TrianglifyView  
-```
+```java
 a = (TrianglifyView) findViewById(R.id.trianglify_main_view); 
 trianglifyView.setGridWidth(trianglifyView.getWidth())
             .setGridHeight(trianglifyView.getHeight())
@@ -45,7 +45,7 @@ trianglifyView.setGridWidth(trianglifyView.getWidth())
             .setDrawStrokeEnabled(false);
 ```
 ### 1.2 XML
-```
+```xml
 <com.sdsmdg.kd.trianglify.views.TrianglifyView
     android:id="@+id/trianglify_main_view"
     app:cellSize="20dp"
@@ -91,7 +91,7 @@ Few notes on performance of Trianglify
 * Performance of coloring is faster on the use of random coloring rather than gradient.
 
 ## 4. Known issues and bugs
-- [ ] Palette descriptions doesn't matches description.  
+- [ ] color pattern rendered for a given palette does not match description.  
 - [ ] View re-generates complete triangulation even when not required.
 
 ## 5. UML diagrams
