@@ -83,6 +83,16 @@ public enum Palette {
         return c1;
     }
 
+    public static int indexOf(Palette palette){
+        int pos = -1;
+        for (int i = 0; i < Palette.values().length; i++){
+            if (Palette.values()[i] == palette) {
+                pos = i;
+            }
+        }
+        return  pos;
+    }
+
     public static void main(String[] args) {
         if (args.length != 1) {
             System.err.println("Usage: java Palette <colors>");

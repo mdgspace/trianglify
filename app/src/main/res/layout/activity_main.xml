@@ -5,87 +5,91 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:background="#D3D3D3"
     tools:context="com.sdsmdg.kd.trianglifyexample.MainActivity">
-    <TextView
-        android:id="@+id/variance_textview"
-        android:layout_width="wrap_content"
-        android:text="Variance: "
-        android:layout_height="wrap_content" />
-    <SeekBar
-        android:id="@+id/variance_seekbar"
-        android:layout_toRightOf="@id/variance_textview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/cell_size_textview"
-        android:layout_below="@id/variance_textview"
-        android:layout_width="wrap_content"
-        android:text="Cell Size: "
-        android:layout_height="wrap_content" />
-    <SeekBar
-        android:id="@+id/cell_size_seekbar"
-        android:layout_toRightOf="@id/cell_size_textview"
-        android:layout_below="@+id/variance_seekbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/palette_textview"
-        android:layout_below="@id/cell_size_textview"
-        android:layout_width="wrap_content"
-        android:text="Palette: "
-        android:layout_height="wrap_content" />
-    <SeekBar
-        android:id="@+id/palette_seekbar"
-        android:layout_toRightOf="@id/palette_textview"
-        android:layout_below="@+id/cell_size_textview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <CheckBox
-        android:id="@+id/random_coloring_checkbox"
-        android:layout_below="@+id/palette_seekbar"
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:text="Random Coloring"
-        />
-    <CheckBox
-        android:id="@+id/draw_stroke_checkbox"
-        android:layout_below="@+id/random_coloring_checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:text="Draw storkes"
-        />
-    <CheckBox
-        android:id="@+id/draw_fill_checkbox"
-        android:layout_below="@+id/draw_stroke_checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:text="Fill Triangles"
-        />
+        android:elevation="10dp"
+        android:background="#A0FFFFFF"
+        android:layout_margin="8dp"
+
+        android:padding="16dp">
+        <TextView
+            android:id="@+id/variance_textview"
+            android:layout_width="wrap_content"
+            android:text="Variance: "
+            android:layout_height="wrap_content" />
+        <SeekBar
+            android:id="@+id/variance_seekbar"
+            android:layout_toRightOf="@id/variance_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/cell_size_textview"
+            android:layout_below="@id/variance_textview"
+            android:layout_width="wrap_content"
+            android:text="Cell Size: "
+            android:layout_height="wrap_content" />
+        <SeekBar
+            android:id="@+id/cell_size_seekbar"
+            android:layout_toRightOf="@id/cell_size_textview"
+            android:layout_below="@+id/variance_seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/palette_textview"
+            android:layout_below="@id/cell_size_textview"
+            android:layout_width="wrap_content"
+            android:text="Palette: "
+            android:layout_height="wrap_content" />
+        <SeekBar
+            android:id="@+id/palette_seekbar"
+            android:layout_toRightOf="@id/palette_textview"
+            android:layout_below="@+id/cell_size_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <CheckBox
+            android:id="@+id/random_coloring_checkbox"
+            android:layout_below="@+id/palette_seekbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="Random Coloring"
+            />
+        <CheckBox
+            android:id="@+id/draw_stroke_checkbox"
+            android:layout_below="@+id/random_coloring_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="Draw storkes"
+            />
+        <CheckBox
+            android:id="@+id/draw_fill_checkbox"
+            android:layout_below="@+id/draw_stroke_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="Fill Triangles"
+            />
+
+    </RelativeLayout>
 
     <com.sdsmdg.kd.trianglify.views.TrianglifyView
         android:id="@+id/trianglify_main_view"
-        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/draw_fill_checkbox"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cellSize="20dp"
+        app:cellSize="30dp"
         app:variance="5dp"
         app:bleedX="50dp"
         app:bleedY="50dp"
         app:gridType="rectangle"
         app:palette="Oranges"
-        app:fillStrokes="true"
+        app:fillStrokes="false"
         app:fillTriangle="true"
-
-        android:clipChildren="true"
+        app:randomColoring="false"
         />
 </RelativeLayout>

@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">trianglifyexample</string>
+    <string name="app_name">Trianglify Demo</string>
+
+
+    <!-- About Fragment strings -->
+    <string name="mdg_description">An Active students group at IIT Roorkee directed towards developing useful applications</string>
+    <string name="share_application_text">Check out trianglify a library to generate beautiful view for Android. Link: </string>
+    <string name="trianglify_store_short_link">http://bit.ly/musicDnaApp</string>
+    <string name="license_text">Trianglify library and related material are distributed under \'MIT license\' a copy of which can be obtained from link provided.</string>
+    <string name="license_link">https://github.com/sdsmdg/trianglify/blob/develop/LICENSE.md</string>
 </resources>
