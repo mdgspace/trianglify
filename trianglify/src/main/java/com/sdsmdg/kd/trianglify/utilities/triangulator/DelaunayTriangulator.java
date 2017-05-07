@@ -31,8 +31,8 @@ public class DelaunayTriangulator {
     /**
      * This method generates a Delaunay triangulation from the specified point
      * set.
-     * 
-     * @throws NotEnoughPointsException
+     *
+     * @throws com.sdsmdg.kd.trianglify.utilities.triangulator.NotEnoughPointsException
      */
     public void triangulate() throws NotEnoughPointsException {
         triangleSoup = new TriangleSoup();

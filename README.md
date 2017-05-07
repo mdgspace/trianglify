@@ -7,11 +7,16 @@
 Trianglify is an Android library that helps creates views with beautiful patterns. Trianglify is based on MVP architecture and licensed under MIT license
 
 # Usages
-> This library is under construction, for usage please check back later.  
 
-TrianglifyView should be invalidated on change of any of the parameter for changes to take effect.  
-**Note:** If any of the parameters is changed `TrianglifyView` regenerates every thing from scratch
+Include following line in the gradle script of your application to include latest release of Trianglify:
+```gradle
+compile 'com.sdsmdg.kd:trianglify:0.7-beta'
+```
 
+# Releases
+## [Version 0.7.0-beta](https://bintray.com/suyashmahar/trianglify/trianglify/0.7-beta)
+Google Play Store link for demo app | [link](https://suyashmahar.me/404)
+* Added library to jCenter | [Link](https://bintray.com/suyashmahar/trianglify/trianglify/)
 # Documentation
 1. [Example Usages](#1-example-usages)
     1. [Java](#11-java)
@@ -57,6 +62,13 @@ trianglifyView.setGridWidth(trianglifyView.getWidth())
     app:fillStrokes="true"
     app:fillTriangle="true" />
 ```
+
+
+
+> TrianglifyView should be invalidated on change of any of the parameter for changes to take effect.  
+**Note:** If any of the parameters is changed `TrianglifyView` regenerates every thing from scratch
+
+
 ## 2. API Documentation
 ### 2.1 Attributes
 | Property                    | Default values | Java method             | Attribute       | Description                                                                                                                   |
