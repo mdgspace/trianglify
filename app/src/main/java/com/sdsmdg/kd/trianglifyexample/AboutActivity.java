@@ -73,7 +73,12 @@ public class AboutActivity extends AppCompatActivity {
         backBtn = (ImageView) this.findViewById(R.id.about_back_btn);
         fragTitle = (TextView) this.findViewById(R.id.about_title);
 
-
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         versiontTextView.setText("Version " + versionName);
         openSourceLicense.setOnClickListener(new View.OnClickListener() {
             @Override

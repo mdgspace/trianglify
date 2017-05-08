@@ -15,7 +15,7 @@
         android:orderInCategory="100"
         app:showAsAction="always"
         android:icon="@drawable/ic_about_icon"
-        android:title="Refresh"/>
+        android:title="About"/>
 
 </menu>
 

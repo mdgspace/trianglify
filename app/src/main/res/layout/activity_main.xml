@@ -57,6 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:text="Random Coloring"
+            android:checked="false"
             />
         <CheckBox
             android:id="@+id/draw_stroke_checkbox"
@@ -64,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:text="Draw storkes"
+            android:text="Draw strokes"
             />
         <CheckBox
             android:id="@+id/draw_fill_checkbox"

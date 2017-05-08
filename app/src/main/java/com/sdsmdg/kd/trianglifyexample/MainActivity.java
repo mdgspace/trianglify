@@ -24,12 +24,6 @@ import java.util.Random;
 import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity {
-    Palette palettes[] = {Palette.YlGn, Palette.YlGnBu, Palette.GnBu, Palette.BuGn, Palette.PuBuGn,
-            Palette.PuBu, Palette.BuPu, Palette.RdPu, Palette.PuRd, Palette.OrRd, Palette.YlOrRd,
-            Palette.YlOrBr, Palette.Purples, Palette.Blues, Palette.Greens, Palette.Oranges,
-            Palette.Reds, Palette.Greys, Palette.PuOr, Palette.BrBG, Palette.PRGn, Palette.PiYG,
-            Palette.RdBu, Palette.RdGy, Palette.RdYlBu, Palette.Spectral, Palette.RdYlGn, Palette.Yl};
-
     public TrianglifyView trianglifyView;
     private SeekBar varianceSeekBar;
     private SeekBar cellSizeSeekBar;
@@ -46,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
         trianglifyView = (TrianglifyView) findViewById(R.id.trianglify_main_view);
 
         trianglifyView.setGridWidth(trianglifyView.getWidth())
-                .setGridHeight(trianglifyView.getHeight());
+                .setGridHeight(trianglifyView.getHeight())
+                .setRandomColoring(false);
 
         varianceSeekBar = (SeekBar) findViewById(R.id.variance_seekbar);
         varianceSeekBar.setMax(100);
@@ -92,12 +87,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         paletteSeekBar = (SeekBar) findViewById(R.id.palette_seekbar);
-        paletteSeekBar.setMax(palettes.length-1);
+        paletteSeekBar.setMax(Palette.values().length-1);
         paletteSeekBar.setProgress(1);
         paletteSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                trianglifyView.setPalette(palettes[progress]);
+                trianglifyView.setPalette(Palette.values()[progress]);
                 trianglifyView.invalidate();
             }
 
@@ -133,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         randomColoringCheckbox = (CheckBox) findViewById(R.id.random_coloring_checkbox);
-        randomColoringCheckbox.setChecked(trianglifyView.isFillTriangle());
+        randomColoringCheckbox.setChecked(trianglifyView.isRandomColoringEnabled());
         randomColoringCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -163,7 +158,8 @@ public class MainActivity extends AppCompatActivity {
     public void randomizeTrianglifyParameters(TrianglifyView trianglifyView){
         Random rnd = new Random(System.currentTimeMillis());
         trianglifyView.setCellSize(dpToPx(rnd.nextInt(10) + 35))
-                .setPalette(Palette.values()[rnd.nextInt(10)])
+//                .setPalette(Palette.values()[rnd.nextInt(10)])
+                .setPalette(Palette.Spectral)
                 .setRandomColoring(rnd.nextInt(2) == 0)
                 .setFillTriangle(rnd.nextInt(2) == 0)
                 .setVariance(rnd.nextInt(60));
@@ -198,5 +194,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    public void checkForColoringError(TrianglifyView trianglifyView) {
+        if (!(trianglifyView.isFillTriangle() | trianglifyView.isDrawStrokeEnabled())) {
+            Toast.makeText(this, "view should atleast be set to draw strokes or fill triangles or both.", Toast.LENGTH_LONG).show();
+        }
     }
 }
