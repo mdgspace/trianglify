@@ -158,8 +158,7 @@ public class MainActivity extends AppCompatActivity {
     public void randomizeTrianglifyParameters(TrianglifyView trianglifyView){
         Random rnd = new Random(System.currentTimeMillis());
         trianglifyView.setCellSize(dpToPx(rnd.nextInt(10) + 35))
-//                .setPalette(Palette.values()[rnd.nextInt(10)])
-                .setPalette(Palette.Spectral)
+                .setPalette(Palette.values()[rnd.nextInt(10)])
                 .setRandomColoring(rnd.nextInt(2) == 0)
                 .setFillTriangle(rnd.nextInt(2) == 0)
                 .setVariance(rnd.nextInt(60));

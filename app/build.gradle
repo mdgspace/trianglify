@@ -5,10 +5,10 @@ android {
     buildToolsVersion "25.0.1"
     defaultConfig {
         applicationId "com.sdsmdg.kd.trianglifyexample"
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode 0
+        versionName "0.7-beta"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -29,7 +29,6 @@ dependencies {
     })
 
     //----Testing frameworks
-    
 
     compile project(':trianglify')
 
