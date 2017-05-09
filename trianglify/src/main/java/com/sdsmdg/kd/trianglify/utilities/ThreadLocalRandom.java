@@ -10,10 +10,14 @@ package com.sdsmdg.kd.trianglify.utilities;
  */
 
 public class ThreadLocalRandom {
-    long seed = 0x5DEECE66DL;
+    private long seed = 0x5DEECE66DL;
 
     public ThreadLocalRandom(){
 
+    }
+
+    public ThreadLocalRandom(long seed){
+        this.seed = seed;
     }
 
     /**

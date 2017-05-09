@@ -12,7 +12,7 @@ import com.sdsmdg.kd.trianglify.utilities.ThreadLocalRandom;
  */
 
 public class Rectangle implements Patterns {
-    private final ThreadLocalRandom random = new ThreadLocalRandom();
+    private final ThreadLocalRandom random;
     private int bleedX = 0;
     private int bleedY = 0;
 
@@ -33,6 +33,8 @@ public class Rectangle implements Patterns {
 
         this.height = height;
         this.width = width;
+
+        random = new ThreadLocalRandom();
 
         grid = new ArrayList<>();
     }

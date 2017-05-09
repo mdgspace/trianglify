@@ -57,7 +57,7 @@ public class FixedPointsColorizer implements Colorizer {
     public FixedPointsColorizer(Triangulation triangulation, Palette colorPalette,
                                 int gridHeight, int gridWidth, Boolean randomColoring) {
         this.randomColoring = randomColoring;
-        random = new ThreadLocalRandom();
+        random = new ThreadLocalRandom(System.currentTimeMillis());
         this.triangulation = triangulation;
         this.colorPalette = colorPalette;
         this.gridHeight = gridHeight;
