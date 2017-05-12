@@ -27,7 +27,7 @@ If you've got an idea for a change then please discuss it in the open first,
 either by opening an issue, or by joining us in our
 [MDG public chat room](https://mdg.sdslabs.co/chat).
 
-If you're looking for something to work on, have a look at the open issues in the repository [here](https://github.com/sdsmdg/trianglify/issues).
+If you're looking for something to work on  , have a look at the open issues in the repository [here](https://github.com/sdsmdg/trianglify/issues).
 
 MDG Chat Room
 -------------------
