@@ -1,11 +1,11 @@
 
-<div style="text-align:center"><img src="resources/trianglify-logo-180.png" data-canonical-src="trianglify-logo-180.png" width="154" height="154" /></div>
+<div align="center"><img src="resources/trianglify-logo-180.png" data-canonical-src="trianglify-logo-180.png" width="154" height="154" /></div>
 
 # Trianglify
 
 <!--[![Build Status](https://travis-ci.com/sdsmdg/trianglify.svg?token=tRURwj39jsSs5JWUTxs6&branch=develop)](https://travis-ci.com/sdsmdg/trianglify)-->
 [![platform](https://img.shields.io/badge/platform-Android-yellow.svg)](https://www.android.com)
-[![API](https://img.shields.io/badge/API-19%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=19)
+[![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16s)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![by-SDS-MDG](https://img.shields.io/badge/by-SDS%2C%20MDG-blue.svg)](https://mdg.sdslabs.co)
 
@@ -35,6 +35,8 @@ Google Play Store link for demo app | [link](https://suyashmahar.me/404)
 3. [Performance analysis](#3-performance-analysis)
 4. [Known issues and bugs](#4-known-issues-and-bugs)
 5. [UML Diagrams](#5-uml-diagrams)
+6. [Credits](#6-credits)
+7. [Contributing](#7-contributing)
 
 ## 1. Example Usages
 ### 1.1 Java
@@ -142,6 +144,13 @@ Few notes on performance of Trianglify
 Complete UML diagram for the project structures are available as Draw.io link hosted in google drive 
 | [Link](https://www.draw.io/?state=%7B%22ids%22:%5B%220Bz_2jvdEtUlrWlB0LXJvRnBQZ0U%22%5D,%22action%22:%22open%22,%22userId%22:%22109172653085429225560%22%7D)  
 *(Note that you'll require a google account to access the file, if this is your first time then choose `open with Draw.io` option on top of the browser window. Then scroll to the center of the document to view diagrams)*
+
+## 6. Credits
+Development of Trianglify wouldn't have been possible without following libraries:
+* [Delaunay Triangulator by jdiemke](https://github.com/jdiemke/delaunay-triangulator)
+
+## 7. Contributing
+Please see the [CONTRIBUTING](/CONTRIBUTING.md) file for information on contributing to the development of Trianglify.
 
 # License
 Trianglify is licensed under `MIT license`. View [license](LICENSE.md).
