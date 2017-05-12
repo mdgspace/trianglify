@@ -27,7 +27,7 @@ If you've got an idea for a change then please discuss it in the open first,
 either by opening an issue, or by joining us in our
 [MDG public chat room](https://mdg.sdslabs.co/chat).
 
-If you're looking for something to work on  , have a look at the open issues in the repository [here](https://github.com/sdsmdg/trianglify/issues).
+If you're looking for something to work on, have a look at the open issues in the repository [here](https://github.com/sdsmdg/trianglify/issues).
 
 MDG Chat Room
 -------------------
@@ -43,5 +43,4 @@ Security
 Please do not publish security vulnerabilities publicly until we've had a chance
 to address them. All security related issues/patches should be sent directly to
 [sdsmobilelabs@gmail.com](mailto:sdsmobilelabs@gmail.com) where we will attempt to address them quickly. If you're
-unsure whether something is a security issue or not, then please be cautious and
-contact us at [sdsmobilelabs@gmail.com](mailto:sdsmobilelabs@gmail.com) first.
+unsure whether something is a security issue or not, then please be cautious and contact us at [sdsmobilelabs@gmail.com](mailto:sdsmobilelabs@gmail.com) first.
