@@ -1,5 +1,8 @@
-
-<div align="center"><img src="resources/trianglify-logo-180.png" data-canonical-src="trianglify-logo-180.png" width="154" height="154" /></div>
+<br> 
+<br> 
+<div align="center"><img src="resources/trianglify-logo-with-text-close-fit.png" data-canonical-src="trianglify-logo-180.png" width="154" height="154" /></div>
+<br> 
+<br> 
 
 # Trianglify
 
