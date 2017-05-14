@@ -88,7 +88,7 @@
         app:bleedX="50dp"
         app:bleedY="50dp"
         app:gridType="rectangle"
-        app:palette="Oranges"
+        app:palette="RdBu"
         app:fillStrokes="true"
         app:fillTriangle="true"
         app:randomColoring="false"
