@@ -33,7 +33,6 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     Triangulation triangulation;
     Presenter presenter;
-    TriangleGeneratorTask generatorTask;
 
     public TrianglifyView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -162,9 +161,9 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         return triangulation;
     }
 
-    public void setTriangulation(Triangulation triangulation) {
+    public TrianglifyView setTriangulation(Triangulation triangulation) {
         this.triangulation = triangulation;
-        invalidate();
+        return this;
     }
 
     @Override
@@ -209,8 +208,11 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
             generateAndInvalidate();
         }
     }
+    public void generateAndInvalidate(){
+        presenter.generateSoupAndInvalidateView();
+    }
 
-
+/*
     void generateAndPlot(Canvas canvas) {
         generate();
         plotOnCanvas(canvas);
@@ -218,15 +220,8 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     void generate() {
         this.triangulation = presenter.getSoup();
-    }
+    }*/
 
-    public void generateAndInvalidate() {
-        if(generatorTask!=null)
-            generatorTask.cancel(true);
-        generatorTask = null;
-        generatorTask = new TriangleGeneratorTask();
-        generatorTask.execute(this);
-    }
     void plotOnCanvas(Canvas canvas) {
         for (int i = 0; i < triangulation.getTriangleList().size(); i++){
             drawTriangle(canvas, triangulation.getTriangleList().get(i));
@@ -272,18 +267,5 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         path.close();
 
         canvas.drawPath(path, paint);
-    }
-    class TriangleGeneratorTask extends AsyncTask<TrianglifyView,Void,Triangulation> {
-
-        @Override
-        protected Triangulation doInBackground(TrianglifyView... params) {
-            return params[0].presenter.getSoup();
-        }
-
-        @Override
-        protected void onPostExecute(Triangulation triangulation) {
-            super.onPostExecute(triangulation);
-            setTriangulation(triangulation);
-        }
     }
 }

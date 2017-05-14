@@ -183,11 +183,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
     public void checkForColoringError(TrianglifyView trianglifyView) {
         if (!(trianglifyView.isFillTriangle() | trianglifyView.isDrawStrokeEnabled())) {
             Toast.makeText(this, "view should atleast be set to draw strokes or fill triangles or both.", Toast.LENGTH_LONG).show();

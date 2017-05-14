@@ -1,6 +1,8 @@
 package com.sdsmdg.kd.trianglify.presenters;
 
 
+import android.os.AsyncTask;
+
 import com.sdsmdg.kd.trianglify.utilities.triangulator.DelaunayTriangulator;
 import com.sdsmdg.kd.trianglify.models.Triangulation;
 import com.sdsmdg.kd.trianglify.utilities.triangulator.NotEnoughPointsException;
@@ -10,6 +12,7 @@ import com.sdsmdg.kd.trianglify.utilities.patterns.Patterns;
 import com.sdsmdg.kd.trianglify.utilities.patterns.Rectangle;
 import com.sdsmdg.kd.trianglify.utilities.colorizers.Colorizer;
 import com.sdsmdg.kd.trianglify.utilities.colorizers.FixedPointsColorizer;
+import com.sdsmdg.kd.trianglify.views.TrianglifyView;
 import com.sdsmdg.kd.trianglify.views.TrianglifyViewInterface;
 
 import java.util.List;
@@ -28,6 +31,7 @@ import java.util.List;
 public class Presenter {
     TrianglifyViewInterface view;
     Triangulation triangulation;
+    TriangleGeneratorTask generatorTask;
 
     public Presenter(TrianglifyViewInterface view) {
         this.view = view;
@@ -107,5 +111,30 @@ public class Presenter {
 
     public void clearSoup() {
         triangulation = null;
+    }
+    public void generateSoupAndInvalidateView(){
+        if(generatorTask!=null) {
+            generatorTask.cancel(true);
+        }
+        generatorTask = new TriangleGeneratorTask();
+        generatorTask.execute();    }
+
+
+
+
+
+    class TriangleGeneratorTask extends AsyncTask<Void,Void,Triangulation> {
+
+        @Override
+        protected Triangulation doInBackground(Void... params) {
+            return getSoup();
+        }
+
+        @Override
+        protected void onPostExecute(Triangulation triangulation) {
+            super.onPostExecute(triangulation);
+            ((TrianglifyView)view).setTriangulation(triangulation);
+            ((TrianglifyView)view).invalidate();
+        }
     }
 }
