@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -161,6 +160,12 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         return triangulation;
     }
 
+    @Override
+    public void invalidateView(Triangulation triangulation) {
+        this.setTriangulation(triangulation);
+        invalidate();
+    }
+
     public TrianglifyView setTriangulation(Triangulation triangulation) {
         this.triangulation = triangulation;
         return this;
@@ -208,19 +213,10 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
             generateAndInvalidate();
         }
     }
+
     public void generateAndInvalidate(){
         presenter.generateSoupAndInvalidateView();
     }
-
-/*
-    void generateAndPlot(Canvas canvas) {
-        generate();
-        plotOnCanvas(canvas);
-    }
-
-    void generate() {
-        this.triangulation = presenter.getSoup();
-    }*/
 
     void plotOnCanvas(Canvas canvas) {
         for (int i = 0; i < triangulation.getTriangleList().size(); i++){

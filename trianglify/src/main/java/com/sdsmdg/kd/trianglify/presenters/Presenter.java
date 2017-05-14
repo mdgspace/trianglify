@@ -117,11 +117,8 @@ public class Presenter {
             generatorTask.cancel(true);
         }
         generatorTask = new TriangleGeneratorTask();
-        generatorTask.execute();    }
-
-
-
-
+        generatorTask.execute();
+    }
 
     class TriangleGeneratorTask extends AsyncTask<Void,Void,Triangulation> {
 
@@ -133,8 +130,7 @@ public class Presenter {
         @Override
         protected void onPostExecute(Triangulation triangulation) {
             super.onPostExecute(triangulation);
-            ((TrianglifyView)view).setTriangulation(triangulation);
-            ((TrianglifyView)view).invalidate();
+            view.invalidateView(triangulation);
         }
     }
 }
