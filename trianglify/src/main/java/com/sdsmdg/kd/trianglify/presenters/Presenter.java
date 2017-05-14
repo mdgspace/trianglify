@@ -65,8 +65,12 @@ public class Presenter {
      * Generates soup and returns triangulation
      * @return triangulation corresponding to current instance parameters
      */
-    public Triangulation getSoup() {
-        generateSoup();
+    public Triangulation getSoup(int justColor) {
+        if(justColor == 0){
+            generateSoup();
+        }else if(justColor == 1){
+            generateColoredSoup(triangulation);
+        }
         return triangulation;
     }
 

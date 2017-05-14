@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.sdsmdg.kd.trianglify.presenters.Presenter;
@@ -22,6 +23,15 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     int typeGrid;
     int variance;
     int cellSize;
+
+    /**
+     * flag for change in attributes
+     * if triangulation is unchanged then value is -1
+     * if change in grid width, grid height, variance, bleedX, bleedY, typeGrid or cell size then value is 1
+     * if change in palette or random coloring then value is 2
+     * if change in fillTriangle or drawStroke then value is 0
+     */
+    int flagForChangeInRelatedParameters = -1;
 
     boolean fillTriangle;
     boolean drawStroke;
@@ -79,6 +89,9 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setPalette(Palette palette) {
         this.palette = palette;
+        if(this.flagForChangeInRelatedParameters != 1){
+            this.flagForChangeInRelatedParameters = 2;
+        }
         return this;
     }
 
@@ -89,6 +102,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setCellSize(int cellSize) {
         this.cellSize = cellSize;
+        this.flagForChangeInRelatedParameters = 1;
         return this;
     }
 
@@ -99,6 +113,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setGridHeight(int gridHeight) {
         this.gridHeight = gridHeight;
+        this.flagForChangeInRelatedParameters = 1;
         return this;
     }
 
@@ -109,6 +124,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setGridWidth(int gridWidth) {
         this.gridWidth = gridWidth;
+        this.flagForChangeInRelatedParameters = 1;
         return this;
     }
 
@@ -119,6 +135,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setBleedX(int bleedX) {
         this.bleedX = bleedX;
+        this.flagForChangeInRelatedParameters = 1;
         return this;
     }
 
@@ -129,6 +146,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setBleedY(int bleedY) {
         this.bleedY = bleedY;
+        this.flagForChangeInRelatedParameters = 1;
         return this;
     }
 
@@ -138,7 +156,8 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     }
 
     public TrianglifyView setTypeGrid(int typeGrid) {
-        typeGrid = typeGrid;
+        this.typeGrid = typeGrid;
+        this.flagForChangeInRelatedParameters = 1;
         return this;
     }
 
@@ -149,6 +168,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setVariance(int variance) {
         this.variance = variance;
+        this.flagForChangeInRelatedParameters = 1;
         return this;
     }
 
@@ -178,6 +198,9 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setFillTriangle(boolean fillTriangle) {
         this.fillTriangle = fillTriangle;
+        if(this.flagForChangeInRelatedParameters != 1 && this.flagForChangeInRelatedParameters != 2){
+            this.flagForChangeInRelatedParameters = 0;
+        }
         return this;
     }
 
@@ -188,6 +211,9 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setDrawStrokeEnabled(boolean drawStroke) {
         this.drawStroke = drawStroke;
+        if(this.flagForChangeInRelatedParameters != 1 && this.flagForChangeInRelatedParameters != 2){
+            this.flagForChangeInRelatedParameters = 0;
+        }
         return this;
     }
 
@@ -198,13 +224,22 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setRandomColoring(boolean randomColoring) {
         this.randomColoring = randomColoring;
+        if(this.flagForChangeInRelatedParameters != 1){
+            this.flagForChangeInRelatedParameters = 2;
+        }
         return this;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        generateAndPlot(canvas);
+        if(flagForChangeInRelatedParameters == 0) {
+            plotOnCanvas(canvas);
+        }else if(flagForChangeInRelatedParameters == 2){
+            generateNewColoredSoupAndPlot(canvas);
+        }else if(flagForChangeInRelatedParameters == 1){
+            generateAndPlot(canvas);
+        }
     }
 
     void generateAndPlot(Canvas canvas) {
@@ -212,8 +247,19 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         plotOnCanvas(canvas);
     }
 
+    void generateNewColoredSoupAndPlot(Canvas canvas){
+        generateColoredSoup();
+        plotOnCanvas(canvas);
+    }
+
     void generate() {
-        this.triangulation = presenter.getSoup();
+        this.triangulation = presenter.getSoup(0);
+        this.flagForChangeInRelatedParameters = -1;
+    }
+
+    void generateColoredSoup(){
+        this.triangulation = presenter.getSoup(1);
+        this.flagForChangeInRelatedParameters = -1;
     }
 
     void plotOnCanvas(Canvas canvas) {
