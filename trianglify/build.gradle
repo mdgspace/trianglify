@@ -3,7 +3,7 @@ apply plugin: 'com.android.library'
 ext {
 
     bintrayRepo = 'trianglify'
-    bintrayName = 'trianglify'   // Has to be same as your library module name
+    bintrayName = 'trianglify'   // Has to be same as library module name
 
     PUBLISH_GROUP_ID = 'com.sdsmdg.kd'
     PUBLISH_ARTIFACT_ID = 'trianglify'
@@ -11,7 +11,7 @@ ext {
 
     publishedGroupId = 'com.sdsmdg.kd'
     libraryName = 'trianglify'
-    artifact = 'trianglify'     // Has to be same as your library module name
+    artifact = 'trianglify'     // Has to be same as library module name
 
     siteUrl = 'https://github.com/sdsmdg/trianglify'
     gitUrl = 'https://github.com/sdsmdg/trianglify.git'

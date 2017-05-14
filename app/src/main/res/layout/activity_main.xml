@@ -89,7 +89,7 @@
         app:bleedY="50dp"
         app:gridType="rectangle"
         app:palette="Oranges"
-        app:fillStrokes="false"
+        app:fillStrokes="true"
         app:fillTriangle="true"
         app:randomColoring="false"
         />
