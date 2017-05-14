@@ -14,13 +14,13 @@
         android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cellSize="40dp"
+        app:cellSize="50dp"
         app:variance="5dp"
         app:bleedX="50dp"
         app:bleedY="50dp"
         app:gridType="rectangle"
-        app:palette="RdYlGn"
-        app:fillStrokes="false"
+        app:palette="PuBu"
+        app:fillStrokes="true"
         app:fillTriangle="true"
         />
     <RelativeLayout

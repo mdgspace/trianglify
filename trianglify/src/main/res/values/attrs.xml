@@ -13,34 +13,34 @@
         <attr name="fillStrokes" format="boolean"/>
         <attr name="randomColoring" format="boolean"/>
         <attr name="palette" format="enum">
-            <enum name="YlGn" value="0"/>
-            <enum name="YlGnBu" value="1"/>
-            <enum name="GnBu" value="2"/>
-            <enum name="BuGn" value="3"/>
-            <enum name="PuBuGn" value="4"/>
-            <enum name="PuBu" value="5"/>
-            <enum name="BuPu" value="6"/>
-            <enum name="RdPu" value="7"/>
-            <enum name="PuRd" value="8"/>
-            <enum name="OrRd" value="9"/>
-            <enum name="YlOrRd" value="10"/>
-            <enum name="YlOrBr" value="11"/>
-            <enum name="Purples" value="12"/>
-            <enum name="Blues" value="13"/>
-            <enum name="Greens" value="14"/>
-            <enum name="Oranges" value="15"/>
-            <enum name="Reds" value="16"/>
-            <enum name="Greys" value="17"/>
-            <enum name="PuOr" value="18"/>
-            <enum name="BrBG" value="19"/>
-            <enum name="PRGn" value="20"/>
-            <enum name="PiYG" value="21"/>
-            <enum name="RdBu" value="22"/>
-            <enum name="RdGy" value="23"/>
-            <enum name="RdYlBu" value="24"/>
-            <enum name="Spectral" value="25"/>
-            <enum name="RdYlGn" value="26"/>
-            <enum name="YL" value="27"/>
+            <enum name="Yl" value="0"/>
+            <enum name="YlGn" value="1"/>
+            <enum name="YlGnBu" value="2"/>
+            <enum name="GnBu" value="3"/>
+            <enum name="BuGn" value="4"/>
+            <enum name="PuBuGn" value="5"/>
+            <enum name="PuBu" value="6"/>
+            <enum name="BuPu" value="7"/>
+            <enum name="RdPu" value="8"/>
+            <enum name="PuRd" value="9"/>
+            <enum name="OrRd" value="10"/>
+            <enum name="YlOrRd" value="11"/>
+            <enum name="YlOrBr" value="12"/>
+            <enum name="Purples" value="13"/>
+            <enum name="Blues" value="14"/>
+            <enum name="Greens" value="15"/>
+            <enum name="Oranges" value="16"/>
+            <enum name="Reds" value="17"/>
+            <enum name="Greys" value="18"/>
+            <enum name="PuOr" value="19"/>
+            <enum name="BrBG" value="20"/>
+            <enum name="PRGn" value="21"/>
+            <enum name="PiYG" value="22"/>
+            <enum name="RdBu" value="23"/>
+            <enum name="RdGy" value="24"/>
+            <enum name="RdYlBu" value="25"/>
+            <enum name="Spectral" value="26"/>
+            <enum name="RdYlGn" value="27"/>
         </attr>
     </declare-styleable>
 </resources>

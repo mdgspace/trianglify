@@ -29,11 +29,6 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     int paletteNumber;
 
-    Palette palettesArray[] = {Palette.YlGn, Palette.YlGnBu, Palette.GnBu, Palette.BuGn, Palette.PuBuGn,
-            Palette.PuBu, Palette.BuPu, Palette.RdPu, Palette.PuRd, Palette.OrRd, Palette.YlOrRd,
-            Palette.YlOrBr, Palette.Purples, Palette.Blues, Palette.Greens, Palette.Oranges,
-            Palette.Reds, Palette.Greys, Palette.PuOr, Palette.BrBG, Palette.PRGn, Palette.PiYG,
-                Palette.RdBu, Palette.RdGy, Palette.RdYlBu, Palette.Spectral, Palette.RdYlGn};
     Palette palette;
 
     Triangulation triangulation;
@@ -64,7 +59,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
             fillTriangle = typedArray.getBoolean(R.styleable.TrianglifyView_fillTriangle, true);
             drawStroke = typedArray.getBoolean(R.styleable.TrianglifyView_fillStrokes, false);
             paletteNumber = typedArray.getInt(R.styleable.TrianglifyView_palette, 0);
-            palette = palettesArray[paletteNumber];
+            palette = Palette.values()[paletteNumber];
             typeGrid = GRID_RECTANGLE;
             randomColoring = typedArray.getBoolean(R.styleable.TrianglifyView_randomColoring, false);
         }finally {
@@ -231,12 +226,12 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         int color = triangle2D.getColor();
 
+
         /*
-         * Right shifts number by 8 bits (2 hex for alpha) since color received in triangle2D
-         * is without alpha channel.
+         * Add 0xff000000 for alpha channel required by android.graphics.Color
          */
-        color <<= 8;
-        color += 255;
+
+        color += 0xff000000;
 
         paint.setColor(color);
         paint.setStrokeWidth(4);
