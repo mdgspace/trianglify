@@ -112,8 +112,14 @@ public class MainActivity extends AppCompatActivity {
         strokeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                trianglifyView.setDrawStrokeEnabled(isChecked);
-                trianglifyView.invalidate();
+                if(isChecked || trianglifyView.isFillTriangle()){
+                    trianglifyView.setDrawStrokeEnabled(isChecked);
+                    strokeCheckBox.setChecked(isChecked);
+                    trianglifyView.invalidate();
+                }else{
+                    strokeCheckBox.setChecked(!isChecked);
+                    showColoringError();
+                }
             }
         });
 
@@ -122,8 +128,14 @@ public class MainActivity extends AppCompatActivity {
         fillCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                trianglifyView.setFillTriangle(isChecked);
-                trianglifyView.invalidate();
+                if(isChecked || trianglifyView.isDrawStrokeEnabled()){
+                    trianglifyView.setFillTriangle(isChecked);
+                    fillCheckBox.setChecked(isChecked);
+                    trianglifyView.invalidate();
+                }else{
+                    fillCheckBox.setChecked(!isChecked);
+                    showColoringError();
+                }
             }
         });
 
@@ -161,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
                 .setPalette(Palette.values()[rnd.nextInt(10)])
                 .setRandomColoring(rnd.nextInt(2) == 0)
                 .setFillTriangle(rnd.nextInt(2) == 0)
+                .setDrawStrokeEnabled(rnd.nextInt(2) == 0)
                 .setVariance(rnd.nextInt(60));
         updateUIElements(trianglifyView);
     }
@@ -195,9 +208,8 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public void checkForColoringError(TrianglifyView trianglifyView) {
-        if (!(trianglifyView.isFillTriangle() | trianglifyView.isDrawStrokeEnabled())) {
+    public void showColoringError() {
             Toast.makeText(this, "view should atleast be set to draw strokes or fill triangles or both.", Toast.LENGTH_LONG).show();
-        }
+
     }
 }
