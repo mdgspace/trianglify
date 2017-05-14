@@ -29,11 +29,6 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     int paletteNumber;
 
-    Palette palettesArray[] = {Palette.YlGn, Palette.YlGnBu, Palette.GnBu, Palette.BuGn, Palette.PuBuGn,
-            Palette.PuBu, Palette.BuPu, Palette.RdPu, Palette.PuRd, Palette.OrRd, Palette.YlOrRd,
-            Palette.YlOrBr, Palette.Purples, Palette.Blues, Palette.Greens, Palette.Oranges,
-            Palette.Reds, Palette.Greys, Palette.PuOr, Palette.BrBG, Palette.PRGn, Palette.PiYG,
-                Palette.RdBu, Palette.RdGy, Palette.RdYlBu, Palette.Spectral, Palette.RdYlGn};
     Palette palette;
 
     Triangulation triangulation;
@@ -64,7 +59,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
             fillTriangle = typedArray.getBoolean(R.styleable.TrianglifyView_fillTriangle, true);
             drawStroke = typedArray.getBoolean(R.styleable.TrianglifyView_fillStrokes, false);
             paletteNumber = typedArray.getInt(R.styleable.TrianglifyView_palette, 0);
-            palette = palettesArray[paletteNumber-1];
+            palette = Palette.values()[paletteNumber];
             typeGrid = GRID_RECTANGLE;
             randomColoring = typedArray.getBoolean(R.styleable.TrianglifyView_randomColoring, false);
         }finally {
