@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -28,16 +29,11 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     boolean randomColoring;
 
     int paletteNumber;
-
-    Palette palettesArray[] = {Palette.YlGn, Palette.YlGnBu, Palette.GnBu, Palette.BuGn, Palette.PuBuGn,
-            Palette.PuBu, Palette.BuPu, Palette.RdPu, Palette.PuRd, Palette.OrRd, Palette.YlOrRd,
-            Palette.YlOrBr, Palette.Purples, Palette.Blues, Palette.Greens, Palette.Oranges,
-            Palette.Reds, Palette.Greys, Palette.PuOr, Palette.BrBG, Palette.PRGn, Palette.PiYG,
-                Palette.RdBu, Palette.RdGy, Palette.RdYlBu, Palette.Spectral, Palette.RdYlGn};
     Palette palette;
 
     Triangulation triangulation;
     Presenter presenter;
+    TriangleGeneratorTask generatorTask;
 
     public TrianglifyView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -49,7 +45,6 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     @Override
     protected void onSizeChanged(int width, int height, int oldWidth, int oldHeight) {
         super.onSizeChanged(width, height, oldWidth, oldHeight);
-
         gridWidth = width;
         gridHeight =height;
     }
@@ -64,7 +59,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
             fillTriangle = typedArray.getBoolean(R.styleable.TrianglifyView_fillTriangle, true);
             drawStroke = typedArray.getBoolean(R.styleable.TrianglifyView_fillStrokes, false);
             paletteNumber = typedArray.getInt(R.styleable.TrianglifyView_palette, 0);
-            palette = palettesArray[paletteNumber];
+            palette = Palette.values()[paletteNumber];
             typeGrid = GRID_RECTANGLE;
             randomColoring = typedArray.getBoolean(R.styleable.TrianglifyView_randomColoring, false);
         }finally {
@@ -169,6 +164,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public void setTriangulation(Triangulation triangulation) {
         this.triangulation = triangulation;
+        invalidate();
     }
 
     @Override
@@ -204,8 +200,16 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        generateAndPlot(canvas);
+        gridHeight = getHeight();
+        gridWidth = getWidth();
+        if(this.triangulation!=null) {
+            plotOnCanvas(canvas);
+        }
+        else {
+            generateAndInvalidate();
+        }
     }
+
 
     void generateAndPlot(Canvas canvas) {
         generate();
@@ -216,6 +220,13 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         this.triangulation = presenter.getSoup();
     }
 
+    public void generateAndInvalidate() {
+        if(generatorTask!=null)
+            generatorTask.cancel(true);
+        generatorTask = null;
+        generatorTask = new TriangleGeneratorTask();
+        generatorTask.execute(this);
+    }
     void plotOnCanvas(Canvas canvas) {
         for (int i = 0; i < triangulation.getTriangleList().size(); i++){
             drawTriangle(canvas, triangulation.getTriangleList().get(i));
@@ -261,5 +272,18 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         path.close();
 
         canvas.drawPath(path, paint);
+    }
+    class TriangleGeneratorTask extends AsyncTask<TrianglifyView,Void,Triangulation> {
+
+        @Override
+        protected Triangulation doInBackground(TrianglifyView... params) {
+            return params[0].presenter.getSoup();
+        }
+
+        @Override
+        protected void onPostExecute(Triangulation triangulation) {
+            super.onPostExecute(triangulation);
+            setTriangulation(triangulation);
+        }
     }
 }
