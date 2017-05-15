@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
         paletteSeekBar = (SeekBar) findViewById(R.id.palette_seekbar);
         paletteSeekBar.setMax(Palette.values().length-1);
-        paletteSeekBar.setProgress(1);
+        paletteSeekBar.setProgress(Palette.indexOf(trianglifyView.getPalette()));
         paletteSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
