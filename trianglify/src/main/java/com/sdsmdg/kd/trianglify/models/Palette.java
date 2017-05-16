@@ -44,14 +44,25 @@ public class Palette {
 
     private int[] colors;
 
+    public int[] getColors() {
+        return colors;
+    }
+
+    public void setColors(int[] colors) {
+        if (colors.length != 9) {
+            throw new IllegalArgumentException("Colors array length should exactly be 9");
+        }
+        this.colors = colors;
+    }
+
     /**
      * Return palette object corresponding to supplied value of paletteIndex, palette is constructed
      * from a predefined set of colors
-     * @param palleteIndex Index of palette to return
+     * @param paletteIndex Index of palette to return
      * @return Palette object generated from predefined set of colors
      */
-    public static Palette getPalette(int palleteIndex) {
-        switch (palleteIndex){
+    public static Palette getPalette(int paletteIndex) {
+        switch (paletteIndex){
             case YL_GN:
                 return new Palette(0xFFFFE0, 0xFFFFCC, 0xFFFACD, 0xFFFF00, 0xFFEF00, 0xFFD300, 0xF8DE7E, 0xFFD700, 0xC3B091);
             case YL:
