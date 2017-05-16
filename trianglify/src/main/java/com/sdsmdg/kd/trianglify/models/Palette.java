@@ -33,9 +33,9 @@ public class Palette {
     public static final int REDS = 17;
     public static final int GREYS = 18;
     public static final int PU_OR = 19;
-    public static final int BR_B_G = 20;
-    public static final int PU_RE_GN = 21;
-    public static final int PI_YE_G = 22;
+    public static final int BR_BL = 20;
+    public static final int PU_RD_GN = 21;
+    public static final int PI_YL_GN = 22;
     public static final int RD_BU = 23;
     public static final int RD_GY = 24;
     public static final int RD_YL_BU = 25;
@@ -62,10 +62,10 @@ public class Palette {
      * @return Palette object generated from predefined set of colors
      */
     public static Palette getPalette(int paletteIndex) {
-        switch (paletteIndex){
-            case YL_GN:
-                return new Palette(0xFFFFE0, 0xFFFFCC, 0xFFFACD, 0xFFFF00, 0xFFEF00, 0xFFD300, 0xF8DE7E, 0xFFD700, 0xC3B091);
+        switch (paletteIndex) {
             case YL:
+                return new Palette(0xffffe0, 0xffffcc, 0xfffacd, 0xffff00, 0xffef00, 0xffd300, 0xf8de7e, 0xffd700, 0xc3b091);
+            case YL_GN:
                 return new Palette(0xffffe5, 0xf7fcb9, 0xd9f0a3, 0xaddd8e, 0x78c679, 0x41ab5d, 0x238443, 0x006837, 0x004529);
             case YL_GN_BU:
                 return new Palette(0xffffd9, 0xedf8b1, 0xc7e9b4, 0x7fcdbb, 0x41b6c4, 0x1d91c0, 0x225ea8, 0x253494, 0x081d58);
@@ -103,11 +103,11 @@ public class Palette {
                 return new Palette(0xffffff, 0xf0f0f0, 0xd9d9d9, 0xbdbdbd, 0x969696, 0x737373, 0x525252, 0x252525, 0x000000);
             case PU_OR:
                 return new Palette(0x7f3b08, 0xb35806, 0xe08214, 0xfdb863, 0xfee0b6, 0xf7f7f7, 0xd8daeb, 0xb2abd2, 0x8073ac);
-            case BR_B_G:
+            case BR_BL:
                 return new Palette(0x543005, 0x8c510a, 0xbf812d, 0xdfc27d, 0xf6e8c3, 0xf5f5f5, 0xc7eae5, 0x80cdc1, 0x35978f);
-            case PU_RE_GN:
+            case PU_RD_GN:
                 return new Palette(0x40004b, 0x762a83, 0x9970ab, 0xc2a5cf, 0xe7d4e8, 0xf7f7f7, 0xd9f0d3, 0xa6dba0, 0x5aae61);
-            case PI_YE_G:
+            case PI_YL_GN:
                 return new Palette(0x8e0152, 0xc51b7d, 0xde77ae, 0xf1b6da, 0xfde0ef, 0xf7f7f7, 0xe6f5d0, 0xb8e186, 0x7fbc41);
             case RD_BU:
                 return new Palette(0x67001f, 0xb2182b, 0xd6604d, 0xf4a582, 0xfddbc7, 0xf7f7f7, 0xd1e5f0, 0x92c5de, 0x4393c3);
@@ -152,7 +152,7 @@ public class Palette {
         colors[8] = c8;
     }
 
-    public Palette(int colors[]) {
+    public Palette(int[] colors) {
         if (colors.length != 9) {
             throw new IllegalArgumentException("Colors array length should exactly be 9");
         }
@@ -165,7 +165,7 @@ public class Palette {
      * @return color as int without alpha channel
      */
     public int getColor(int index) {
-        switch (index){
+        switch (index) {
             case 0:
                 return colors[0];
             case 1:
