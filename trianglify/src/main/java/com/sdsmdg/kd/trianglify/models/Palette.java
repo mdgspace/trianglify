@@ -42,7 +42,7 @@ public class Palette {
     public static final int SPECTRAL = 26;
     public static final int RD_YL_GN = 27;
 
-    private int colors[];
+    private int[] colors;
 
     /**
      * Return palette object corresponding to supplied value of paletteIndex, palette is constructed
@@ -50,7 +50,7 @@ public class Palette {
      * @param palleteIndex Index of palette to return
      * @return Palette object generated from predefined set of colors
      */
-    public static Palette getPalette(int palleteIndex){
+    public static Palette getPalette(int palleteIndex) {
         switch (palleteIndex){
             case YL_GN:
                 return new Palette(0xFFFFE0, 0xFFFFCC, 0xFFFACD, 0xFFFF00, 0xFFEF00, 0xFFD300, 0xF8DE7E, 0xFFD700, 0xC3B091);
@@ -118,9 +118,9 @@ public class Palette {
      * @param palette Object for finding index
      * @return Index from predefined pallete or -1 if not found
      */
-    public static int indexOf(Palette palette){
+    public static int indexOf(Palette palette) {
         int pos = -1;
-        for (int i = 0; i < Palette.DEFAULT_PALETTE_COUNT; i++){
+        for (int i = 0; i < Palette.DEFAULT_PALETTE_COUNT; i++) {
             if (Palette.getPalette(i) == palette) {
                 pos = i;
             }
@@ -153,7 +153,7 @@ public class Palette {
      * @param index Index of color in set of color for current palette object
      * @return color as int without alpha channel
      */
-    public int getColor(int index){
+    public int getColor(int index) {
         switch (index){
             case 0:
                 return colors[0];
