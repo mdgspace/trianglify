@@ -59,7 +59,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
             fillTriangle = typedArray.getBoolean(R.styleable.TrianglifyView_fillTriangle, true);
             drawStroke = typedArray.getBoolean(R.styleable.TrianglifyView_fillStrokes, false);
             paletteNumber = typedArray.getInt(R.styleable.TrianglifyView_palette, 0);
-            palette = Palette.values()[paletteNumber];
+            palette = Palette.getPalette(paletteNumber);
             typeGrid = GRID_RECTANGLE;
             randomColoring = typedArray.getBoolean(R.styleable.TrianglifyView_randomColoring, false);
         }finally {
