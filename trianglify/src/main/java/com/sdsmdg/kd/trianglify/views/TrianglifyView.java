@@ -207,20 +207,19 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         super.onDraw(canvas);
         gridHeight = getHeight();
         gridWidth = getWidth();
-        if(this.triangulation!=null) {
+        if (this.triangulation != null) {
             plotOnCanvas(canvas);
-        }
-        else {
+        } else {
             generateAndInvalidate();
         }
     }
 
-    public void generateAndInvalidate(){
+    public void generateAndInvalidate() {
         presenter.generateSoupAndInvalidateView();
     }
 
     void plotOnCanvas(Canvas canvas) {
-        for (int i = 0; i < triangulation.getTriangleList().size(); i++){
+        for (int i = 0; i < triangulation.getTriangleList().size(); i++) {
             drawTriangle(canvas, triangulation.getTriangleList().get(i));
         }
     }

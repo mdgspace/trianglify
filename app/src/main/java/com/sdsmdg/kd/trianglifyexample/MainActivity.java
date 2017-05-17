@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public void updateUIElements(TrianglifyView trianglifyView){
+    public void updateUIElements(TrianglifyView trianglifyView) {
         fillCheckBox.setChecked(trianglifyView.isFillTriangle());
         strokeCheckBox.setChecked(trianglifyView.isDrawStrokeEnabled());
         randomColoringCheckbox.setChecked(trianglifyView.isRandomColoringEnabled());

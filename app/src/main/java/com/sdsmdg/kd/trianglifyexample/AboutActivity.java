@@ -127,7 +127,7 @@ public class AboutActivity extends AppCompatActivity {
             }
         });
     }
-    public void displayOpenSourceLicenses(){
+    public void displayOpenSourceLicenses() {
         final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle(this.getApplicationInfo().name);
         alertDialog.setMessage(getResources().getString(R.string.license_text));

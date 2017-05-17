@@ -12,7 +12,6 @@ import com.sdsmdg.kd.trianglify.utilities.patterns.Patterns;
 import com.sdsmdg.kd.trianglify.utilities.patterns.Rectangle;
 import com.sdsmdg.kd.trianglify.utilities.colorizers.Colorizer;
 import com.sdsmdg.kd.trianglify.utilities.colorizers.FixedPointsColorizer;
-import com.sdsmdg.kd.trianglify.views.TrianglifyView;
 import com.sdsmdg.kd.trianglify.views.TrianglifyViewInterface;
 
 import java.util.List;
@@ -29,9 +28,9 @@ import java.util.List;
 
 
 public class Presenter {
-    TrianglifyViewInterface view;
-    Triangulation triangulation;
-    TriangleGeneratorTask generatorTask;
+    private TrianglifyViewInterface view;
+    private Triangulation triangulation;
+    private TriangleGeneratorTask generatorTask;
 
     public Presenter(TrianglifyViewInterface view) {
         this.view = view;
@@ -91,7 +90,7 @@ public class Presenter {
         DelaunayTriangulator triangulator = new DelaunayTriangulator(inputGrid);
         try {
             triangulator.triangulate();
-        } catch (NotEnoughPointsException e){
+        } catch (NotEnoughPointsException e) {
             e.printStackTrace();
         }
         return new Triangulation(triangulator.getTriangles());
@@ -114,14 +113,14 @@ public class Presenter {
     }
 
     public void generateSoupAndInvalidateView() {
-        if (generatorTask!=null) {
+        if (generatorTask != null) {
             generatorTask.cancel(true);
         }
         generatorTask = new TriangleGeneratorTask();
         generatorTask.execute();
     }
 
-    class TriangleGeneratorTask extends AsyncTask<Void,Void,Triangulation> {
+    class TriangleGeneratorTask extends AsyncTask<Void, Void, Triangulation> {
 
         @Override
         protected Triangulation doInBackground(Void... params) {

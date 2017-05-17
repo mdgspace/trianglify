@@ -33,7 +33,7 @@ public class ExtendedColor extends android.graphics.Color {
         this.b = b;
     }
 
-    public static ExtendedColor avg(ExtendedColor c0, ExtendedColor c1){
+    public static ExtendedColor avg(ExtendedColor c0, ExtendedColor c1) {
         return new ExtendedColor((c0.a + c1.a) / 2,
                 (c0.r + c1.r) / 2,
                 (c0.g + c1.g) / 2,
@@ -41,7 +41,7 @@ public class ExtendedColor extends android.graphics.Color {
         );
     }
 
-    public int toInt(){
+    public int toInt() {
         return argb(a, r, g, b);
     }
 }

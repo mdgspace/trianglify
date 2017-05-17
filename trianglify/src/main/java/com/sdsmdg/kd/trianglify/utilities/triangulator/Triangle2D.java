@@ -221,11 +221,11 @@ public class Triangle2D {
         return Math.signum(a) == Math.signum(b);
     }
 
-    public void setColor(int color){
+    public void setColor(int color) {
         this.color = color;
     }
 
-    public int getColor(){
+    public int getColor() {
         return color;
     }
 
@@ -236,7 +236,7 @@ public class Triangle2D {
 
 
 
-    public Vector2D getCentroid(){
+    public Vector2D getCentroid() {
         Vector2D centroid = new Vector2D(0,0);
         centroid.x = ((a.x) + (b.x) + (c.x))/3;
         centroid.y = ((a.y) + (b.y) + (c.y))/3;
