@@ -48,7 +48,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         gridHeight =height;
     }
 
-    public void attributeSetter(TypedArray typedArray){
+    public void attributeSetter(TypedArray typedArray) {
         try{
             bleedX = (int) typedArray.getDimension(R.styleable.TrianglifyView_bleedX, 0);
             bleedY = (int) typedArray.getDimension(R.styleable.TrianglifyView_bleedY, 0);

@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 trianglifyView.setPalette(Palette.getPalette(progress));
-                trianglifyView.invalidate();
+                trianglifyView.generateAndInvalidate();
             }
 
             @Override
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         paletteSeekBar.setProgress(Palette.indexOf(trianglifyView.getPalette()));
     }
 
-    public void randomizeTrianglifyParameters(TrianglifyView trianglifyView){
+    public void randomizeTrianglifyParameters(TrianglifyView trianglifyView) {
         Random rnd = new Random(System.currentTimeMillis());
         trianglifyView.setCellSize(dpToPx(rnd.nextInt(10) + 35))
                 .setPalette(Palette.getPalette(rnd.nextInt(28)))

@@ -123,7 +123,7 @@ public class FixedPointsColorizer implements Colorizer {
 
     private int getColorForPoint(Vector2D point){
         if (randomColoring){
-            return colorPalette.getColor(random.nextInt(9)+1);
+            return colorPalette.getColor(random.nextInt(9));
         } else {
 
             ExtendedColor topLeftColor, topRightColor;

@@ -112,8 +112,9 @@ public class Presenter {
     public void clearSoup() {
         triangulation = null;
     }
-    public void generateSoupAndInvalidateView(){
-        if(generatorTask!=null) {
+
+    public void generateSoupAndInvalidateView() {
+        if (generatorTask!=null) {
             generatorTask.cancel(true);
         }
         generatorTask = new TriangleGeneratorTask();
