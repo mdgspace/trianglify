@@ -1,4 +1,4 @@
-<br> 
+﻿<br> 
 <br> 
 <div align="center"><img src="resources/trianglify-logo-with-text-close-fit.png" data-canonical-src="trianglify-logo-180.png" width="154" height="154" /></div>
 <br> 
@@ -79,7 +79,7 @@ trianglifyView.setGridWidth(trianglifyView.getWidth())
     app:fillTriangle="true" />
 ```
 
-> TrianglifyView should be invalidated on change of any of the parameter for changes to take effect.  
+> TrianglifyView should be invalidated on change of any of the parameter for changes to take effect.To invalidate TrianglifyView call generateAndInvalidate method of TrianglifyView class.  
 **Note:** If any of the parameters is changed `TrianglifyView` regenerates every thing from scratch
 
 

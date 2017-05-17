@@ -28,7 +28,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     boolean randomColoring;
 
     int paletteNumber;
-
+  
     Palette palette;
 
     Triangulation triangulation;
@@ -44,12 +44,11 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     @Override
     protected void onSizeChanged(int width, int height, int oldWidth, int oldHeight) {
         super.onSizeChanged(width, height, oldWidth, oldHeight);
-
         gridWidth = width;
         gridHeight =height;
     }
 
-    public void attributeSetter(TypedArray typedArray){
+    public void attributeSetter(TypedArray typedArray) {
         try{
             bleedX = (int) typedArray.getDimension(R.styleable.TrianglifyView_bleedX, 0);
             bleedY = (int) typedArray.getDimension(R.styleable.TrianglifyView_bleedY, 0);
@@ -162,8 +161,15 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         return triangulation;
     }
 
-    public void setTriangulation(Triangulation triangulation) {
+    @Override
+    public void invalidateView(Triangulation triangulation) {
+        this.setTriangulation(triangulation);
+        invalidate();
+    }
+
+    public TrianglifyView setTriangulation(Triangulation triangulation) {
         this.triangulation = triangulation;
+        return this;
     }
 
     @Override
@@ -199,20 +205,21 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        generateAndPlot(canvas);
+        gridHeight = getHeight();
+        gridWidth = getWidth();
+        if (this.triangulation != null) {
+            plotOnCanvas(canvas);
+        } else {
+            generateAndInvalidate();
+        }
     }
 
-    void generateAndPlot(Canvas canvas) {
-        generate();
-        plotOnCanvas(canvas);
-    }
-
-    void generate() {
-        this.triangulation = presenter.getSoup();
+    public void generateAndInvalidate() {
+        presenter.generateSoupAndInvalidateView();
     }
 
     void plotOnCanvas(Canvas canvas) {
-        for (int i = 0; i < triangulation.getTriangleList().size(); i++){
+        for (int i = 0; i < triangulation.getTriangleList().size(); i++) {
             drawTriangle(canvas, triangulation.getTriangleList().get(i));
         }
     }

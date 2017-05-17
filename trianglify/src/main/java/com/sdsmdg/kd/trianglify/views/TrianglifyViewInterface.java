@@ -24,4 +24,5 @@ public interface TrianglifyViewInterface {
     int getPaletteNumber();
     Palette getPalette();
     Triangulation getTriangulation();
+    void invalidateView(Triangulation triangulation);
 }

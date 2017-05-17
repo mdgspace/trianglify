@@ -45,7 +45,7 @@ public class Rectangle implements Patterns {
      * @return List of Vector2D containing points that resembles rectangular grid
      */
     @Override
-    public List<Vector2D> generate(){
+    public List<Vector2D> generate() {
         grid.clear();
 
         int x, y;

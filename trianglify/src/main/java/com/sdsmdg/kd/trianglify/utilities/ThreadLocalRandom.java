@@ -12,11 +12,11 @@ package com.sdsmdg.kd.trianglify.utilities;
 public class ThreadLocalRandom {
     private long seed = 0x5DEECE66DL;
 
-    public ThreadLocalRandom(){
+    public ThreadLocalRandom() {
 
     }
 
-    public ThreadLocalRandom(long seed){
+    public ThreadLocalRandom(long seed) {
         this.seed = seed;
     }
 
