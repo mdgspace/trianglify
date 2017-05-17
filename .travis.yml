@@ -15,6 +15,13 @@ android:
 script:
  - ./gradlew build
  - ./gradlew test
+ 
+before_install:
+  - python <(curl -s https://raw.githubusercontent.com/TouK/sputnik-ci/master/sputnik-ci.py)
+
+env:
+  global:
+  - secure: PIbHGVr+Bv0HbK6qOE6C0FrVqcsm/Q6kzFCOa4y9ixT8+2i82DDP4kyyy2ymKevmps+7+SCeJiW8KQkZa7gztSG0h1BoHJo0C6f0xiMYG4kY/7Gq4ZX3mehOVFUymxqhVED/NMK4a7JJxqcSH7JIkBLkuEaueqxc3CmHjI7LCqTr9yMdu/8ulhOeEL/Drg0zsNK9424K6BtxnTh6nNmbNfRnvxCgFc3mLuZ4J6/YN7lBagNiBhpr3XsXdvUC/W89UCcQCIkl/xBKPTxoUGxD6YG+IhapEJrQvqsFkvwFcsUUa9iL7+23QDlK7VGXeKZxwcMYWjRSVai3np94cHZwqivL1okoMFnIjqcAAzX5NOgd0VvM1dUqIwkXQDhp9IPGqDe/H1BiuRb8rmbJyRsxx5YjwksuPugDcG/B24qhyz4NM+gupMx0UE1DXS20xtE1kItEMzCyOJGXDwD9VR13ED0kYkcZoovPFdGFUOpAyAE9UYe1wDpDbmxF8o24tM5ICTcaATpiowWvBmS3i2qsEg8akpxmOqwWK//aOg2aNRiiX5we1H8QK8QNT0MoRf7B9bh59BHL6aOJ/jCeiYXb1jjWGQCGO9Vh3lzJWw2V9f2CvnUaZfeJOCzLgVPqtrI9E1LoPLiVT0Izx9DZ+aINrBxhNfndz5UZ4VQPHF8DDe4=
 
 notifications:
   slack: sdsmdg:hvFSzqFNHm3t6NDR2H2Twiio

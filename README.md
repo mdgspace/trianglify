@@ -35,6 +35,7 @@ Google Play Store link for demo app | [link](https://suyashmahar.me/404)
     3. [Generates](#23-Generates)
     4. [Note on Units of CellSize, Variance, Bleed & Grid Height](#24-note-on-units-of-cellsize-variance-bleed-and-grid-height)
     5. [Setting Palette using `.setPalette()`](#25-setting-palette-using-setpalette-method)
+    6. [Using custom Palettes](#26-using-custom-palettes)
 3. [Performance analysis](#3-performance-analysis)
 4. [Known issues and bugs](#4-known-issues-and-bugs)
 5. [UML Diagrams](#5-uml-diagrams)
@@ -50,7 +51,7 @@ import com.sdsmdg.kd.trianglify.views.TrianglifyView;
 import com.sdsmdg.kd.trianglify.models.Palette;
 ```
 
-Code for using TrianglifyView  
+Java code for using TrianglifyView  
 
 ```java
 trianglifyView = (TrianglifyView) findViewById(R.id.trianglify_main_view); 
@@ -61,8 +62,8 @@ trianglifyView.setGridWidth(trianglifyView.getWidth())
             .setCellSize(20)
             .setVariance(10)
             .setTypeGrid(0)
-            .setPalette(26)
-            .setDrawStrokeEnabled(false);
+            .setPalette(Palette.getPalette(26))
+            .setDrawStrokeEnabled(true);
 ```
 ### 1.2 XML
 ```xml
@@ -130,10 +131,29 @@ public int pxToDp(int px) {
 }
 ```
 ### 2.5 Setting Palette using setPalette method
-`TrianglifyView`'s `.setPalette()` accepts integer that corresponds to index of palette in `com.sdsmdg.kd.trianglify.models.Palette.java` which is an enum. Palette can be set using one of the following method: 
-* To use specific palette for example *Spectral* use `trianglifyView.setPalette(Palette.Spectral)`
-* To use palette referring to its index for example palette at index `<index>` of `Palette.java` enum use `.setPalette(Palette.values()[<index>])`  
-> **Note:** Palette enum defines total of 28 named palettes that can be accessed using either of the above defined methods.
+`TrianglifyView`'s `setPalette` method accepts `Palette` object. Palette can be set using one of the following method: 
+* To use one of the predefined palette, for example **Spectral** use `trianglifyView.setPalette(Palette.getPalette(Palette.Spectral))`.
+* To use palette referring to its index use `Palette.getPalette(<index>)`.  
+* To use custom palette refer to section [2.6 Using custom Palettes](#26-using-custom-palettes).
+
+> **Note:** Index used for addressing palette should be less than `Palette.DEFAULT_PALETTE_COUNT`, if index is greater than `DEFAULT_PALETTE_COUNT` `IllegalArgumentException` is thrown.
+
+> **Note:** Palette enum defines total of 28 named palettes that can be used to generate views without specifying colors.
+
+### 2.6 Using custom Palettes
+Custom Palettes can be used by creating new palette using one of the following constructor:
+
+```java
+Palette customPalette = new Palette(int c0, int c1, int c2, int c3, int c4, int c5, int c6, int c7, int c8);
+```
+
+or
+
+```java
+Palette customPalette = new Palette(int colors[]);
+```
+> Array based constructor will throw `IllegalArgumentException` if size of array is not exactly 9.
+
 ## 3. Performance analysis
 Few notes on performance of Trianglify
 * Performance takes a serious hit with decrease in cell size. Time complexity of the algorithm to generate triangles from grid of points is Ω(n*log(n)). Decreasing cell size increases n (number of points on the grid). 
