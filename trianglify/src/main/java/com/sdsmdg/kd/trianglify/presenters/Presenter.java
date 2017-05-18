@@ -31,7 +31,7 @@ public class Presenter {
     private TrianglifyViewInterface view;
     private Triangulation triangulation;
     private TriangleGeneratorTask generatorTask;
-    int justColor = 0;
+    private int justColor;
 
     public Presenter(TrianglifyViewInterface view) {
         this.view = view;
@@ -78,9 +78,9 @@ public class Presenter {
      * @return triangulation corresponding to current instance parameters
      */
     public Triangulation getSoup() {
-        if(justColor == 0){
+        if (justColor == 0) {
             generateSoup();
-        }else if(justColor == 1){
+        } else if (justColor == 1) {
             generateColoredSoup(triangulation);
         }
         return triangulation;

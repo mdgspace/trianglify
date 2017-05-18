@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import com.sdsmdg.kd.trianglify.presenters.Presenter;
@@ -32,7 +31,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
      * if change in palette or random coloring then value is 2
      * if change in fillTriangle or drawStroke then value is 0
      */
-    int flagForChangeInRelatedParameters = -2;
+    private int flagForChangeInRelatedParameters = -2;
 
     boolean fillTriangle;
     boolean drawStroke;
@@ -84,7 +83,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setPalette(Palette palette) {
         this.palette = palette;
-        if(this.flagForChangeInRelatedParameters != 1){
+        if (this.flagForChangeInRelatedParameters != 1) {
             this.flagForChangeInRelatedParameters = 2;
         }
         return this;
@@ -205,7 +204,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setFillTriangle(boolean fillTriangle) {
         this.fillTriangle = fillTriangle;
-        if(this.flagForChangeInRelatedParameters != 1 && this.flagForChangeInRelatedParameters != 2){
+        if (this.flagForChangeInRelatedParameters != 1 && this.flagForChangeInRelatedParameters != 2) {
             this.flagForChangeInRelatedParameters = 0;
         }
         return this;
@@ -218,7 +217,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setDrawStrokeEnabled(boolean drawStroke) {
         this.drawStroke = drawStroke;
-        if(this.flagForChangeInRelatedParameters != 1 && this.flagForChangeInRelatedParameters != 2){
+        if (this.flagForChangeInRelatedParameters != 1 && this.flagForChangeInRelatedParameters != 2) {
             this.flagForChangeInRelatedParameters = 0;
         }
         return this;
@@ -231,7 +230,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setRandomColoring(boolean randomColoring) {
         this.randomColoring = randomColoring;
-        if(this.flagForChangeInRelatedParameters != 1){
+        if (this.flagForChangeInRelatedParameters != 1) {
             this.flagForChangeInRelatedParameters = 2;
         }
         return this;
@@ -243,27 +242,21 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         gridHeight = getHeight();
         gridWidth = getWidth();
 
-        if(flagForChangeInRelatedParameters == 0)  {
-            Log.d("just plotting", "just plot");
+        if (flagForChangeInRelatedParameters == 0 || flagForChangeInRelatedParameters == -1) {
             plotOnCanvas(canvas);
-        }else if( flagForChangeInRelatedParameters == -1) {
-            plotOnCanvas(canvas);
-        }
-        else if(flagForChangeInRelatedParameters == 2){
-            generateNewColoredSoupAndInvalidate(canvas);
-        }else if(flagForChangeInRelatedParameters == 1 || flagForChangeInRelatedParameters == -2){
+        } else if (flagForChangeInRelatedParameters == 2) {
+            generateNewColoredSoupAndInvalidate();
+        } else if (flagForChangeInRelatedParameters == 1 || flagForChangeInRelatedParameters == -2) {
             generateAndInvalidate();
         }
     }
 
-    void generateNewColoredSoupAndInvalidate(Canvas canvas){
-        Log.d("JUST COLOR", "got just the color");
+    void generateNewColoredSoupAndInvalidate() {
         presenter.setJustColor(1);
         presenter.generateSoupAndInvalidateView();
     }
 
     public void generateAndInvalidate() {
-        Log.d("GENERATE NEW", "got a new triangulation");
         presenter.setJustColor(0);
         presenter.generateSoupAndInvalidateView();
     }

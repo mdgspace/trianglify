@@ -100,11 +100,11 @@ public class MainActivity extends AppCompatActivity {
         strokeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked || trianglifyView.isFillTriangle()){
+                if (isChecked || trianglifyView.isFillTriangle()) {
                     trianglifyView.setDrawStrokeEnabled(isChecked);
                     strokeCheckBox.setChecked(isChecked);
                     trianglifyView.invalidate();
-                }else{
+                } else {
                     strokeCheckBox.setChecked(!isChecked);
                     showColoringError();
                 }
@@ -116,11 +116,11 @@ public class MainActivity extends AppCompatActivity {
         fillCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked || trianglifyView.isDrawStrokeEnabled()){
+                if (isChecked || trianglifyView.isDrawStrokeEnabled()) {
                     trianglifyView.setFillTriangle(isChecked);
                     fillCheckBox.setChecked(isChecked);
                     trianglifyView.invalidate();
-                }else{
+                } else {
                     fillCheckBox.setChecked(!isChecked);
                     showColoringError();
                 }
