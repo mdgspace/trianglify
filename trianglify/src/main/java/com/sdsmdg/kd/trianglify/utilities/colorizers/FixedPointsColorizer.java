@@ -65,9 +65,9 @@ public class FixedPointsColorizer implements Colorizer {
     }
 
     @Override
-    public Triangulation getColororedTriangulation(){
-        if (triangulation != null){
-            for (Triangle2D triangle : triangulation.getTriangleList()){
+    public Triangulation getColororedTriangulation() {
+        if (triangulation != null) {
+            for (Triangle2D triangle : triangulation.getTriangleList()) {
                 triangle.setColor(getColorForPoint(triangle.getCentroid()));
             }
         } else {
@@ -121,9 +121,9 @@ public class FixedPointsColorizer implements Colorizer {
     //     \______o__/
     //
 
-    private int getColorForPoint(Vector2D point){
-        if (randomColoring){
-            return colorPalette.getColor(random.nextInt(9)+1);
+    private int getColorForPoint(Vector2D point) {
+        if (randomColoring) {
+            return colorPalette.getColor(random.nextInt(9));
         } else {
 
             ExtendedColor topLeftColor, topRightColor;

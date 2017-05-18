@@ -13,20 +13,20 @@ public class Point{
     public int x;
     public int y;
 
-    public Point(){
+    public Point() {
         this(0, 0);
     }
 
-    public Point(int x, int y){
+    public Point(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public static Point subtract(Point a, Point b){
+    public static Point subtract(Point a, Point b) {
         return new Point(a.x - a.y, b.x - b.y);
     }
 
-    public static Point add(Point a, Point b){
+    public static Point add(Point a, Point b) {
         return new Point(a.x + a.y, b.x + b.y);
     }
 
@@ -36,7 +36,7 @@ public class Point{
      * @param b Second Point
      * @return Mid Point
      */
-    public static Point midPoint(Point a, Point b){
+    public static Point midPoint(Point a, Point b) {
         return new Point((a.x + a.y) / 2, (b.x + b.y) / 2);
     }
 }

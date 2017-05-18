@@ -3,21 +3,21 @@ apply plugin: 'com.android.library'
 ext {
 
     bintrayRepo = 'trianglify'
-    bintrayName = 'trianglify'   // Has to be same as your library module name
+    bintrayName = 'trianglify'   // Has to be same as library module name
 
     PUBLISH_GROUP_ID = 'com.sdsmdg.kd'
     PUBLISH_ARTIFACT_ID = 'trianglify'
-    PUBLISH_VERSION = '0.7-beta'
+    PUBLISH_VERSION = '0.8-beta'
 
     publishedGroupId = 'com.sdsmdg.kd'
     libraryName = 'trianglify'
-    artifact = 'trianglify'     // Has to be same as your library module name
+    artifact = 'trianglify'     // Has to be same as library module name
 
     siteUrl = 'https://github.com/sdsmdg/trianglify'
     gitUrl = 'https://github.com/sdsmdg/trianglify.git'
     githubRepository= 'sdsmdg/trianglify'
 
-    libraryVersion = '0.7-beta'
+    libraryVersion = '0.8-beta'
     libraryDescription = 'Generate beautiful view for android.'
 
     developerId = 'sdsmdg'
@@ -37,7 +37,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 0
-        versionName "0.7-beta"
+        versionName "0.8-beta"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 

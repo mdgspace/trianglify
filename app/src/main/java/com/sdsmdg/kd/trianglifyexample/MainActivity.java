@@ -3,9 +3,7 @@ package com.sdsmdg.kd.trianglifyexample;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,11 +15,7 @@ import android.widget.Toast;
 import com.sdsmdg.kd.trianglify.views.TrianglifyView;
 import com.sdsmdg.kd.trianglify.models.Palette;
 
-import java.sql.Time;
-import java.util.Date;
 import java.util.Random;
-
-import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity {
     public TrianglifyView trianglifyView;
@@ -36,13 +30,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         trianglifyView = (TrianglifyView) findViewById(R.id.trianglify_main_view);
-
-        trianglifyView.setGridWidth(trianglifyView.getWidth())
-                .setGridHeight(trianglifyView.getHeight())
-                .setRandomColoring(false);
-
         varianceSeekBar = (SeekBar) findViewById(R.id.variance_seekbar);
         varianceSeekBar.setMax(100);
         varianceSeekBar.setProgress(trianglifyView.getVariance());
@@ -87,12 +75,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         paletteSeekBar = (SeekBar) findViewById(R.id.palette_seekbar);
-        paletteSeekBar.setMax(Palette.values().length-1);
-        paletteSeekBar.setProgress(1);
+        paletteSeekBar.setMax(Palette.DEFAULT_PALETTE_COUNT - 1);
+        paletteSeekBar.setProgress(Palette.indexOf(trianglifyView.getPalette()));
         paletteSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                trianglifyView.setPalette(Palette.values()[progress]);
+                trianglifyView.setPalette(Palette.getPalette(progress));
                 trianglifyView.invalidate();
             }
 
@@ -157,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public void updateUIElements(TrianglifyView trianglifyView){
+    public void updateUIElements(TrianglifyView trianglifyView) {
         fillCheckBox.setChecked(trianglifyView.isFillTriangle());
         strokeCheckBox.setChecked(trianglifyView.isDrawStrokeEnabled());
         randomColoringCheckbox.setChecked(trianglifyView.isRandomColoringEnabled());
@@ -167,10 +155,10 @@ public class MainActivity extends AppCompatActivity {
         paletteSeekBar.setProgress(Palette.indexOf(trianglifyView.getPalette()));
     }
 
-    public void randomizeTrianglifyParameters(TrianglifyView trianglifyView){
+    public void randomizeTrianglifyParameters(TrianglifyView trianglifyView) {
         Random rnd = new Random(System.currentTimeMillis());
         trianglifyView.setCellSize(dpToPx(rnd.nextInt(10) + 35))
-                .setPalette(Palette.values()[rnd.nextInt(10)])
+                .setPalette(Palette.getPalette(rnd.nextInt(28)))
                 .setRandomColoring(rnd.nextInt(2) == 0)
                 .setFillTriangle(rnd.nextInt(2) == 0)
                 .setDrawStrokeEnabled(rnd.nextInt(2) == 0)
@@ -199,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
             // action with ID action_refresh was selected
             case R.id.action_refresh:
                 randomizeTrianglifyParameters(trianglifyView);
-                trianglifyView.invalidate();
+                trianglifyView.generateAndInvalidate();
                 break;
             default:
                 break;
@@ -209,7 +197,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showColoringError() {
-            Toast.makeText(this, "view should atleast be set to draw strokes or fill triangles or both.", Toast.LENGTH_LONG).show();
-
+            Toast.makeText(this, "view should at least be set to draw strokes or fill triangles or both.", Toast.LENGTH_LONG).show();
     }
 }

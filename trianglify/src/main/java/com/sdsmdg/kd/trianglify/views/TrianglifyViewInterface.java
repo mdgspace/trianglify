@@ -18,10 +18,12 @@ public interface TrianglifyViewInterface {
     int getGridHeight();
     int getVariance();
     int getCellSize();
+    void setFlagForChangeInRelatedParameters(int flagForChangeInRelatedParameters);
     boolean isFillTriangle();
     boolean isDrawStrokeEnabled();
     boolean isRandomColoringEnabled();
     int getPaletteNumber();
     Palette getPalette();
     Triangulation getTriangulation();
+    void invalidateView(Triangulation triangulation);
 }

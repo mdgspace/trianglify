@@ -26,24 +26,20 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     /**
      * flag for change in attributes
+     * if triangulation is null then value is -2
      * if triangulation is unchanged then value is -1
      * if change in grid width, grid height, variance, bleedX, bleedY, typeGrid or cell size then value is 1
      * if change in palette or random coloring then value is 2
      * if change in fillTriangle or drawStroke then value is 0
      */
-    int flagForChangeInRelatedParameters = -1;
+    int flagForChangeInRelatedParameters = -2;
 
     boolean fillTriangle;
     boolean drawStroke;
     boolean randomColoring;
 
     int paletteNumber;
-
-    Palette palettesArray[] = {Palette.YlGn, Palette.YlGnBu, Palette.GnBu, Palette.BuGn, Palette.PuBuGn,
-            Palette.PuBu, Palette.BuPu, Palette.RdPu, Palette.PuRd, Palette.OrRd, Palette.YlOrRd,
-            Palette.YlOrBr, Palette.Purples, Palette.Blues, Palette.Greens, Palette.Oranges,
-            Palette.Reds, Palette.Greys, Palette.PuOr, Palette.BrBG, Palette.PRGn, Palette.PiYG,
-                Palette.RdBu, Palette.RdGy, Palette.RdYlBu, Palette.Spectral, Palette.RdYlGn};
+  
     Palette palette;
 
     Triangulation triangulation;
@@ -59,12 +55,11 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     @Override
     protected void onSizeChanged(int width, int height, int oldWidth, int oldHeight) {
         super.onSizeChanged(width, height, oldWidth, oldHeight);
-
         gridWidth = width;
-        gridHeight =height;
+        gridHeight = height;
     }
 
-    public void attributeSetter(TypedArray typedArray){
+    public void attributeSetter(TypedArray typedArray) {
         try{
             bleedX = (int) typedArray.getDimension(R.styleable.TrianglifyView_bleedX, 0);
             bleedY = (int) typedArray.getDimension(R.styleable.TrianglifyView_bleedY, 0);
@@ -74,7 +69,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
             fillTriangle = typedArray.getBoolean(R.styleable.TrianglifyView_fillTriangle, true);
             drawStroke = typedArray.getBoolean(R.styleable.TrianglifyView_fillStrokes, false);
             paletteNumber = typedArray.getInt(R.styleable.TrianglifyView_palette, 0);
-            palette = palettesArray[paletteNumber];
+            palette = Palette.getPalette(paletteNumber);
             typeGrid = GRID_RECTANGLE;
             randomColoring = typedArray.getBoolean(R.styleable.TrianglifyView_randomColoring, false);
         }finally {
@@ -93,6 +88,10 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
             this.flagForChangeInRelatedParameters = 2;
         }
         return this;
+    }
+
+    public void setFlagForChangeInRelatedParameters(int flagForChangeInRelatedParameters) {
+        this.flagForChangeInRelatedParameters = flagForChangeInRelatedParameters;
     }
 
     @Override
@@ -187,8 +186,16 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         return triangulation;
     }
 
-    public void setTriangulation(Triangulation triangulation) {
+    @Override
+    public void invalidateView(Triangulation triangulation) {
+        this.setTriangulation(triangulation);
+        this.flagForChangeInRelatedParameters = -1;
+        invalidate();
+    }
+
+    public TrianglifyView setTriangulation(Triangulation triangulation) {
         this.triangulation = triangulation;
+        return this;
     }
 
     @Override
@@ -233,37 +240,36 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if(flagForChangeInRelatedParameters == 0) {
+        gridHeight = getHeight();
+        gridWidth = getWidth();
+
+        if(flagForChangeInRelatedParameters == 0)  {
+            Log.d("just plotting", "just plot");
             plotOnCanvas(canvas);
-        }else if(flagForChangeInRelatedParameters == 2){
-            generateNewColoredSoupAndPlot(canvas);
-        }else if(flagForChangeInRelatedParameters == 1){
-            generateAndPlot(canvas);
+        }else if( flagForChangeInRelatedParameters == -1) {
+            plotOnCanvas(canvas);
+        }
+        else if(flagForChangeInRelatedParameters == 2){
+            generateNewColoredSoupAndInvalidate(canvas);
+        }else if(flagForChangeInRelatedParameters == 1 || flagForChangeInRelatedParameters == -2){
+            generateAndInvalidate();
         }
     }
 
-    void generateAndPlot(Canvas canvas) {
-        generate();
-        plotOnCanvas(canvas);
+    void generateNewColoredSoupAndInvalidate(Canvas canvas){
+        Log.d("JUST COLOR", "got just the color");
+        presenter.setJustColor(1);
+        presenter.generateSoupAndInvalidateView();
     }
 
-    void generateNewColoredSoupAndPlot(Canvas canvas){
-        generateColoredSoup();
-        plotOnCanvas(canvas);
-    }
-
-    void generate() {
-        this.triangulation = presenter.getSoup(0);
-        this.flagForChangeInRelatedParameters = -1;
-    }
-
-    void generateColoredSoup(){
-        this.triangulation = presenter.getSoup(1);
-        this.flagForChangeInRelatedParameters = -1;
+    public void generateAndInvalidate() {
+        Log.d("GENERATE NEW", "got a new triangulation");
+        presenter.setJustColor(0);
+        presenter.generateSoupAndInvalidateView();
     }
 
     void plotOnCanvas(Canvas canvas) {
-        for (int i = 0; i < triangulation.getTriangleList().size(); i++){
+        for (int i = 0; i < triangulation.getTriangleList().size(); i++) {
             drawTriangle(canvas, triangulation.getTriangleList().get(i));
         }
     }
@@ -277,12 +283,12 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         int color = triangle2D.getColor();
 
+
         /*
-         * Right shifts number by 8 bits (2 hex for alpha) since color received in triangle2D
-         * is without alpha channel.
+         * Add 0xff000000 for alpha channel required by android.graphics.Color
          */
-        color <<= 8;
-        color += 255;
+
+        color += 0xff000000;
 
         paint.setColor(color);
         paint.setStrokeWidth(4);

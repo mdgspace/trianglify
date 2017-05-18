@@ -11,7 +11,7 @@ import java.util.List;
 public class Grid {
     private List<Vector2D> gridPoints;
 
-    public Grid(List<Vector2D> gridPoints){
+    public Grid(List<Vector2D> gridPoints) {
         this.gridPoints = gridPoints;
     }
 

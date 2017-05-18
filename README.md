@@ -1,4 +1,4 @@
-<br> 
+﻿<br> 
 <br> 
 <div align="center"><img src="resources/trianglify-logo-with-text-close-fit.png" data-canonical-src="trianglify-logo-180.png" width="154" height="154" /></div>
 <br> 
@@ -18,13 +18,22 @@ Trianglify is an Android library that helps creates views with beautiful pattern
 
 Include following line in the gradle script of your application to include latest release of Trianglify:
 ```gradle
-compile 'com.sdsmdg.kd:trianglify:0.7-beta'
+compile 'com.sdsmdg.kd:trianglify:0.8-beta'
 ```
 
 # Releases
-## [Version 0.7.0-beta](https://bintray.com/suyashmahar/trianglify/trianglify/0.7-beta)
-Google Play Store link for demo app | [link](https://suyashmahar.me/404)
-* Added library to jCenter | [Link](https://bintray.com/suyashmahar/trianglify/trianglify/)
+
+## Latest
+* [Version 0.8 beta](https://bintray.com/suyashmahar/trianglify/trianglify/0.8-beta)
+ | [demo apk](https://www.dropbox.com/s/cn85g497nkwmx14/trianglify-release-0.8-beta.apk?dl=0)
+    * Generation of triangulation on worker thread to prevent UI freezing [#20](https://github.com/sdsmdg/trianglify/issues/20)
+    * Correct coloring of view, color now drawn matches its name [#18](https://github.com/sdsmdg/trianglify/issues/18)
+    * Support for custom palette ([usage](#26-using-custom-palettes)) [#17](https://github.com/sdsmdg/trianglify/issues/17)
+
+## Previous
+* [Version 0.7 beta](https://bintray.com/suyashmahar/trianglify/trianglify/0.7-beta)
+ [Google Play](https://suyashmahar.me/404)
+    * Added library to jCenter | [Link](https://bintray.com/suyashmahar/trianglify/trianglify/)
 # Documentation
 1. [Example Usages](#1-example-usages)
     1. [Java](#11-java)
@@ -35,6 +44,7 @@ Google Play Store link for demo app | [link](https://suyashmahar.me/404)
     3. [Generates](#23-Generates)
     4. [Note on Units of CellSize, Variance, Bleed & Grid Height](#24-note-on-units-of-cellsize-variance-bleed-and-grid-height)
     5. [Setting Palette using `.setPalette()`](#25-setting-palette-using-setpalette-method)
+    6. [Using custom Palettes](#26-using-custom-palettes)
 3. [Performance analysis](#3-performance-analysis)
 4. [Known issues and bugs](#4-known-issues-and-bugs)
 5. [UML Diagrams](#5-uml-diagrams)
@@ -50,7 +60,7 @@ import com.sdsmdg.kd.trianglify.views.TrianglifyView;
 import com.sdsmdg.kd.trianglify.models.Palette;
 ```
 
-Code for using TrianglifyView  
+Java code for using TrianglifyView  
 
 ```java
 trianglifyView = (TrianglifyView) findViewById(R.id.trianglify_main_view); 
@@ -61,8 +71,8 @@ trianglifyView.setGridWidth(trianglifyView.getWidth())
             .setCellSize(20)
             .setVariance(10)
             .setTypeGrid(0)
-            .setPalette(26)
-            .setDrawStrokeEnabled(false);
+            .setPalette(Palette.getPalette(26))
+            .setDrawStrokeEnabled(true);
 ```
 ### 1.2 XML
 ```xml
@@ -78,8 +88,7 @@ trianglifyView.setGridWidth(trianglifyView.getWidth())
     app:fillTriangle="true" />
 ```
 
-> TrianglifyView should be invalidated on change of any of the parameter for changes to take effect.  
-**Note:** If any of the parameters is changed `TrianglifyView` regenerates every thing from scratch
+> TrianglifyView should be invalidated on change of any of the parameter for changes to take effect. To invalidate TrianglifyView call invalidate method on the Trianglify View Instance.  
 
 
 ## 2. API Documentation
@@ -130,29 +139,44 @@ public int pxToDp(int px) {
 }
 ```
 ### 2.5 Setting Palette using setPalette method
-`TrianglifyView`'s `.setPalette()` accepts integer that corresponds to index of palette in `com.sdsmdg.kd.trianglify.models.Palette.java` which is an enum. Palette can be set using one of the following method: 
-* To use specific palette for example *Spectral* use `trianglifyView.setPalette(Palette.Spectral)`
-* To use palette referring to its index for example palette at index `<index>` of `Palette.java` enum use `.setPalette(Palette.values()[<index>])`  
-> **Note:** Palette enum defines total of 28 named palettes that can be accessed using either of the above defined methods.
+`TrianglifyView`'s `setPalette` method accepts `Palette` object. Palette can be set using one of the following method: 
+* To use one of the predefined palette, for example **Spectral** use `trianglifyView.setPalette(Palette.getPalette(Palette.Spectral))`.
+* To use palette referring to its index use `Palette.getPalette(<index>)`.  
+* To use custom palette refer to section [2.6 Using custom Palettes](#26-using-custom-palettes).
+
+> **Note:** Index used for addressing palette should be less than `Palette.DEFAULT_PALETTE_COUNT`, if index is greater than `DEFAULT_PALETTE_COUNT` `IllegalArgumentException` is thrown.
+
+> **Note:** Palette enum defines total of 28 named palettes that can be used to generate views without specifying colors.
+
+### 2.6 Using custom Palettes
+Custom Palettes can be used by creating new palette using one of the following constructor:
+
+```java
+Palette customPalette = new Palette(int c0, int c1, int c2, int c3, int c4, int c5, int c6, int c7, int c8);
+```
+
+or
+
+```java
+Palette customPalette = new Palette(int colors[]);
+```
+> Array based constructor will throw `IllegalArgumentException` if size of array is not exactly 9.
+
 ## 3. Performance analysis
 Few notes on performance of Trianglify
 * Performance takes a serious hit with decrease in cell size. Time complexity of the algorithm to generate triangles from grid of points is Ω(n*log(n)). Decreasing cell size increases n (number of points on the grid). 
 * Performance of coloring is faster on the use of random coloring rather than gradient.
 
-## 4. Known issues and bugs
-- [ ] color pattern rendered for a given palette does not match description.  
-- [ ] View re-generates complete triangulation even when not required.
-
-## 5. UML diagrams
+## 4. UML diagrams
 Complete UML diagram for the project structures are available as Draw.io link hosted in google drive 
 | [Link](https://www.draw.io/?state=%7B%22ids%22:%5B%220Bz_2jvdEtUlrWlB0LXJvRnBQZ0U%22%5D,%22action%22:%22open%22,%22userId%22:%22109172653085429225560%22%7D)  
 *(Note that you'll require a google account to access the file, if this is your first time then choose `open with Draw.io` option on top of the browser window. Then scroll to the center of the document to view diagrams)*
 
-## 6. Credits
+## 5. Credits
 Development of Trianglify wouldn't have been possible without following libraries:
 * [Delaunay Triangulator by jdiemke](https://github.com/jdiemke/delaunay-triangulator)
 
-## 7. Contributing
+## 6. Contributing
 Please see the [CONTRIBUTING](/CONTRIBUTING.md) file for information on contributing to the development of Trianglify.
 
 # License
