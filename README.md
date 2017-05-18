@@ -87,9 +87,7 @@ trianglifyView.setGridWidth(trianglifyView.getWidth())
     app:fillStrokes="true"
     app:fillTriangle="true" />
 ```
-
-> TrianglifyView should be invalidated on change of any of the parameter for changes to take effect. To invalidate TrianglifyView call updateView method on the Trianglify View Instance.  
-
+ 
 
 ## 2. API Documentation
 ### 2.1 Attributes
@@ -161,6 +159,14 @@ or
 Palette customPalette = new Palette(int colors[]);
 ```
 > Array based constructor will throw `IllegalArgumentException` if size of array is not exactly 9.
+
+### 2.7 Updating the View
+
+`TrianglifyView` should be invalidated on change of any of the parameter for changes to take effect. To invalidate `TrianglifyView` call `updateView` method on the Trianglify View Instance. `updateView` can make the following two important calls:
+* `generateAndInvalidate`: this is called when the triangulation is to be generated from scratch, as in the case of change in `gridWidth`, `gridHeight`, `variance`, `bleedX`, `bleedY` or `cellSize`.
+* `generateNewColoredSoupAndInvalidate`: this is called when only the colorization of the triangulation is to be changed, ie `Palette` or `randomColoring' is changed.
+* `invalidateView`: this is called when the triangulation is to be rendered again. It calls the `onDraw` method of the view.
+
 
 ## 3. Performance analysis
 Few notes on performance of Trianglify

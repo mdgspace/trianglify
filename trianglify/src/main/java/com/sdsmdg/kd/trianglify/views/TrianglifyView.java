@@ -24,12 +24,13 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     int cellSize;
 
     /**
-     * flag for change in attributes
+     * Flag for keeping track of changes in attributes of the view. Helpful in increasing
+     * performance by stopping unnecessary regeneration of triangulation. Look at updateView method for more.
      * if triangulation is null then value is -2
      * if triangulation is unchanged then value is -1
+     * if change in fillTriangle or drawStroke then value is 0
      * if change in grid width, grid height, variance, bleedX, bleedY, typeGrid or cell size then value is 1
      * if change in palette or random coloring then value is 2
-     * if change in fillTriangle or drawStroke then value is 0
      */
     private int flagForChangeInRelatedParameters = -2;
 
@@ -185,11 +186,17 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         return triangulation;
     }
 
+    /**
+     * This method invalidates the view by setting the triangulation and calling the invalidate method.
+     * Once invalidated, the flag is changed to -1 to denote no change in triangulation.
+     * @param triangulation
+     */
+
     @Override
     public void invalidateView(Triangulation triangulation) {
         this.setTriangulation(triangulation);
-        this.flagForChangeInRelatedParameters = -1;
         invalidate();
+        this.flagForChangeInRelatedParameters = -1;
     }
 
     public TrianglifyView setTriangulation(Triangulation triangulation) {
@@ -248,9 +255,13 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         }
     }
 
-    public void updateView(){
+    /**
+     * This method ensures the increase in performance by generating only the necessary changes in triangulation.
+     * According to the value of flagForChangeInRelatedParameters, it makes the necessary method call.
+     */
+    public void updateView() {
         if (flagForChangeInRelatedParameters == 0 || flagForChangeInRelatedParameters == -1) {
-            invalidate();
+            invalidateView(triangulation);
         } else if (flagForChangeInRelatedParameters == 2) {
             generateNewColoredSoupAndInvalidate();
         } else if (flagForChangeInRelatedParameters == 1 || flagForChangeInRelatedParameters == -2) {
@@ -258,11 +269,17 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         }
     }
 
+    /**
+     * This method is called when only the coloration of the view is to be changed.
+     */
     void generateNewColoredSoupAndInvalidate() {
         presenter.setJustColor(1);
         presenter.generateSoupAndInvalidateView();
     }
 
+    /**
+     * This method is called when the triangulation is to be generated from scratch.
+     */
     public void generateAndInvalidate() {
         presenter.setJustColor(0);
         presenter.generateSoupAndInvalidateView();

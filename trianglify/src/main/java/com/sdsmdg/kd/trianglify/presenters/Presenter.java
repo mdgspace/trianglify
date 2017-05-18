@@ -31,6 +31,10 @@ public class Presenter {
     private TrianglifyViewInterface view;
     private Triangulation triangulation;
     private TriangleGeneratorTask generatorTask;
+
+    /**
+     * flag that keeps track of whether just the color of the triangulation is to be changed or not.
+     */
     private int justColor;
 
     public Presenter(TrianglifyViewInterface view) {
