@@ -241,9 +241,16 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         super.onDraw(canvas);
         gridHeight = getHeight();
         gridWidth = getWidth();
-
-        if (flagForChangeInRelatedParameters == 0 || flagForChangeInRelatedParameters == -1) {
+        if (triangulation != null) {
             plotOnCanvas(canvas);
+        } else {
+            generateAndInvalidate();
+        }
+    }
+
+    public void updateView(){
+        if (flagForChangeInRelatedParameters == 0 || flagForChangeInRelatedParameters == -1) {
+            invalidate();
         } else if (flagForChangeInRelatedParameters == 2) {
             generateNewColoredSoupAndInvalidate();
         } else if (flagForChangeInRelatedParameters == 1 || flagForChangeInRelatedParameters == -2) {

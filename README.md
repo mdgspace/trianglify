@@ -88,7 +88,7 @@ trianglifyView.setGridWidth(trianglifyView.getWidth())
     app:fillTriangle="true" />
 ```
 
-> TrianglifyView should be invalidated on change of any of the parameter for changes to take effect. To invalidate TrianglifyView call invalidate method on the Trianglify View Instance.  
+> TrianglifyView should be invalidated on change of any of the parameter for changes to take effect. To invalidate TrianglifyView call updateView method on the Trianglify View Instance.  
 
 
 ## 2. API Documentation

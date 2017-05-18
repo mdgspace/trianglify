@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 trianglifyView.setVariance(progress+1);
-                trianglifyView.invalidate();
+                trianglifyView.updateView();
             }
 
             @Override
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 trianglifyView.setCellSize(progress+100);
-                trianglifyView.invalidate();
+                trianglifyView.updateView();
             }
 
             @Override
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 trianglifyView.setPalette(Palette.getPalette(progress));
-                trianglifyView.invalidate();
+                trianglifyView.updateView();
             }
 
             @Override
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 if (isChecked || trianglifyView.isFillTriangle()) {
                     trianglifyView.setDrawStrokeEnabled(isChecked);
                     strokeCheckBox.setChecked(isChecked);
-                    trianglifyView.invalidate();
+                    trianglifyView.updateView();
                 } else {
                     strokeCheckBox.setChecked(!isChecked);
                     showColoringError();
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 if (isChecked || trianglifyView.isDrawStrokeEnabled()) {
                     trianglifyView.setFillTriangle(isChecked);
                     fillCheckBox.setChecked(isChecked);
-                    trianglifyView.invalidate();
+                    trianglifyView.updateView();
                 } else {
                     fillCheckBox.setChecked(!isChecked);
                     showColoringError();
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 trianglifyView.setRandomColoring(isChecked);
-                trianglifyView.invalidate();
+                trianglifyView.updateView();
             }
         });
     }
