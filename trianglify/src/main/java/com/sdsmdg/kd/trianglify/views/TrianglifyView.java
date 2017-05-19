@@ -23,6 +23,24 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     int variance;
     int cellSize;
 
+    public enum ViewState {
+        NULL_TRIANGULATION,
+        UNCHANGED_TRIANGULATION,
+        PAINT_STYLE_CHANGED,
+        COLOR_SCHEME_CHANGED,
+        GRID_PARAMETERS_CHANGED
+    }
+    /**
+     * Flag for keeping track of changes in attributes of the view. Helpful in increasing
+     * performance by stopping unnecessary regeneration of triangulation. Look at smartUpdate method for more.
+     * if triangulation is null then value is NULL_TRIANGULATION
+     * if triangulation is unchanged then value is UNCHANGED_TRIANGULATION
+     * if change in fillTriangle or drawStroke then value is PAINT_STYLE_CHANGED
+     * if change in grid width, grid height, variance, bleedX, bleedY, typeGrid or cell size then value is GRID_PARAMETERS_CHANGED
+     * if change in palette or random coloring then value is COLOR_SCHEME_CHANGED
+     */
+    private ViewState viewState = ViewState.NULL_TRIANGULATION;
+
     boolean fillTriangle;
     boolean drawStroke;
     boolean randomColoring;
@@ -45,7 +63,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     protected void onSizeChanged(int width, int height, int oldWidth, int oldHeight) {
         super.onSizeChanged(width, height, oldWidth, oldHeight);
         gridWidth = width;
-        gridHeight =height;
+        gridHeight = height;
     }
 
     public void attributeSetter(TypedArray typedArray) {
@@ -73,7 +91,14 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setPalette(Palette palette) {
         this.palette = palette;
+        if (this.viewState != ViewState.GRID_PARAMETERS_CHANGED) {
+            this.viewState = ViewState.COLOR_SCHEME_CHANGED;
+        }
         return this;
+    }
+
+    public void setViewState(ViewState viewState) {
+        this.viewState = viewState;
     }
 
     @Override
@@ -83,6 +108,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setCellSize(int cellSize) {
         this.cellSize = cellSize;
+        this.viewState = ViewState.GRID_PARAMETERS_CHANGED;
         return this;
     }
 
@@ -93,6 +119,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setGridHeight(int gridHeight) {
         this.gridHeight = gridHeight;
+        this.viewState = ViewState.GRID_PARAMETERS_CHANGED;
         return this;
     }
 
@@ -103,6 +130,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setGridWidth(int gridWidth) {
         this.gridWidth = gridWidth;
+        this.viewState = ViewState.GRID_PARAMETERS_CHANGED;
         return this;
     }
 
@@ -113,6 +141,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setBleedX(int bleedX) {
         this.bleedX = bleedX;
+        this.viewState = ViewState.GRID_PARAMETERS_CHANGED;
         return this;
     }
 
@@ -123,6 +152,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setBleedY(int bleedY) {
         this.bleedY = bleedY;
+        this.viewState = ViewState.GRID_PARAMETERS_CHANGED;
         return this;
     }
 
@@ -132,7 +162,8 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     }
 
     public TrianglifyView setTypeGrid(int typeGrid) {
-        typeGrid = typeGrid;
+        this.typeGrid = typeGrid;
+        this.viewState = ViewState.GRID_PARAMETERS_CHANGED;
         return this;
     }
 
@@ -143,6 +174,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setVariance(int variance) {
         this.variance = variance;
+        this.viewState = ViewState.GRID_PARAMETERS_CHANGED;
         return this;
     }
 
@@ -161,10 +193,18 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         return triangulation;
     }
 
+    /**
+     * invalidateView method invalidates the view by setting
+     * @param triangulation to the view instance triangulation and calling invalidate method.
+     * Once invalidated, the flag is changed to UNCHANGED_TRIANGULATION to denote no change in the triangulation
+     * parameters after rendering the view.
+     */
+
     @Override
     public void invalidateView(Triangulation triangulation) {
         this.setTriangulation(triangulation);
         invalidate();
+        this.viewState = ViewState.UNCHANGED_TRIANGULATION;
     }
 
     public TrianglifyView setTriangulation(Triangulation triangulation) {
@@ -179,6 +219,9 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setFillTriangle(boolean fillTriangle) {
         this.fillTriangle = fillTriangle;
+        if (this.viewState != ViewState.GRID_PARAMETERS_CHANGED && this.viewState != ViewState.COLOR_SCHEME_CHANGED) {
+            this.viewState = ViewState.PAINT_STYLE_CHANGED;
+        }
         return this;
     }
 
@@ -189,6 +232,9 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setDrawStrokeEnabled(boolean drawStroke) {
         this.drawStroke = drawStroke;
+        if (this.viewState != ViewState.GRID_PARAMETERS_CHANGED && this.viewState != ViewState.COLOR_SCHEME_CHANGED) {
+            this.viewState = ViewState.PAINT_STYLE_CHANGED;
+        }
         return this;
     }
 
@@ -199,6 +245,9 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setRandomColoring(boolean randomColoring) {
         this.randomColoring = randomColoring;
+        if (this.viewState != ViewState.GRID_PARAMETERS_CHANGED) {
+            this.viewState = ViewState.COLOR_SCHEME_CHANGED;
+        }
         return this;
     }
 
@@ -207,14 +256,46 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         super.onDraw(canvas);
         gridHeight = getHeight();
         gridWidth = getWidth();
-        if (this.triangulation != null) {
+        if (triangulation != null) {
             plotOnCanvas(canvas);
         } else {
             generateAndInvalidate();
         }
     }
 
+    /**
+     * smartUpdate method ensures the increase in performance by generating only the necessary changes in triangulation.
+     * According to the value of flagForChangeInRelatedParameters, it makes the necessary method call.
+     */
+    public void smartUpdate() {
+        if (viewState == ViewState.PAINT_STYLE_CHANGED || viewState == ViewState.UNCHANGED_TRIANGULATION) {
+            invalidateView(triangulation);
+        } else if (viewState == ViewState.COLOR_SCHEME_CHANGED) {
+            generateNewColoredSoupAndInvalidate();
+        } else if (viewState == ViewState.GRID_PARAMETERS_CHANGED || viewState == ViewState.NULL_TRIANGULATION) {
+            generateAndInvalidate();
+        }
+    }
+
+    /**
+     * generateNewColoredSoupAndInvalidate method is called when only the coloration of the view is to be changed. It sets the
+     * GenerateOnlyColor boolean of presenter to true, so that when generateSoupAndInvalidateView is
+     * called, only the new colors are assigned to the triangles in the triangulation, since the
+     * grid parameters have not been changed, thereby bypassing the unnecessary regeneration of grid and delaunay triangulation.
+     */
+    void generateNewColoredSoupAndInvalidate() {
+        presenter.setGenerateOnlyColor(true);
+        presenter.generateSoupAndInvalidateView();
+    }
+
+    /**
+     * generateAndInvalidate method is called when the triangulation is to be generated from scratch. It sets the
+     * GenerateOnlyColor boolean of presenter to false so that when generateSoupAndInvalidateView is
+     * called, the grid and delaunay triangulation is regenerated according to the new parameters, followed by
+     * colorization and plotting of the triangulation onto the view.
+     */
     public void generateAndInvalidate() {
+        presenter.setGenerateOnlyColor(false);
         presenter.generateSoupAndInvalidateView();
     }
 

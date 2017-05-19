@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 trianglifyView.setVariance(progress+1);
-                trianglifyView.generateAndInvalidate();
+                trianglifyView.smartUpdate();
             }
 
             @Override
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 trianglifyView.setCellSize(progress+100);
-                trianglifyView.generateAndInvalidate();
+                trianglifyView.smartUpdate();
             }
 
             @Override
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 trianglifyView.setPalette(Palette.getPalette(progress));
-                trianglifyView.generateAndInvalidate();
+                trianglifyView.smartUpdate();
             }
 
             @Override
@@ -100,8 +100,14 @@ public class MainActivity extends AppCompatActivity {
         strokeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                trianglifyView.setDrawStrokeEnabled(isChecked);
-                trianglifyView.generateAndInvalidate();
+                if (isChecked || trianglifyView.isFillTriangle()) {
+                    trianglifyView.setDrawStrokeEnabled(isChecked);
+                    strokeCheckBox.setChecked(isChecked);
+                    trianglifyView.smartUpdate();
+                } else {
+                    strokeCheckBox.setChecked(!isChecked);
+                    showColoringError();
+                }
             }
         });
 
@@ -110,8 +116,14 @@ public class MainActivity extends AppCompatActivity {
         fillCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                trianglifyView.setFillTriangle(isChecked);
-                trianglifyView.generateAndInvalidate();
+                if (isChecked || trianglifyView.isDrawStrokeEnabled()) {
+                    trianglifyView.setFillTriangle(isChecked);
+                    fillCheckBox.setChecked(isChecked);
+                    trianglifyView.smartUpdate();
+                } else {
+                    fillCheckBox.setChecked(!isChecked);
+                    showColoringError();
+                }
             }
         });
 
@@ -121,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 trianglifyView.setRandomColoring(isChecked);
-                trianglifyView.generateAndInvalidate();
+                trianglifyView.smartUpdate();
             }
         });
     }
@@ -149,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
                 .setPalette(Palette.getPalette(rnd.nextInt(28)))
                 .setRandomColoring(rnd.nextInt(2) == 0)
                 .setFillTriangle(rnd.nextInt(2) == 0)
+                .setDrawStrokeEnabled(rnd.nextInt(2) == 0)
                 .setVariance(rnd.nextInt(60));
         updateUIElements(trianglifyView);
     }
@@ -183,9 +196,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public void checkForColoringError(TrianglifyView trianglifyView) {
-        if (!(trianglifyView.isFillTriangle() | trianglifyView.isDrawStrokeEnabled())) {
+    public void showColoringError() {
             Toast.makeText(this, "view should at least be set to draw strokes or fill triangles or both.", Toast.LENGTH_LONG).show();
-        }
     }
 }

@@ -12,6 +12,7 @@ import com.sdsmdg.kd.trianglify.utilities.patterns.Patterns;
 import com.sdsmdg.kd.trianglify.utilities.patterns.Rectangle;
 import com.sdsmdg.kd.trianglify.utilities.colorizers.Colorizer;
 import com.sdsmdg.kd.trianglify.utilities.colorizers.FixedPointsColorizer;
+import com.sdsmdg.kd.trianglify.views.TrianglifyView;
 import com.sdsmdg.kd.trianglify.views.TrianglifyViewInterface;
 
 import java.util.List;
@@ -32,8 +33,21 @@ public class Presenter {
     private Triangulation triangulation;
     private TriangleGeneratorTask generatorTask;
 
+    /**
+     * flag that keeps track of whether just the color of the triangulation is to be changed or not.
+     */
+    private boolean generateOnlyColor;
+
     public Presenter(TrianglifyViewInterface view) {
         this.view = view;
+    }
+
+    public boolean getGenerateOnlyColor() {
+        return generateOnlyColor;
+    }
+
+    public void setGenerateOnlyColor(boolean generateOnlyColor) {
+        this.generateOnlyColor = generateOnlyColor;
     }
 
     /**
@@ -65,11 +79,15 @@ public class Presenter {
     }
 
     /**
-     * Generates soup and returns triangulation
-     * @return triangulation corresponding to current instance parameters
+     * Generates soup corresponding to current instance parameters
+     * @return triangulation generated
      */
     public Triangulation getSoup() {
-        generateSoup();
+        if (generateOnlyColor) {
+            triangulation = generateColoredSoup(triangulation);
+        } else {
+            generateSoup();
+        }
         return triangulation;
     }
 
@@ -110,8 +128,13 @@ public class Presenter {
 
     public void clearSoup() {
         triangulation = null;
+        view.setViewState(TrianglifyView.ViewState.NULL_TRIANGULATION);
     }
 
+    /**
+     * generateSoupAndInvalidateView method starts a new thread to regenerate the triangulation so
+     * that the regeneration is not done on the UI thread, thereby reducing the workload on the UI thread.
+     */
     public void generateSoupAndInvalidateView() {
         if (generatorTask != null) {
             generatorTask.cancel(true);
@@ -119,6 +142,12 @@ public class Presenter {
         generatorTask = new TriangleGeneratorTask();
         generatorTask.execute();
     }
+
+    /**
+     * TriangleGeneratorTask specifies the task of the thread. It regenerates the triangulation in the background in
+     * accordance to the value of the generateOnlyColor boolean. Upon the generation of the triangulation, it calls
+     * upon the invalidateView method to render the triangulation to the view.
+     */
 
     class TriangleGeneratorTask extends AsyncTask<Void, Void, Triangulation> {
 

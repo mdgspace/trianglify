@@ -45,11 +45,11 @@ compile 'com.sdsmdg.kd:trianglify:0.8-beta'
     4. [Note on Units of CellSize, Variance, Bleed & Grid Height](#24-note-on-units-of-cellsize-variance-bleed-and-grid-height)
     5. [Setting Palette using `.setPalette()`](#25-setting-palette-using-setpalette-method)
     6. [Using custom Palettes](#26-using-custom-palettes)
+	7. [Updating the View](#27-updating-the-view)
 3. [Performance analysis](#3-performance-analysis)
-4. [Known issues and bugs](#4-known-issues-and-bugs)
-5. [UML Diagrams](#5-uml-diagrams)
-6. [Credits](#6-credits)
-7. [Contributing](#7-contributing)
+4. [UML Diagrams](#4-uml-diagrams)
+5. [Credits](#5-credits)
+6. [Contributing](#6-contributing)
 
 ## 1. Example Usages
 ### 1.1 Java
@@ -87,10 +87,7 @@ trianglifyView.setGridWidth(trianglifyView.getWidth())
     app:fillStrokes="true"
     app:fillTriangle="true" />
 ```
-
-> TrianglifyView should be invalidated on change of any of the parameter for changes to take effect.To invalidate TrianglifyView call generateAndInvalidate method of TrianglifyView class.  
-**Note:** If any of the parameters is changed `TrianglifyView` regenerates every thing from scratch
-
+ 
 
 ## 2. API Documentation
 ### 2.1 Attributes
@@ -162,6 +159,29 @@ or
 Palette customPalette = new Palette(int colors[]);
 ```
 > Array based constructor will throw `IllegalArgumentException` if size of array is not exactly 9.
+
+### 2.7 Updating the View
+
+`TrianglifyView` should be updated on change of any of the parameter for changes to take effect. `TrianglifyView` can be updated by the following two methods:
+
+####Smart update of view using `smartUpdate`
+
+`smartUpdate` updates the view smartly by looking at the parameter changes in the view since the last update, and accordingly decides which parts of the view should be updated. More formal description is:
+* If only the `drawStroke` or `fillTriangle` values have been changed since the last update, the triangulation is only replotted in accordance to the new paint strokes. 
+* If the `randomColoring` or `palette` have been changed without any changes in the grid parameters, only the new colors are assigned to the triangulation without regenerating the grid and delaunay triangulation, after which the view is plotted in accordance to the `fillTriangle` and `drawStrokes` parameters.
+* If there are changes in the grid parameters, the whole triangulation has to be generated from scratch. The method generates a new grid according to the parameters and fits a delaunay triangulation. This is followed by colorization and plotting of the triangulation onto the view.
+
+####Complete regeneration using `generateAndInvalidate`
+
+This is used when the triangulation is to be generated from scratch. The method generates a grid according to the parameters and fits a delaunay triangulation. This is followed by colorization and plotting of the triangulation onto the view.
+
+####(Basic) Performance Comparision of the Two Methods
+
+`smartUpdate` method regenerates the whole triangulation only when the grid parameters have been changed, thereby bypassing the unnecessary regeneration of grid and delaunay triangulation in situations when parameters other than grid parameters have been changed. This leads to a faster rendering of view. 
+
+The `generateAndInvalidate` method regenerates the whole triangulation irrespective of which parameters have been changed, carrying out steps that might not be necessary, hence causing hindrance to performance.
+
+
 
 ## 3. Performance analysis
 Few notes on performance of Trianglify
