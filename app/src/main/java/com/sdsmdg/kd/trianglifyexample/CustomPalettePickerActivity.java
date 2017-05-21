@@ -54,19 +54,14 @@ public class CustomPalettePickerActivity extends AppCompatActivity {
         trianglifyView.setPalette(new Palette(colors));
         trianglifyView.smartUpdate();
 
-        c0 = (ImageView) findViewById(R.id.custom_palette_c0);
-        c1 = (ImageView) findViewById(R.id.custom_palette_c1);
-        c2 = (ImageView) findViewById(R.id.custom_palette_c2);
-        c3 = (ImageView) findViewById(R.id.custom_palette_c3);
-        c4 = (ImageView) findViewById(R.id.custom_palette_c4);
-        c5 = (ImageView) findViewById(R.id.custom_palette_c5);
-        c6 = (ImageView) findViewById(R.id.custom_palette_c6);
-        c7 = (ImageView) findViewById(R.id.custom_palette_c7);
-        c8 = (ImageView) findViewById(R.id.custom_palette_c8);
+        int[] imageViewID = {R.id.custom_palette_c0, R.id.custom_palette_c1, R.id.custom_palette_c2,
+                R.id.custom_palette_c3, R.id.custom_palette_c4, R.id.custom_palette_c5,
+                R.id.custom_palette_c6, R.id.custom_palette_c7, R.id.custom_palette_c8};
 
         final ImageView[] imageViews = {c0, c1, c2, c3, c4, c5, c6, c7, c8};
 
         for (int i = 0; i < imageViews.length; i++) {
+            imageViews[i] = (ImageView) findViewById(imageViewID[i]);
             imageViews[i].setBackgroundColor(colors[i]);
             final int finalI = i;
 
