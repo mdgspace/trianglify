@@ -22,6 +22,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     int typeGrid;
     int variance;
     int cellSize;
+    boolean fillViewCompletely;
 
     public enum ViewState {
         NULL_TRIANGULATION,
@@ -79,6 +80,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
             palette = Palette.getPalette(paletteNumber);
             typeGrid = GRID_RECTANGLE;
             randomColoring = typedArray.getBoolean(R.styleable.TrianglifyView_randomColoring, false);
+            fillViewCompletely = typedArray.getBoolean(R.styleable.TrianglifyView_fillViewCompletely, false);
         }finally {
             typedArray.recycle();
         }
@@ -109,7 +111,19 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     public TrianglifyView setCellSize(int cellSize) {
         this.cellSize = cellSize;
         this.viewState = ViewState.GRID_PARAMETERS_CHANGED;
+        if ( fillViewCompletely ) {
+            checkViewFilledCompletely();
+        }
         return this;
+    }
+
+    @Override
+    public void setFillViewCompletely(boolean fillViewCompletely) {
+        this.fillViewCompletely = fillViewCompletely;
+    }
+
+    public boolean isFillViewCompletely() {
+        return fillViewCompletely;
     }
 
     @Override
@@ -142,6 +156,9 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     public TrianglifyView setBleedX(int bleedX) {
         this.bleedX = bleedX;
         this.viewState = ViewState.GRID_PARAMETERS_CHANGED;
+        if ( fillViewCompletely ) {
+            checkViewFilledCompletely();
+        }
         return this;
     }
 
@@ -153,6 +170,9 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     public TrianglifyView setBleedY(int bleedY) {
         this.bleedY = bleedY;
         this.viewState = ViewState.GRID_PARAMETERS_CHANGED;
+        if ( fillViewCompletely ) {
+            checkViewFilledCompletely();
+        }
         return this;
     }
 
@@ -344,5 +364,11 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         path.close();
 
         canvas.drawPath(path, paint);
+    }
+
+    public void checkViewFilledCompletely(){
+        if ( bleedY <= cellSize || bleedX <= cellSize ) {
+            throw new IllegalArgumentException("bleedY and bleedX should be larger than cellSize for view to be completely filled.");
+        }
     }
 }

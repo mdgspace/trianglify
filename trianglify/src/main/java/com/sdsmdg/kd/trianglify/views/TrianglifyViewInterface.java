@@ -18,6 +18,7 @@ public interface TrianglifyViewInterface {
     int getGridHeight();
     int getVariance();
     int getCellSize();
+    void setFillViewCompletely(boolean fillViewCompletely);
     void setViewState(TrianglifyView.ViewState viewState);
     boolean isFillTriangle();
     boolean isDrawStrokeEnabled();
