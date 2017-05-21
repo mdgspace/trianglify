@@ -185,6 +185,12 @@ public class MainActivity extends AppCompatActivity {
                 .setFillTriangle(rnd.nextInt(2) == 0)
                 .setDrawStrokeEnabled(rnd.nextInt(2) == 0)
                 .setVariance(rnd.nextInt(60));
+
+        if ( !trianglifyView.isFillTriangle() && !trianglifyView.isDrawStrokeEnabled()) {
+            trianglifyView.setDrawStrokeEnabled(true);
+            trianglifyView.setFillTriangle(true);
+        }
+
         updateUIElements(trianglifyView);
     }
 
