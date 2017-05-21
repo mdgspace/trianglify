@@ -9,9 +9,9 @@ of Trianglify, then here are some notes on how to do that.
 * [Coding Guidelines](#coding-guidelines)
     * [Pull Requests](#pull-requests)
     * [MVP architecture](#mvp-architecture)
-    * [Style Check](style-check)
+    * [Style Check](#style-check)
     * [Git Commit Messages](#git-commit-messages)
-* [MDG Chat Room](#mdg-Chat-Room)
+* [MDG Chat Room](#mdg-chat-room)
 * [Security](#security)
     
 ## Reporting bugs and opening issues
@@ -36,16 +36,15 @@ If you've got an idea for a change then please discuss it in the open first,
 either by opening an issue, or by joining us in our
 [MDG public chat room](https://mdg.sdslabs.co/chat).
 
-
 If you're looking for something to work on, have a look at the open issues in the repository [here](https://github.com/sdsmdg/trianglify/issues).
 
 > We don't have a set format for Pull requests, but we expect you to list changes, bugs generated and other relevant things in PR message.
 
 ### MVP architecture
-Trianglify if built keeping [MVP (model-view-presenter)](https://en.wikipedia.org/wiki/Model–view–presenter) architecture in mind, so any changes that are proposed to Trianglfiy should follow MVP architecture. If you are confused regarding where a method should be, join us at  [MDG public chat room](https://mdg.sdslabs.co/chat), we'll be happy to help.
+Trianglify is built keeping [MVP (model-view-presenter)](https://en.wikipedia.org/wiki/Model–view–presenter) architecture in mind, so any changes that are proposed to Trianglfiy should follow MVP architecture. If you are confused regarding where a method should be, join us at  [MDG public chat room](https://mdg.sdslabs.co/chat), we'll be happy to help.
 
 ### Style Check
-Trianglify uses Sputnik for performing style check in codebase, this helps us maintaining quality of the code. Sputniks checks for violation upon submission of Pull Requests. If Sputnik reports a violation and you believe that it is not applicable just comment on sputnik review `N/A` with reason why it is not applicable. **Pull Requests will only be merged once all the violations are resolved**.
+Trianglify uses Sputnik for performing style checks on the codebase, this helps us maintaining quality of the code. Sputnik checks for violation upon submission of Pull Requests. If Sputnik reports a violation and you believe that it is not applicable, just comment on sputnik review `N/A` with reason why it is not applicable. **Pull Requests will only be merged once all the violations are resolved**.
 
 ### Git Commit Messages
 * Use the present tense ("Add feature" not "Added feature")
@@ -58,9 +57,6 @@ Trianglify uses Sputnik for performing style check in codebase, this helps us ma
     * :racehorse: `:racehorse:` when improving performance
     * :non-potable_water: `:non-potable_water:` when plugging memory leaks
     * :memo: `:memo:` when writing docs
-    * :penguin: `:penguin:` when fixing something on Linux
-    * :apple: `:apple:` when fixing something on macOS
-    * :checkered_flag: `:checkered_flag:` when fixing something on Windows
     * :bug: `:bug:` when fixing a bug
     * :fire: `:fire:` when removing code or files
     * :green_heart: `:green_heart:` when fixing the CI build
@@ -70,6 +66,12 @@ Trianglify uses Sputnik for performing style check in codebase, this helps us ma
     * :arrow_down: `:arrow_down:` when downgrading dependencies
     * :shirt: `:shirt:` when removing linter warnings
 
+## MDG Chat Room
+
+If you want to ask any questions in real-time, or get a feel for what's going on
+then please drop into our [MDG public chat room](https://mdg.sdslabs.co/chat).
+If no one is online then you can still leave a message that will hopefully get a reply
+when we return.
 
 ## Security
 
@@ -78,9 +80,3 @@ to address them. All security related issues/patches should be sent directly to
 [sdsmobilelabs@gmail.com](mailto:sdsmobilelabs@gmail.com) where we will attempt to address them quickly. If you're
 unsure whether something is a security issue or not, then please be cautious and contact us at [sdsmobilelabs@gmail.com](mailto:sdsmobilelabs@gmail.com) first.
 
-## MDG Chat Room
-
-If you want to ask any questions in real-time, or get a feel for what's going on
-then please drop into our [MDG public chat room](https://mdg.sdslabs.co/chat).
-If no one is online then you can still leave a message that will hopefully get a reply
-when we return.

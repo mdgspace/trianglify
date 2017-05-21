@@ -43,4 +43,4 @@ Development of Trianglify wouldn't have been possible without following librarie
 If you want to contribute to improve this library, please read [our guidelines](CONTRIBUTING.md).
 
 # License
-Trianglify is licensed under `MIT license`. View [license here](LICENSE.md).
+Trianglify is licensed under `MIT license`. View license [here](LICENSE.md).
