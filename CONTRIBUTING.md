@@ -44,7 +44,7 @@ If you're looking for something to work on, have a look at the open issues in th
 Trianglify is built keeping [MVP (model-view-presenter)](https://en.wikipedia.org/wiki/Model–view–presenter) architecture in mind, so any changes that are proposed to Trianglfiy should follow MVP architecture. If you are confused regarding where a method should be, join us at  [MDG public chat room](https://mdg.sdslabs.co/chat), we'll be happy to help.
 
 ### Style Check
-Trianglify uses Sputnik for performing style checks on the codebase, which helps us in maintaining quality of the code. Sputnik checks for violation upon submission of Pull Requests. If Sputnik reports a violation and you believe that it is not applicable, just comment `N/A` on sputnik review with the reason why it is not applicable. **Pull Requests will only be merged once all the violations are resolved**.
+Trianglify uses Sputnik for performing style checks on the codebase, which helps us in maintaining the quality of the code. Sputnik checks for violation upon submission of Pull Requests. If Sputnik reports a violation and you believe that it is not applicable, just comment `N/A` on sputnik review with the reason why it is not applicable. **Pull Requests will only be merged once all the violations are resolved**.
 
 ### Git Commit Messages
 * Use the present tense ("Add feature" not "Added feature")
