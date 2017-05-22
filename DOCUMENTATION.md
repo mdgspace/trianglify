@@ -115,7 +115,7 @@ public int pxToDp(int px) {
 ```
 
 ### 2.5 Setting Palette using setPalette method
-`TrianglifyView`'s `setPalette` methods accepts `Palette` object. Palette can be set using one of the following method: 
+`TrianglifyView`'s `setPalette` method accepts `Palette` object. Palette can be set using one of the following methods: 
 * To use one of the predefined palette, for example **Spectral** use `trianglifyView.setPalette(Palette.getPalette(Palette.Spectral))`.
 * To use palette referring to its index use `Palette.getPalette(<index>)`.  
 * To use custom palette refer to section [2.6 Using custom Palettes](#26-using-custom-palettes).
