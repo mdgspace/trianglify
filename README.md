@@ -18,7 +18,7 @@
 
 <img src="resources/splash.png" data-canonical-src="resources/default_pattern_explained.jpg"/>
 
-Trianglify is an Android library that helps creates views with beautiful patterns. Trianglify is based on MVP architecture and licensed under MIT license
+Trianglify is an Android library that helps creates views with beautiful patterns. Trianglify is based on MVP architecture and licensed under MIT license.
 
 # Latest Release
 * [Version 0.8 beta](https://bintray.com/suyashmahar/trianglify/trianglify/0.8-beta)
@@ -27,16 +27,17 @@ Trianglify is an Android library that helps creates views with beautiful pattern
     * Correct coloring of view, color now drawn matches its name [#18](https://github.com/sdsmdg/trianglify/issues/18)
     * Support for custom palette ([usage](#26-using-custom-palettes)) [#17](https://github.com/sdsmdg/trianglify/issues/17)
 
-For more check complete [change log](/CHANGELOG.md)  
+For more check complete [change log](/CHANGELOG.md).  
 
 # Usages and Documentation
-For details on usage and documentation of Trianglify check documentation [here](DOCUMENTATION.md).
+For details on usage and documentation of Trianglify, check documentation [here](DOCUMENTATION.md).
 
 # Credits
 Trianglify is inspired from qrohlf's work to generate triangle art, [Trianglify](https://github.com/qrohlf/trianglify)  
 
 Development of Trianglify wouldn't have been possible without following libraries:
 * [Delaunay Triangulator by jdiemke](https://github.com/jdiemke/delaunay-triangulator)
+* [Color Picker by QuadFlask](https://github.com/QuadFlask/colorpicker)
 
 
 # Guidelines for Contributors

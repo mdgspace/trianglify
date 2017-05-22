@@ -1,4 +1,4 @@
-Welcome to the Trianglify documentation! Here's is the ultimate guide to use Trianglify in your app.
+Welcome to the Trianglify documentation! Here's the ultimate guide to use Trianglify in your app.
 
 # Documentation
 ## Contents
@@ -6,22 +6,22 @@ Welcome to the Trianglify documentation! Here's is the ultimate guide to use Tri
     1. [Java](#11-java)
     2. [XML](#12-xml)
 2. [APIs](#2-api-documentation)
-    1. [Attributes and methods](#21-attributes-and-methods)
+    1. [Attributes and Methods](#21-attributes-and-methods)
         1. [TrianglifyView](#211-trianglifyview)
         2. [Palette](#212-palette)
-    2. [Details of Bleed and Grid dimensions](#22-details-of-bleed-and-grid-dimensions)
+    2. [Details of Bleed and Grid Dimensions](#22-details-of-bleed-and-grid-dimensions)
     4. [Note on Units of CellSize, Variance, Bleed & Grid Height](#24-note-on-units-of-cellsize-variance-bleed-and-grid-height)
     5. [Setting Palette using setPalette](#25-setting-palette-using-setpalette-method)
     6. [Using custom Palettes](#26-using-custom-palettes)
 	7. [Updating the View](#27-updating-the-view)
-3. [Performance analysis](#3-performance-analysis)
+3. [Performance Analysis](#3-performance-analysis)
 4. [UML Diagrams](#4-uml-diagrams)
 
 ## 1. Usages
 ### 1.1 Java
 
 #### Import Statements
-Include following lines along with other import statements at the beginning of your activity's java class
+Include following lines along with other import statements at the beginning of your activity's java class:  
 
 ```java
 import com.sdsmdg.kd.trianglify.views.TrianglifyView;
@@ -71,7 +71,7 @@ trianglifyView.setGridWidth(trianglifyView.getWidth())
 | Variance                    | 10 px          | .setVariance(...)       | variance        | Displacement of points from original grid position to create triangles of different sizes                                     |
 | Cell Size                   | 40 px          | .setCellSize(...)       | cell_size       | Size of cells of rectangular grid used to generated vertices of the triangles                                                 |
 | Grid Type*                  | 0              | .setGridType(...)       | grid_type       | Type of grid 0 for Rectangular                                                                                                |
-| Fill Triangles with color** | true           | .setFillTriangle(...)   | fill_triangles  | Fills the triangle generated with color chosen                                                                                |
+| Fill Triangles with color   | true           | .setFillTriangle(...)   | fill_triangles  | Fills the triangle generated with color chosen                                                                                |
 | Draw strokes                | false          | .setDrawStrokes(...)    | draw_strokes    | Draws triangle's border with neighboring triangle's color                                                                     |
 | Color Palette               | YlGn           | .setPalette(...)        | palette         | Set of existing colors to color triangles                                                                                     |
 | Random Coloring             | false          | .setRandomColoring(...) | random_coloring | If random coloring is on triangles will be colored randomly instead of linear interpolation                                   |
@@ -81,15 +81,15 @@ trianglifyView.setGridWidth(trianglifyView.getWidth())
 #### 2.1.2 Palette
 | Method      | Return Type | Type        | Parameters                                                             | Description                                                                                                                     |
 |-------------|-------------|-------------|------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|
-| Constructor | -           | Constructor | int c0, int c1, int c2, int c3, int c4, int c5, int c6, int c7, int c8 | Takes eight parameters as colors to construct palette                                                                           |
-| Constructor | -           | Constructor | int[] colors                                                           | Takes eight parameters as an array of colors to construct palette                                                               |
-| getPalette  | Palette     | static      | int paletteIndex                                                       | Returns palette object corresponding to supplied value of paletteIndex, palette is constructed from a predefined set of colors. |
+| Constructor | -           | Constructor | int c0, int c1, int c2, int c3, int c4, int c5, int c6, int c7, int c8 | Takes nine parameters as colors to construct palette                                                                           |
+| Constructor | -           | Constructor | int[] colors                                                           | Takes nine parameters as an array of colors to construct palette                                                               |
+| getPalette  | Palette     | static      | int paletteIndex                                                       | Returns palette object corresponding to passed value of paletteIndex, palette is constructed from a predefined set of colors. |
 | indexOf     | int         | static      | Palette palette                                                        | Returns index of palette object in predefined palette, -1 if doesn't exists                                                     |
-| getColor    | int         | -           | int index                                                              | Returns color corresponding to index passed from the set of color for a palette                                                 |
+| getColor    | int         | -           | int index                                                              | Returns color corresponding to index passed from the set of colors for a palette                                                 |
 
 <p>
 
-### 2.2 Details of Bleed and Grid dimensions
+### 2.2 Details of Bleed and Grid Dimensions
 * **Bleed:** Bleed defines the dimensions of extra size that TrianglifyView view generate so that triangles on the edge doesn't appear to be chopped off. In most of the cases `min{bleedX, bleedY} > cellSize` would ensure that the view is completely filled.  
 * **Grid Dimensions:** `GridHeight` and `GridWidth` defines the dimensions of the visible area of the view.  
 
@@ -115,7 +115,7 @@ public int pxToDp(int px) {
 ```
 
 ### 2.5 Setting Palette using setPalette method
-`TrianglifyView`'s `setPalette` method accepts `Palette` object. Palette can be set using one of the following method: 
+`TrianglifyView`'s `setPalette` methods accepts `Palette` object. Palette can be set using one of the following method: 
 * To use one of the predefined palette, for example **Spectral** use `trianglifyView.setPalette(Palette.getPalette(Palette.Spectral))`.
 * To use palette referring to its index use `Palette.getPalette(<index>)`.  
 * To use custom palette refer to section [2.6 Using custom Palettes](#26-using-custom-palettes).
@@ -124,7 +124,7 @@ public int pxToDp(int px) {
 
 **Note: Palette enum defines total of 28 named palettes that can be used to generate views without specifying colors.** 
 
-### 2.6 Using custom Palettes
+### 2.6 Using Custom Palettes
 Custom Palettes can be used by creating new palette using one of the following constructor:
 
 ```java
@@ -161,11 +161,11 @@ The `generateAndInvalidate` method regenerates the whole triangulation irrespect
 
 
 
-## 3. Performance analysis
+## 3. Performance Analysis
 Few notes on performance of Trianglify
 * Performance takes a serious hit with decrease in cell size. Time complexity of the algorithm to generate triangles from grid of points is Ω(n*log(n)). Decreasing cell size increases n (number of points on the grid). 
 * Performance of coloring is faster on the use of random coloring rather than gradient.
-* On use of smartUpdate performance of coloring depends on the parameters changed since last triangulation. Check [2.7 Updating the View](#27-updating-the-view) for more details.
+* On use of smartUpdate, performance of coloring depends on the parameters changed since last triangulation. Check [2.7 Updating the View](#27-updating-the-view) for more details.
 
 ## 4. UML diagrams
 Complete UML diagram for the project structures are available as Draw.io link hosted in google drive 
