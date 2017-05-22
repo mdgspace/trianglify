@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox randomColoringCheckbox;
     private CheckBox customPaletteCheckbox;
     private Palette customPalette;
+    public static final String PALETTE_COLOR_ARRAY = "Palette Color Array";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         int maxCellSize = 150;
 
         cellSizeSeekBar.setMax(maxCellSize);
-        cellSizeSeekBar.setProgress(trianglifyView.getCellSize()-100);
+        cellSizeSeekBar.setProgress(trianglifyView.getCellSize() - 100);
         cellSizeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -220,8 +221,8 @@ public class MainActivity extends AppCompatActivity {
             // action with ID custom_palette_picker was selected
             case R.id.custom_palette_picker:
                 Intent customPalettePickerIntent = new Intent(this, CustomPalettePickerActivity.class);
-                customPalettePickerIntent.putExtra("Palette Color Array",trianglifyView.getPalette().getColors());
-                startActivityForResult(customPalettePickerIntent,1);
+                customPalettePickerIntent.putExtra(PALETTE_COLOR_ARRAY, trianglifyView.getPalette().getColors());
+                startActivityForResult(customPalettePickerIntent, 1);
                 break;
             default:
                 break;
@@ -236,13 +237,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            if (resultCode == RESULT_OK) {
-                customPalette = new Palette(data.getIntArrayExtra("Custom Palette Color Array"));
-                if ( customPaletteCheckbox.isChecked()) {
-                    trianglifyView.setPalette(customPalette);
-                    trianglifyView.smartUpdate();
-                }
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            customPalette = new Palette(data.getIntArrayExtra(CustomPalettePickerActivity.CUSTOM_PALETTE_COLOR_ARRAY));
+            if (customPaletteCheckbox.isChecked()) {
+                trianglifyView.setPalette(customPalette);
+                trianglifyView.smartUpdate();
             }
         }
     }

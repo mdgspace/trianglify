@@ -23,7 +23,6 @@ public interface TrianglifyViewInterface {
     boolean isFillTriangle();
     boolean isDrawStrokeEnabled();
     boolean isRandomColoringEnabled();
-    int getPaletteNumber();
     Palette getPalette();
     Triangulation getTriangulation();
     void invalidateView(Triangulation triangulation);

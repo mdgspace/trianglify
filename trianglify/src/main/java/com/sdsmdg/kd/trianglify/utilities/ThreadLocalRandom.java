@@ -29,7 +29,7 @@ public class ThreadLocalRandom {
     public int nextInt(int mod) {
         if ( mod != 0 ) {
             seed = (seed * 0x5DEECE66DL + 0xBL) & ((1L << 48) - 1);
-            return (int) (seed % mod);
+            return (int)(seed % mod);
         }
         return 0;
     }

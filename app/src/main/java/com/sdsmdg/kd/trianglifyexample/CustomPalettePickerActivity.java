@@ -25,17 +25,9 @@ public class CustomPalettePickerActivity extends AppCompatActivity {
     private Palette palette;
     private TrianglifyView trianglifyView;
     private Context context;
-    private ImageView c0;
-    private ImageView c1;
-    private ImageView c2;
-    private ImageView c3;
-    private ImageView c4;
-    private ImageView c5;
-    private ImageView c6;
-    private ImageView c7;
-    private ImageView c8;
+    private ImageView[] imageViews = new ImageView[9];
     private int[] colors = {Color.BLACK, Color.BLUE, Color.BLACK, Color.CYAN, Color.DKGRAY, Color.GREEN, Color.RED, Color.MAGENTA, Color.LTGRAY};
-
+    public static final String CUSTOM_PALETTE_COLOR_ARRAY = "Custom Palette Color Array";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +38,7 @@ public class CustomPalettePickerActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Custom Palette Picker");
 
-        colors = getIntent().getIntArrayExtra("Palette Color Array");
+        colors = getIntent().getIntArrayExtra(MainActivity.PALETTE_COLOR_ARRAY);
 
         context = this;
 
@@ -54,15 +46,12 @@ public class CustomPalettePickerActivity extends AppCompatActivity {
         trianglifyView.setPalette(new Palette(colors));
         trianglifyView.smartUpdate();
 
-        int[] imageViewID = {R.id.custom_palette_c0, R.id.custom_palette_c1, R.id.custom_palette_c2,
-                R.id.custom_palette_c3, R.id.custom_palette_c4, R.id.custom_palette_c5,
-                R.id.custom_palette_c6, R.id.custom_palette_c7, R.id.custom_palette_c8};
-
-        final ImageView[] imageViews = {c0, c1, c2, c3, c4, c5, c6, c7, c8};
-
         for (int i = 0; i < imageViews.length; i++) {
-            imageViews[i] = (ImageView) findViewById(imageViewID[i]);
-            imageViews[i].setBackgroundColor(colors[i]);
+            String imageViewNumber = "custom_palette_c" + String.valueOf(i);
+            int resID = getResources().getIdentifier(imageViewNumber,"id",getPackageName());
+            imageViews[i] = (ImageView) findViewById(resID);
+            imageViews[i].setBackgroundColor(colors[i] + 0xff000000);
+
             final int finalI = i;
 
             imageViews[i].setOnClickListener(new View.OnClickListener() {
@@ -121,9 +110,10 @@ public class CustomPalettePickerActivity extends AppCompatActivity {
                 return true;
             case R.id.custom_palette_ok:
                 Intent intent = new Intent();
-                intent.putExtra("Custom Palette Color Array", colors);
+                intent.putExtra(CUSTOM_PALETTE_COLOR_ARRAY, colors);
                 setResult(RESULT_OK, intent);
                 onBackPressed();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

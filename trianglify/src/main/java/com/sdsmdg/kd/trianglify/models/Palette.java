@@ -131,13 +131,21 @@ public class Palette {
      */
     public static int indexOf(Palette palette) {
         int pos = -1;
+        int[] passedPaletteColors = palette.getColors();
 
         for (int i = 0; i < Palette.DEFAULT_PALETTE_COUNT; i++) {
-            if ( Palette.getPalette(i).getColors()[8] == palette.getColors()[8] ) {
-                pos = i;
+            int[] calledPaletteColors = Palette.getPalette(i).getColors();
+
+            for (int j = 0; j < 9; j++) {
+                if (passedPaletteColors[j] != calledPaletteColors[j]) {
+                    break;
+                }
+
+                if (j == 8) {
+                    return i;
+                }
             }
         }
-
         return  pos;
     }
 
