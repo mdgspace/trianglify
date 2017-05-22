@@ -12,8 +12,8 @@ Welcome to the Trianglify documentation! Here's the ultimate guide to use Triang
     2. [Details of Bleed and Grid Dimensions](#22-details-of-bleed-and-grid-dimensions)
     4. [Note on Units of CellSize, Variance, Bleed & Grid Height](#24-note-on-units-of-cellsize-variance-bleed-and-grid-height)
     5. [Setting Palette using setPalette](#25-setting-palette-using-setpalette-method)
-    6. [Using custom Palettes](#26-using-custom-palettes)
-	7. [Updating the View](#27-updating-the-view)
+    6. [Using Custom Palettes](#26-using-custom-palettes)
+    7. [Updating the View](#27-updating-the-view)
 3. [Performance Analysis](#3-performance-analysis)
 4. [UML Diagrams](#4-uml-diagrams)
 
