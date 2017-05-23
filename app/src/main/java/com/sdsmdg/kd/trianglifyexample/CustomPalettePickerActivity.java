@@ -59,7 +59,7 @@ public class CustomPalettePickerActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     final AlertDialog dialog = ColorPickerDialogBuilder
                             .with(context)
-                            .initialColor(colors[finalI]+0xff000000)
+                            .initialColor(colors[finalI] + 0xff000000)
                             .setTitle("Choose Color")
                             .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
                             .density(9)
