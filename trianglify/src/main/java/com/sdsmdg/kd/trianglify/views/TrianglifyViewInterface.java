@@ -20,6 +20,7 @@ public interface TrianglifyViewInterface {
     int getCellSize();
     void setFillViewCompletely(boolean fillViewCompletely);
     void setViewState(TrianglifyView.ViewState viewState);
+    TrianglifyView.ViewState getViewState();
     boolean isFillTriangle();
     boolean isDrawStrokeEnabled();
     boolean isRandomColoringEnabled();

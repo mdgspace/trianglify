@@ -23,13 +23,20 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     private int variance;
     private int cellSize;
     private int paletteNumber;
-    private boolean fillViewCompletely;
     private boolean fillTriangle;
     private boolean drawStroke;
     private boolean randomColoring;
     private Palette palette;
     private Triangulation triangulation;
     private Presenter presenter;
+
+    /**
+     *This variable is used to know whether the user wants the view to completely fill the passed gridHeight
+     * and gridWidth. If it is TRUE, then it will throw an exception whenever either bleedX or bleedY are not
+     * greater than the cellSize. If it is FALSE, then it will not check for the above condition, and hence will
+     * not throw an exception.
+     */
+    private boolean fillViewCompletely;
 
     /**
      * Flag for keeping track of changes in attributes of the view. Helpful in increasing
@@ -56,30 +63,27 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         this.presenter = new Presenter(this);
     }
 
-    @Override
-    protected void onSizeChanged(int width, int height, int oldWidth, int oldHeight) {
-        super.onSizeChanged(width, height, oldWidth, oldHeight);
-        gridWidth = width;
-        gridHeight = height;
-    }
-
     private void attributeSetter(TypedArray typedArray) {
-        try {
-            bleedX = (int) typedArray.getDimension(R.styleable.TrianglifyView_bleedX, 0);
-            bleedY = (int) typedArray.getDimension(R.styleable.TrianglifyView_bleedY, 0);
-            variance = (int) typedArray.getDimension(R.styleable.TrianglifyView_variance, 10);
-            cellSize = (int) typedArray.getDimension(R.styleable.TrianglifyView_cellSize, 40);
-            typeGrid = typedArray.getInt(R.styleable.TrianglifyView_gridType, 0);
-            fillTriangle = typedArray.getBoolean(R.styleable.TrianglifyView_fillTriangle, true);
-            drawStroke = typedArray.getBoolean(R.styleable.TrianglifyView_fillStrokes, false);
-            paletteNumber = typedArray.getInt(R.styleable.TrianglifyView_palette, 0);
-            palette = Palette.getPalette(paletteNumber);
-            typeGrid = GRID_RECTANGLE;
-            randomColoring = typedArray.getBoolean(R.styleable.TrianglifyView_randomColoring, false);
-            fillViewCompletely = typedArray.getBoolean(R.styleable.TrianglifyView_fillViewCompletely, false);
-        } finally {
-            typedArray.recycle();
+
+        bleedX = (int) typedArray.getDimension(R.styleable.TrianglifyView_bleedX, 0);
+        bleedY = (int) typedArray.getDimension(R.styleable.TrianglifyView_bleedY, 0);
+        variance = (int) typedArray.getDimension(R.styleable.TrianglifyView_variance, 10);
+        cellSize = (int) typedArray.getDimension(R.styleable.TrianglifyView_cellSize, 40);
+        typeGrid = typedArray.getInt(R.styleable.TrianglifyView_gridType, 0);
+        fillTriangle = typedArray.getBoolean(R.styleable.TrianglifyView_fillTriangle, true);
+        drawStroke = typedArray.getBoolean(R.styleable.TrianglifyView_fillStrokes, false);
+        paletteNumber = typedArray.getInt(R.styleable.TrianglifyView_palette, 0);
+        palette = Palette.getPalette(paletteNumber);
+        typeGrid = GRID_RECTANGLE;
+        randomColoring = typedArray.getBoolean(R.styleable.TrianglifyView_randomColoring, false);
+        fillViewCompletely = typedArray.getBoolean(R.styleable.TrianglifyView_fillViewCompletely, false);
+
+        typedArray.recycle();
+
+        if (fillViewCompletely) {
+            checkViewFilledCompletely();
         }
+
     }
 
     @Override
@@ -244,6 +248,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         this.viewState = viewState;
     }
 
+    @Override
     public ViewState getViewState() {
         return viewState;
     }
@@ -252,7 +257,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     /**
      * invalidateView method invalidates the view by setting
      * @param triangulation to the view instance triangulation and calling invalidate method.
-     * Once invalidated, the flag is changed to UNCHANGED_TRIANGULATION to denote no change in the triangulation
+     * Once invalidated, the viewState is changed to UNCHANGED_TRIANGULATION to denote no change in the triangulation
      * parameters after rendering the view.
      */
     @Override
@@ -276,27 +281,10 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     /**
      * smartUpdate method ensures the increase in performance by generating only the necessary changes in triangulation.
-     * According to the value of flagForChangeInRelatedParameters, it makes the necessary method call.
+     * According to the value of viewState, it makes the necessary method call.
      */
     public void smartUpdate() {
-        if (viewState == ViewState.PAINT_STYLE_CHANGED || viewState == ViewState.UNCHANGED_TRIANGULATION) {
-            invalidateView(triangulation);
-        } else if (viewState == ViewState.COLOR_SCHEME_CHANGED) {
-            generateNewColoredSoupAndInvalidate();
-        } else if (viewState == ViewState.GRID_PARAMETERS_CHANGED || viewState == ViewState.NULL_TRIANGULATION) {
-            generateAndInvalidate();
-        }
-    }
-
-    /**
-     * generateNewColoredSoupAndInvalidate method is called when only the coloration of the view is to be changed. It sets the
-     * GenerateOnlyColor boolean of presenter to true, so that when generateSoupAndInvalidateView is
-     * called, only the new colors are assigned to the triangles in the triangulation, since the
-     * grid parameters have not been changed, thereby bypassing the unnecessary regeneration of grid and delaunay triangulation.
-     */
-    private void generateNewColoredSoupAndInvalidate() {
-        presenter.setGenerateOnlyColor(true);
-        presenter.generateSoupAndInvalidateView();
+        presenter.updateView();
     }
 
     /**
@@ -328,7 +316,6 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         /*
          * Add 0xff000000 for alpha channel required by android.graphics.Color
          */
-
         color += 0xff000000;
 
         paint.setColor(color);
@@ -355,6 +342,16 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
         canvas.drawPath(path, paint);
     }
+
+    /**
+     * This method checks whether the view will be filled completely by testing if both bleedY and bleedX are
+     * greater than cellSize. If not, then it throws an illegal argument exception.
+     *
+     * Explaination for Condition:
+     * Bleed defines the dimensions of extra size that TrianglifyView view generates so that triangles
+     * on the edge don't appear to be chopped off. In most of the cases min{bleedX, bleedY} > cellSize
+     * would ensure that the view is completely filled.
+     */
 
     private void checkViewFilledCompletely() {
         if (bleedY <= cellSize || bleedX <= cellSize) {

@@ -48,7 +48,7 @@ public class CustomPalettePickerActivity extends AppCompatActivity {
 
         for (int i = 0; i < imageViews.length; i++) {
             String imageViewNumber = "custom_palette_c" + String.valueOf(i);
-            int resID = getResources().getIdentifier(imageViewNumber,"id",getPackageName());
+            int resID = getResources().getIdentifier(imageViewNumber, "id", getPackageName());
             imageViews[i] = (ImageView) findViewById(resID);
             imageViews[i].setBackgroundColor(colors[i] + 0xff000000);
 
@@ -59,7 +59,7 @@ public class CustomPalettePickerActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     final AlertDialog dialog = ColorPickerDialogBuilder
                             .with(context)
-                            .initialColor(colors[finalI])
+                            .initialColor(colors[finalI]+0xff000000)
                             .setTitle("Choose Color")
                             .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
                             .density(9)
@@ -76,7 +76,7 @@ public class CustomPalettePickerActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int color, Integer[] allColors) {
                                     imageViews[finalI].setBackgroundColor(color);
-                                    colors[finalI] = color;
+                                    colors[finalI] = color - 0xff000000;
                                     palette = new Palette(colors);
                                     trianglifyView.setPalette(palette);
                                     trianglifyView.smartUpdate();
