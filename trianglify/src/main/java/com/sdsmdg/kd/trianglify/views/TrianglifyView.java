@@ -63,6 +63,14 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         this.presenter = new Presenter(this);
     }
 
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        setGridWidth(w);
+        setGridHeight(h);
+        smartUpdate();
+    }
+
     private void attributeSetter(TypedArray typedArray) {
 
         bleedX = (int) typedArray.getDimension(R.styleable.TrianglifyView_bleedX, 0);
