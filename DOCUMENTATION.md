@@ -79,6 +79,24 @@ trianglifyView.setGridWidth(trianglifyView.getWidth())
 
 *Current release contains only one GridType accessible with id `0`  
 
+**Other methods**  
+These methods are getters for corresponding properties and are not covered in the table above:  
+* isDrawStrokeEnabled
+* isRandomColoringEnabled
+* getVariance
+* getTypeGrid
+* getPalette
+* getGridWidth
+* getGridHeight
+* getCellSize
+* getBleedX
+* getBleedY
+* isFillTriangle
+* isFillViewCompletely
+* getViewState
+* setViewState  
+For more information on states of view read **Smart update of view using smartUpdate** in [Section 2.7 Updating the View](#27-updating-the-view)
+
 #### 2.1.2 Palette
 | Method      | Return Type | Type        | Parameters                                                             | Description                                                                                                                     |
 |-------------|-------------|-------------|------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|

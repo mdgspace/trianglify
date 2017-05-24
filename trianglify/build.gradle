@@ -7,7 +7,7 @@ ext {
 
     PUBLISH_GROUP_ID = 'com.sdsmdg.kd'
     PUBLISH_ARTIFACT_ID = 'trianglify'
-    PUBLISH_VERSION = '0.8-beta'
+    PUBLISH_VERSION = '0.9-beta'
 
     publishedGroupId = 'com.sdsmdg.kd'
     libraryName = 'trianglify'
@@ -17,7 +17,7 @@ ext {
     gitUrl = 'https://github.com/sdsmdg/trianglify.git'
     githubRepository= 'sdsmdg/trianglify'
 
-    libraryVersion = '0.8-beta'
+    libraryVersion = '0.9-beta'
     libraryDescription = 'Generate beautiful view for android.'
 
     developerId = 'sdsmdg'
@@ -37,7 +37,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 0
-        versionName "0.8-beta"
+        versionName "0.9-beta"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -64,5 +64,5 @@ dependencies {
 
 }
 
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
