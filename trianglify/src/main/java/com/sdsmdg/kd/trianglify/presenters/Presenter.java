@@ -32,6 +32,7 @@ public class Presenter {
     private TrianglifyViewInterface view;
     private Triangulation triangulation;
     private TriangleGeneratorTask generatorTask;
+    private TrianglifyView.ViewState viewState;
 
     /**
      * flag that keeps track of whether just the color of the triangulation is to be changed or not.
@@ -48,6 +49,29 @@ public class Presenter {
 
     public void setGenerateOnlyColor(boolean generateOnlyColor) {
         this.generateOnlyColor = generateOnlyColor;
+    }
+
+    public void updateView() {
+        viewState = view.getViewState();
+        if (viewState == TrianglifyView.ViewState.PAINT_STYLE_CHANGED || viewState == TrianglifyView.ViewState.UNCHANGED_TRIANGULATION) {
+            view.invalidateView(triangulation);
+        } else if (viewState == TrianglifyView.ViewState.COLOR_SCHEME_CHANGED) {
+            generateNewColoredSoupAndInvalidate();
+        } else if (viewState == TrianglifyView.ViewState.GRID_PARAMETERS_CHANGED || viewState == TrianglifyView.ViewState.NULL_TRIANGULATION) {
+            generateOnlyColor = false;
+            generateSoupAndInvalidateView();
+        }
+    }
+
+    /**
+     * generateNewColoredSoupAndInvalidate method is called when only the coloration of the view is to be changed. It sets the
+     * GenerateOnlyColor boolean of presenter to true, so that when generateSoupAndInvalidateView is
+     * called, only the new colors are assigned to the triangles in the triangulation, since the
+     * grid parameters have not been changed, thereby bypassing the unnecessary regeneration of grid and delaunay triangulation.
+     */
+    private void generateNewColoredSoupAndInvalidate() {
+        setGenerateOnlyColor(true);
+        generateSoupAndInvalidateView();
     }
 
     /**

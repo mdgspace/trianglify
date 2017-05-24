@@ -7,76 +7,6 @@
     android:layout_height="match_parent"
     android:background="#D3D3D3"
     tools:context="com.sdsmdg.kd.trianglifyexample.MainActivity">
-    <RelativeLayout
-        android:layout_alignParentBottom="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="10dp"
-        android:background="#A0FFFFFF"
-        android:layout_margin="8dp"
-
-        android:padding="16dp">
-        <TextView
-            android:id="@+id/variance_textview"
-            android:layout_width="wrap_content"
-            android:text="Variance: "
-            android:layout_height="wrap_content" />
-        <SeekBar
-            android:id="@+id/variance_seekbar"
-            android:layout_toRightOf="@id/variance_textview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/cell_size_textview"
-            android:layout_below="@id/variance_textview"
-            android:layout_width="wrap_content"
-            android:text="Cell Size: "
-            android:layout_height="wrap_content" />
-        <SeekBar
-            android:id="@+id/cell_size_seekbar"
-            android:layout_toRightOf="@id/cell_size_textview"
-            android:layout_below="@+id/variance_seekbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/palette_textview"
-            android:layout_below="@id/cell_size_textview"
-            android:layout_width="wrap_content"
-            android:text="Palette: "
-            android:layout_height="wrap_content" />
-        <SeekBar
-            android:id="@+id/palette_seekbar"
-            android:layout_toRightOf="@id/palette_textview"
-            android:layout_below="@+id/cell_size_textview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <CheckBox
-            android:id="@+id/random_coloring_checkbox"
-            android:layout_below="@+id/palette_seekbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="Random Coloring"
-            android:checked="false"
-            />
-        <CheckBox
-            android:id="@+id/draw_stroke_checkbox"
-            android:layout_below="@+id/random_coloring_checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="Draw strokes"
-            />
-        <CheckBox
-            android:id="@+id/draw_fill_checkbox"
-            android:layout_below="@+id/draw_stroke_checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="Fill Triangles"
-            />
-
-    </RelativeLayout>
 
     <com.sdsmdg.kd.trianglify.views.TrianglifyView
         android:id="@+id/trianglify_main_view"
@@ -85,12 +15,134 @@
         android:layout_height="match_parent"
         app:cellSize="30dp"
         app:variance="5dp"
-        app:bleedX="50dp"
-        app:bleedY="50dp"
+        app:bleedX="75dp"
+        app:bleedY="75dp"
         app:gridType="rectangle"
         app:palette="RdBu"
         app:fillStrokes="true"
         app:fillTriangle="true"
         app:randomColoring="false"
         />
+
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:background="#84FFFFFF"
+        android:layout_margin="8dp"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/variance_textview"
+            android:layout_width="72dp"
+            android:text="Variance: "
+            android:textColor="#212121"
+            android:padding="4dp"
+            android:layout_height="wrap_content" />
+
+        <SeekBar
+            android:id="@+id/variance_seekbar"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/variance_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            />
+
+        <TextView
+            android:id="@+id/cell_size_textview"
+            android:layout_below="@id/variance_textview"
+            android:layout_width="72dp"
+            android:textColor="#212121"
+            android:padding="4dp"
+            android:text="Cell Size: "
+            android:layout_height="wrap_content" />
+
+        <SeekBar
+            android:id="@+id/cell_size_seekbar"
+            android:layout_toRightOf="@id/cell_size_textview"
+            android:layout_below="@+id/variance_seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            />
+
+        <TextView
+            android:id="@+id/palette_textview"
+            android:layout_below="@id/cell_size_textview"
+            android:layout_width="72dp"
+            android:textColor="#212121"
+            android:padding="4dp"
+            android:text="Palette: "
+            android:layout_height="wrap_content" />
+
+        <SeekBar
+            android:id="@+id/palette_seekbar"
+            android:layout_toRightOf="@id/palette_textview"
+            android:layout_below="@+id/cell_size_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/palette_seekbar"
+            android:layout_marginTop="4dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <CheckBox
+                    android:id="@+id/random_coloring_checkbox"
+                    android:layout_below="@+id/palette_seekbar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Random Coloring"
+                    android:checked="false"
+                    android:layout_weight="1"
+                    />
+
+                <CheckBox
+                    android:id="@+id/custom_palette_checkbox"
+                    android:layout_below="@+id/draw_fill_checkbox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Custom Palette"
+                    android:layout_weight="1"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <CheckBox
+                    android:id="@+id/draw_stroke_checkbox"
+                    android:layout_below="@+id/random_coloring_checkbox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Draw Strokes"
+                    android:layout_weight="1"
+                    />
+
+                <CheckBox
+                    android:id="@+id/draw_fill_checkbox"
+                    android:layout_below="@+id/draw_stroke_checkbox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Fill Triangles"
+                    android:layout_weight="1"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+
 </RelativeLayout>

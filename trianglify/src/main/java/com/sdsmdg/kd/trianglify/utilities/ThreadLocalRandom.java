@@ -27,8 +27,11 @@ public class ThreadLocalRandom {
      * @return Random number between 0 and mod (exclusive)
      */
     public int nextInt(int mod) {
-        seed = (seed * 0x5DEECE66DL + 0xBL) & ((1L << 48) - 1);
-        return (int)(seed%mod);
+        if ( mod != 0 ) {
+            seed = (seed * 0x5DEECE66DL + 0xBL) & ((1L << 48) - 1);
+            return (int) (seed % mod);
+        }
+        return 0;
     }
 
 }

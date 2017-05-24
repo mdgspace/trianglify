@@ -72,7 +72,7 @@ public class Palette {
             case GN_BU:
                 return new Palette(0xf7fcf0, 0xe0f3db, 0xccebc5, 0xa8ddb5, 0x7bccc4, 0x4eb3d3, 0x2b8cbe, 0x0868ac, 0x084081);
             case BU_GN:
-                return new Palette(0xf7fcfd, 0xe5f5f9, 0xccece6, 0x99d8c9, 0x66c2a4, 0x41ae76, 0x238b45, 0x006d2c, 0x00441b);
+                return new Palette(0xf7fcfd, 0xe5f5f9, 0xccece6, 0x99d8c9, 0x66c2a4, 0x41ae76, 0x238b45, 0x006d2c, 0x00441c);
             case PU_BU_GN:
                 return new Palette(0xfff7fb, 0xece2f0, 0xd0d1e6, 0xa6bddb, 0x67a9cf, 0x3690c0, 0x02818a, 0x016c59, 0x014636);
             case PU_BU:
@@ -131,9 +131,19 @@ public class Palette {
      */
     public static int indexOf(Palette palette) {
         int pos = -1;
+        int[] passedPaletteColors = palette.getColors();
+
         for (int i = 0; i < Palette.DEFAULT_PALETTE_COUNT; i++) {
-            if (Palette.getPalette(i) == palette) {
-                pos = i;
+            int[] calledPaletteColors = Palette.getPalette(i).getColors();
+
+            for (int j = 0; j < 9; j++) {
+                if (passedPaletteColors[j] != calledPaletteColors[j]) {
+                    break;
+                }
+
+                if (j == 8) {
+                    return i;
+                }
             }
         }
         return  pos;

@@ -12,6 +12,7 @@
         <attr name="fillTriangle" format="boolean"/>
         <attr name="fillStrokes" format="boolean"/>
         <attr name="randomColoring" format="boolean"/>
+        <attr name="fillViewCompletely" format="boolean"/>
         <attr name="palette" format="enum">
             <enum name="Yl" value="0"/>
             <enum name="YlGn" value="1"/>

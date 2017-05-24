@@ -25,12 +25,18 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox strokeCheckBox;
     private CheckBox fillCheckBox;
     private CheckBox randomColoringCheckbox;
+    private CheckBox customPaletteCheckbox;
+    private Palette customPalette;
+    public static final String PALETTE_COLOR_ARRAY = "Palette Color Array";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         trianglifyView = (TrianglifyView) findViewById(R.id.trianglify_main_view);
+        customPalette = trianglifyView.getPalette();
+
         varianceSeekBar = (SeekBar) findViewById(R.id.variance_seekbar);
         varianceSeekBar.setMax(100);
         varianceSeekBar.setProgress(trianglifyView.getVariance());
@@ -51,11 +57,12 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
         cellSizeSeekBar = (SeekBar) findViewById(R.id.cell_size_seekbar);
         int maxCellSize = 150;
 
         cellSizeSeekBar.setMax(maxCellSize);
-        cellSizeSeekBar.setProgress(trianglifyView.getCellSize());
+        cellSizeSeekBar.setProgress(trianglifyView.getCellSize() - 100);
         cellSizeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -81,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 trianglifyView.setPalette(Palette.getPalette(progress));
+                customPaletteCheckbox.setChecked(false);
                 trianglifyView.smartUpdate();
             }
 
@@ -136,6 +144,21 @@ public class MainActivity extends AppCompatActivity {
                 trianglifyView.smartUpdate();
             }
         });
+
+        customPaletteCheckbox = (CheckBox) findViewById(R.id.custom_palette_checkbox);
+        customPaletteCheckbox.setChecked(false);
+        customPaletteCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    trianglifyView.setPalette(customPalette);
+                    trianglifyView.smartUpdate();
+                } else {
+                    trianglifyView.setPalette(Palette.getPalette(paletteSeekBar.getProgress()));
+                    trianglifyView.smartUpdate();
+                }
+            }
+        });
     }
 
     @Override
@@ -163,6 +186,12 @@ public class MainActivity extends AppCompatActivity {
                 .setFillTriangle(rnd.nextInt(2) == 0)
                 .setDrawStrokeEnabled(rnd.nextInt(2) == 0)
                 .setVariance(rnd.nextInt(60));
+
+        if ( !trianglifyView.isFillTriangle() && !trianglifyView.isDrawStrokeEnabled()) {
+            trianglifyView.setDrawStrokeEnabled(true);
+            trianglifyView.setFillTriangle(true);
+        }
+
         updateUIElements(trianglifyView);
     }
 
@@ -189,6 +218,12 @@ public class MainActivity extends AppCompatActivity {
                 randomizeTrianglifyParameters(trianglifyView);
                 trianglifyView.generateAndInvalidate();
                 break;
+            // action with ID custom_palette_picker was selected
+            case R.id.custom_palette_picker:
+                Intent customPalettePickerIntent = new Intent(this, CustomPalettePickerActivity.class);
+                customPalettePickerIntent.putExtra(PALETTE_COLOR_ARRAY, trianglifyView.getPalette().getColors());
+                startActivityForResult(customPalettePickerIntent, 1);
+                break;
             default:
                 break;
         }
@@ -197,6 +232,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showColoringError() {
-            Toast.makeText(this, "view should at least be set to draw strokes or fill triangles or both.", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "view should at least be set to draw strokes or fill triangles or both.", Toast.LENGTH_LONG).show();
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            customPalette = new Palette(data.getIntArrayExtra(CustomPalettePickerActivity.CUSTOM_PALETTE_COLOR_ARRAY));
+            if (customPaletteCheckbox.isChecked()) {
+                trianglifyView.setPalette(customPalette);
+                trianglifyView.smartUpdate();
+            }
+        }
     }
 }
