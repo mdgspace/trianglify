@@ -38,24 +38,6 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
      */
     private boolean fillViewCompletely;
 
-    /**
-     * Flag for keeping track of changes in attributes of the view. Helpful in increasing
-     * performance by stopping unnecessary regeneration of triangulation. Look at smartUpdate method for more.
-     * if triangulation is null then value is NULL_TRIANGULATION
-     * if triangulation is unchanged then value is UNCHANGED_TRIANGULATION
-     * if change in fillTriangle or drawStroke then value is PAINT_STYLE_CHANGED
-     * if change in grid width, grid height, variance, bleedX, bleedY, typeGrid or cell size then value is GRID_PARAMETERS_CHANGED
-     * if change in palette or random coloring then value is COLOR_SCHEME_CHANGED
-     */
-    private ViewState viewState = ViewState.NULL_TRIANGULATION;
-    public enum ViewState {
-        NULL_TRIANGULATION,
-        UNCHANGED_TRIANGULATION,
-        PAINT_STYLE_CHANGED,
-        COLOR_SCHEME_CHANGED,
-        GRID_PARAMETERS_CHANGED
-    }
-
     public TrianglifyView(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.TrianglifyView, 0, 0);
@@ -101,7 +83,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setBleedX(int bleedX) {
         this.bleedX = bleedX;
-        this.viewState = ViewState.GRID_PARAMETERS_CHANGED;
+        presenter.viewState = Presenter.ViewState.GRID_PARAMETERS_CHANGED;
         if (fillViewCompletely) {
             checkViewFilledCompletely();
         }
@@ -115,7 +97,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setBleedY(int bleedY) {
         this.bleedY = bleedY;
-        this.viewState = ViewState.GRID_PARAMETERS_CHANGED;
+        presenter.viewState = Presenter.ViewState.GRID_PARAMETERS_CHANGED;
         if (fillViewCompletely) {
             checkViewFilledCompletely();
         }
@@ -129,7 +111,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setGridHeight(int gridHeight) {
         this.gridHeight = gridHeight;
-        this.viewState = ViewState.GRID_PARAMETERS_CHANGED;
+        presenter.viewState = Presenter.ViewState.GRID_PARAMETERS_CHANGED;
         return this;
     }
 
@@ -140,7 +122,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setGridWidth(int gridWidth) {
         this.gridWidth = gridWidth;
-        this.viewState = ViewState.GRID_PARAMETERS_CHANGED;
+        presenter.viewState = Presenter.ViewState.GRID_PARAMETERS_CHANGED;
         return this;
     }
 
@@ -151,7 +133,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setTypeGrid(int typeGrid) {
         this.typeGrid = typeGrid;
-        this.viewState = ViewState.GRID_PARAMETERS_CHANGED;
+        presenter.viewState = Presenter.ViewState.GRID_PARAMETERS_CHANGED;
         return this;
     }
 
@@ -162,7 +144,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setVariance(int variance) {
         this.variance = variance;
-        this.viewState = ViewState.GRID_PARAMETERS_CHANGED;
+        presenter.viewState = Presenter.ViewState.GRID_PARAMETERS_CHANGED;
         return this;
     }
 
@@ -173,7 +155,15 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setCellSize(int cellSize) {
         this.cellSize = cellSize;
-        this.viewState = ViewState.GRID_PARAMETERS_CHANGED;
+        presenter.viewState = Presenter.ViewState.GRID_PARAMETERS_CHANGED;
+        if (fillViewCompletely) {
+            checkViewFilledCompletely();
+        }
+        return this;
+    }
+
+    public TrianglifyView setFillViewCompletely(boolean fillViewCompletely) {
+        this.fillViewCompletely = fillViewCompletely;
         if (fillViewCompletely) {
             checkViewFilledCompletely();
         }
@@ -181,10 +171,6 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     }
 
     @Override
-    public void setFillViewCompletely(boolean fillViewCompletely) {
-        this.fillViewCompletely = fillViewCompletely;
-    }
-
     public boolean isFillViewCompletely() {
         return fillViewCompletely;
     }
@@ -196,8 +182,8 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setFillTriangle(boolean fillTriangle) {
         this.fillTriangle = fillTriangle;
-        if (this.viewState != ViewState.GRID_PARAMETERS_CHANGED && this.viewState != ViewState.COLOR_SCHEME_CHANGED) {
-            this.viewState = ViewState.PAINT_STYLE_CHANGED;
+        if (presenter.viewState != Presenter.ViewState.GRID_PARAMETERS_CHANGED && presenter.viewState != Presenter.ViewState.COLOR_SCHEME_CHANGED) {
+            presenter.viewState = Presenter.ViewState.PAINT_STYLE_CHANGED;
         }
         return this;
     }
@@ -209,8 +195,8 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setDrawStrokeEnabled(boolean drawStroke) {
         this.drawStroke = drawStroke;
-        if (this.viewState != ViewState.GRID_PARAMETERS_CHANGED && this.viewState != ViewState.COLOR_SCHEME_CHANGED) {
-            this.viewState = ViewState.PAINT_STYLE_CHANGED;
+        if (presenter.viewState != Presenter.ViewState.GRID_PARAMETERS_CHANGED && presenter.viewState != Presenter.ViewState.COLOR_SCHEME_CHANGED) {
+            presenter.viewState = Presenter.ViewState.PAINT_STYLE_CHANGED;
         }
         return this;
     }
@@ -222,8 +208,8 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setRandomColoring(boolean randomColoring) {
         this.randomColoring = randomColoring;
-        if (this.viewState != ViewState.GRID_PARAMETERS_CHANGED) {
-            this.viewState = ViewState.COLOR_SCHEME_CHANGED;
+        if (presenter.viewState != Presenter.ViewState.GRID_PARAMETERS_CHANGED) {
+            presenter.viewState = Presenter.ViewState.COLOR_SCHEME_CHANGED;
         }
         return this;
     }
@@ -235,32 +221,29 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
 
     public TrianglifyView setPalette(Palette palette) {
         this.palette = palette;
-        if (this.viewState != ViewState.GRID_PARAMETERS_CHANGED) {
-            this.viewState = ViewState.COLOR_SCHEME_CHANGED;
+        if (presenter.viewState != Presenter.ViewState.GRID_PARAMETERS_CHANGED) {
+            presenter.viewState = Presenter.ViewState.COLOR_SCHEME_CHANGED;
         }
         return this;
     }
 
     @Override
-    public Triangulation getTriangulation() {
-        return triangulation;
+    public Presenter.ViewState getViewState() {
+        return presenter.viewState;
     }
 
-    public TrianglifyView setTriangulation(Triangulation triangulation) {
+    private TrianglifyView setTriangulation(Triangulation triangulation) {
         this.triangulation = triangulation;
         return this;
     }
 
-    @Override
-    public void setViewState(ViewState viewState) {
-        this.viewState = viewState;
-    }
 
-    @Override
-    public ViewState getViewState() {
-        return viewState;
+    /**
+     * This method clears the triangulation and sets the view state to NULL_TRIANGULATION.
+     */
+    public void clearView() {
+        presenter.clearSoup();
     }
-
 
     /**
      * invalidateView method invalidates the view by setting
@@ -272,7 +255,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     public void invalidateView(Triangulation triangulation) {
         this.setTriangulation(triangulation);
         invalidate();
-        this.viewState = ViewState.UNCHANGED_TRIANGULATION;
+        presenter.viewState = Presenter.ViewState.UNCHANGED_TRIANGULATION;
     }
 
     @Override
