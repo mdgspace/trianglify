@@ -7,7 +7,7 @@ ext {
 
     PUBLISH_GROUP_ID = 'com.sdsmdg.kd'
     PUBLISH_ARTIFACT_ID = 'trianglify'
-    PUBLISH_VERSION = '0.9-beta'
+    PUBLISH_VERSION = '1.0.0'
 
     publishedGroupId = 'com.sdsmdg.kd'
     libraryName = 'trianglify'
@@ -17,7 +17,7 @@ ext {
     gitUrl = 'https://github.com/sdsmdg/trianglify.git'
     githubRepository= 'sdsmdg/trianglify'
 
-    libraryVersion = '0.9-beta'
+    libraryVersion = '1.0.0'
     libraryDescription = 'Generate beautiful view for android.'
 
     developerId = 'sdsmdg'
@@ -37,7 +37,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 0
-        versionName "0.9-beta"
+        versionName "1.0.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
