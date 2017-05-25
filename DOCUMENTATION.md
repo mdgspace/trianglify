@@ -15,7 +15,6 @@ Welcome to the Trianglify documentation! Here's the ultimate guide to using Tria
     6. [Using Custom Palettes](#26-using-custom-palettes)
     7. [Updating the View](#27-updating-the-view)
 3. [Performance Analysis](#3-performance-analysis)
-4. [UML Diagrams](#4-uml-diagrams)
 
 ## 1. Usages
 ### 1.1 Java
@@ -67,7 +66,7 @@ trianglifyView.setGridWidth(trianglifyView.getWidth())
 | Grid Height                 | NA             | .setGridHeight(...)     | grid_height     | Height of the grid to generate                                                                                                |
 | Grid Width                  | NA             | .setGridWidth(...)      | grid_width      | Width of the grid to generate                                                                                                 |
 | X-axis Bleed                | 0 px         | .setBleedX(...)         | bleed_x         | TrianglifyView generates total area having width = gridWidth + 2*bleedX to avoid unfilled triangles at the edges of the view  |
-| Y-Axis Bleed                | 0 px           | .setBleedY(...)         | bleed_y         | TrianglifyView generates total area having height = gridWidth + 2*bleedY to avoid unfilled triangles at the edges of the view |
+| Y-Axis Bleed                | 0 px           | .setBleedY(...)         | bleed_y         | TrianglifyView generates total area having height = gridHeight + 2*bleedY to avoid unfilled triangles at the edges of the view |
 | Variance                    | 10 px          | .setVariance(...)       | variance        | Displacement of points from original grid position to create triangles of different sizes                                     |
 | Cell Size                   | 40 px          | .setCellSize(...)       | cell_size       | Size of cells of rectangular grid used to generated vertices of the triangles                                                 |
 | Grid Type*                  | 0              | .setTypeGrid(...)       | grid_type       | Type of grid 0 for Rectangular                                                                                                |
@@ -193,7 +192,3 @@ Few notes on performance of Trianglify
 * Performance of coloring is faster on the use of random coloring rather than gradient.
 * On use of smartUpdate, performance of coloring depends on the parameters changed since last triangulation. Check [2.7 Updating the View](#27-updating-the-view) for more details.
 
-## 4. UML diagrams
-Complete UML diagram for the project structures are available as Draw.io link hosted in google drive 
-| [Link](https://www.draw.io/?state=%7B%22ids%22:%5B%220Bz_2jvdEtUlrWlB0LXJvRnBQZ0U%22%5D,%22action%22:%22open%22,%22userId%22:%22109172653085429225560%22%7D)  
-*(Note that you'll require a google account to access the file, if this is your first time then choose `open with Draw.io` option on top of the browser window. Then scroll to the center of the document to view diagrams)*
