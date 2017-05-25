@@ -2,7 +2,7 @@
 
 ## Latest
 * [Version 1.0.0](https://bintray.com/suyashmahar/trianglify/trianglify/1.0.0)
- | [Google Play](http://bit.ly/trianglify_mdg)  
+ | [Google Play](http://bit.ly/trianglifyDemo)  
 **First stable release of Trianglify**
     * Updated documents so that Trianglify can be seamlessly integrated anywhere
     * Fixed bugs in demo app

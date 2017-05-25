@@ -18,7 +18,7 @@
 
 <img src="resources/splash.png" data-canonical-src="resources/default_pattern_explained.jpg"/>
 
-<a href='http://bit.ly/trianglify_mdg'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width="200"/></a>
+<a href='http://bit.ly/trianglifyDemo'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width="200"/></a>
 
 Trianglify is an Android library that helps creates views with beautiful patterns. Trianglify is based on MVP architecture and licensed under MIT license.
 
@@ -31,7 +31,7 @@ compile 'com.sdsmdg.kd:trianglify:1.0.0'
 
 # Latest Release
 * [Version 1.0.0](https://bintray.com/suyashmahar/trianglify/trianglify/1.0.0)
- | [Google Play](http://bit.ly/trianglify_mdg)  
+ | [Google Play](http://bit.ly/trianglifyDemo)  
 **First stable release of Trianglify**
     * Updated documents so that Trianglify can be seamlessly integrated anywhere
     * Fixed bugs in demo app
