@@ -18,21 +18,23 @@
 
 <img src="resources/splash.png" data-canonical-src="resources/default_pattern_explained.jpg"/>
 
+<a href='http://bit.ly/trianglify_mdg'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width="200"/></a>
+
 Trianglify is an Android library that helps creates views with beautiful patterns. Trianglify is based on MVP architecture and licensed under MIT license.
 
 # How to Apply
 
 Include following line in the gradle script of your application to include latest release of Trianglify:
 ```gradle
-compile 'com.sdsmdg.kd:trianglify:0.9-beta'
+compile 'com.sdsmdg.kd:trianglify:1.0.0'
 ```
 
 # Latest Release
-* [Version 0.9 beta](https://bintray.com/suyashmahar/trianglify/trianglify/0.9-beta)
- | [demo apk](https://drive.google.com/open?id=0Bz_2jvdEtUlrWEpxQ2Y2RnJGc1U)
-    * Added custom palette demonstration to demo app
-    * Added method `fillViewCompletely` to check if view is incompletely filled 
-    * Fixes many bugs -  [#23](https://github.com/sdsmdg/trianglify/issues/23), [#33](https://github.com/sdsmdg/trianglify/issues/33), [#34](https://github.com/sdsmdg/trianglify/issues/34), [#35](https://github.com/sdsmdg/trianglify/issues/35) & [#36](https://github.com/sdsmdg/trianglify/issues/36)
+* [Version 1.0.0](https://bintray.com/suyashmahar/trianglify/trianglify/1.0.0)
+ | [Google Play](http://bit.ly/trianglify_mdg)  
+**First stable release of Trianglify**
+    * Updated documents so that Trianglify can be seamlessly integrated anywhere
+    * Fixed bugs in demo app
 
 For more check complete [change log](/CHANGELOG.md).  
 
