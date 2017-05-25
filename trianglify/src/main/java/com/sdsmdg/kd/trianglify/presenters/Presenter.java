@@ -32,7 +32,25 @@ public class Presenter {
     private TrianglifyViewInterface view;
     private Triangulation triangulation;
     private TriangleGeneratorTask generatorTask;
-    private TrianglifyView.ViewState viewState;
+
+    /**
+     * Flag for keeping track of changes in attributes of the view. Helpful in increasing
+     * performance by stopping unnecessary regeneration of triangulation. Look at smartUpdate method for more.
+     * if triangulation is null then value is NULL_TRIANGULATION
+     * if triangulation is unchanged then value is UNCHANGED_TRIANGULATION
+     * if change in fillTriangle or drawStroke then value is PAINT_STYLE_CHANGED
+     * if change in grid width, grid height, variance, bleedX, bleedY, typeGrid or cell size then value is GRID_PARAMETERS_CHANGED
+     * if change in palette or random coloring then value is COLOR_SCHEME_CHANGED
+     */
+    public ViewState viewState = ViewState.NULL_TRIANGULATION;
+
+    public enum ViewState {
+        NULL_TRIANGULATION,
+        UNCHANGED_TRIANGULATION,
+        PAINT_STYLE_CHANGED,
+        COLOR_SCHEME_CHANGED,
+        GRID_PARAMETERS_CHANGED
+    }
 
     /**
      * flag that keeps track of whether just the color of the triangulation is to be changed or not.
@@ -43,21 +61,17 @@ public class Presenter {
         this.view = view;
     }
 
-    public boolean getGenerateOnlyColor() {
-        return generateOnlyColor;
-    }
-
     public void setGenerateOnlyColor(boolean generateOnlyColor) {
         this.generateOnlyColor = generateOnlyColor;
     }
 
     public void updateView() {
         viewState = view.getViewState();
-        if (viewState == TrianglifyView.ViewState.PAINT_STYLE_CHANGED || viewState == TrianglifyView.ViewState.UNCHANGED_TRIANGULATION) {
+        if (viewState == ViewState.PAINT_STYLE_CHANGED || viewState == ViewState.UNCHANGED_TRIANGULATION) {
             view.invalidateView(triangulation);
-        } else if (viewState == TrianglifyView.ViewState.COLOR_SCHEME_CHANGED) {
+        } else if (viewState == ViewState.COLOR_SCHEME_CHANGED) {
             generateNewColoredSoupAndInvalidate();
-        } else if (viewState == TrianglifyView.ViewState.GRID_PARAMETERS_CHANGED || viewState == TrianglifyView.ViewState.NULL_TRIANGULATION) {
+        } else if (viewState == ViewState.GRID_PARAMETERS_CHANGED || viewState == ViewState.NULL_TRIANGULATION) {
             generateOnlyColor = false;
             generateSoupAndInvalidateView();
         }
@@ -152,7 +166,7 @@ public class Presenter {
 
     public void clearSoup() {
         triangulation = null;
-        view.setViewState(TrianglifyView.ViewState.NULL_TRIANGULATION);
+        viewState = ViewState.NULL_TRIANGULATION;
     }
 
     /**

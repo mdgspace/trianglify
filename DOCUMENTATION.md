@@ -75,14 +75,16 @@ trianglifyView.setGridWidth(trianglifyView.getWidth())
 | Draw strokes                | false          | .setDrawStrokes(...)    | draw_strokes    | Draws triangle's border with neighboring triangle's color                                                                     |
 | Color Palette               | YlGn           | .setPalette(...)        | palette         | Set of existing colors to color triangles                                                                                     |
 | Random Coloring             | false          | .setRandomColoring(...) | random_coloring | If random coloring is on triangles will be colored randomly instead of linear interpolation                                   |
-| Fill the View Completely    | false          | .setFillViewCompletely(...) | fillViewCompletely| If fillViewCompletely is true, then it will throw illegalArgumentsException whenever both `BleedX` and `BleedY` are not greater than `cellSize`. Refer to [Section 2.2](#2.2)
+| Fill the View Completely    | false          | .setFillViewCompletely(...) | fillViewCompletely| If fillViewCompletely is true, then it will throw illegalArgumentsException whenever both `BleedX` and `BleedY` are not greater than `cellSize`. Refer to [Section 2.2](#22-details-of-bleed-and-grid-dimensions)
 
 *Current release contains only one GridType accessible with id `0`  
 
 **Other methods**  
-These methods are getters for corresponding properties and are not covered in the table above:  
+The following methods are getters for corresponding properties and are not covered in the table above:  
 * isDrawStrokeEnabled
 * isRandomColoringEnabled
+* isFillTriangle
+* isFillViewCompletely
 * getVariance
 * getTypeGrid
 * getPalette
@@ -91,11 +93,16 @@ These methods are getters for corresponding properties and are not covered in th
 * getCellSize
 * getBleedX
 * getBleedY
-* isFillTriangle
-* isFillViewCompletely
-* getViewState
-* setViewState  
-For more information on states of view read **Smart update of view using smartUpdate** in [Section 2.7 Updating the View](#27-updating-the-view)
+
+The following are additional methods provided for the developer:
+
+**`getViewState`**
+
+This method returns the state of the view. For more information on states of view read **Smart update of view using smartUpdate** in [Section 2.7 Updating the View](#27-updating-the-view).
+
+**`clearView`**
+
+This method clears the triangulation of the view and sets it to `null`.
 
 #### 2.1.2 Palette
 | Method      | Return Type | Type        | Parameters                                                             | Description                                                                                                                     |

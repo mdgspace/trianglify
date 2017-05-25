@@ -38,7 +38,7 @@
             android:layout_width="72dp"
             android:text="Variance: "
             android:textColor="#212121"
-            android:padding="4dp"
+            android:layout_margin="4dp"
             android:layout_height="wrap_content" />
 
         <SeekBar
@@ -47,7 +47,7 @@
             android:layout_toRightOf="@id/variance_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp"
+            android:layout_marginTop="2dp"
             />
 
         <TextView
@@ -55,17 +55,17 @@
             android:layout_below="@id/variance_textview"
             android:layout_width="72dp"
             android:textColor="#212121"
-            android:padding="4dp"
+            android:layout_margin="4dp"
             android:text="Cell Size: "
             android:layout_height="wrap_content" />
 
         <SeekBar
             android:id="@+id/cell_size_seekbar"
             android:layout_toRightOf="@id/cell_size_textview"
-            android:layout_below="@+id/variance_seekbar"
+            android:layout_below="@+id/variance_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp"
+            android:layout_marginTop="2dp"
             />
 
         <TextView
@@ -73,7 +73,7 @@
             android:layout_below="@id/cell_size_textview"
             android:layout_width="72dp"
             android:textColor="#212121"
-            android:padding="4dp"
+            android:layout_margin="4dp"
             android:text="Palette: "
             android:layout_height="wrap_content" />
 
@@ -83,66 +83,60 @@
             android:layout_below="@+id/cell_size_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp"
+            android:layout_marginTop="2dp"
             />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@id/palette_seekbar"
+            android:layout_below="@id/palette_textview"
             android:layout_marginTop="4dp"
             >
 
-            <LinearLayout
+            <View
+                android:id="@+id/layout_middle_point"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerInParent="true"
+                />
+
+            <CheckBox
+                android:id="@+id/random_coloring_checkbox"
+                android:layout_toRightOf="@id/layout_middle_point"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:text="Random Coloring"
+                android:checked="false"
+                />
 
-                <CheckBox
-                    android:id="@+id/random_coloring_checkbox"
-                    android:layout_below="@+id/palette_seekbar"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Random Coloring"
-                    android:checked="false"
-                    android:layout_weight="1"
-                    />
-
-                <CheckBox
-                    android:id="@+id/custom_palette_checkbox"
-                    android:layout_below="@+id/draw_fill_checkbox"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Custom Palette"
-                    android:layout_weight="1"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
+            <CheckBox
+                android:id="@+id/custom_palette_checkbox"
+                android:layout_toLeftOf="@id/layout_middle_point"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:text="Custom Palette"
+                />
 
-                <CheckBox
-                    android:id="@+id/draw_stroke_checkbox"
-                    android:layout_below="@+id/random_coloring_checkbox"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Draw Strokes"
-                    android:layout_weight="1"
-                    />
+            <CheckBox
+                android:id="@+id/draw_stroke_checkbox"
+                android:layout_below="@id/custom_palette_checkbox"
+                android:layout_toLeftOf="@id/layout_middle_point"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Draw Strokes"
+                />
 
-                <CheckBox
-                    android:id="@+id/draw_fill_checkbox"
-                    android:layout_below="@+id/draw_stroke_checkbox"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Fill Triangles"
-                    android:layout_weight="1"
-                    />
+            <CheckBox
+                android:id="@+id/draw_fill_checkbox"
+                android:layout_below="@id/random_coloring_checkbox"
+                android:layout_toRightOf="@id/layout_middle_point"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fill Triangles"
+                />
 
-            </LinearLayout>
+        </RelativeLayout>
 
-        </LinearLayout>
     </RelativeLayout>
 
 </RelativeLayout>
