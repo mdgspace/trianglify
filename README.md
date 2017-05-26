@@ -29,6 +29,17 @@ Include following line in the gradle script of your application to include lates
 compile 'com.sdsmdg.kd:trianglify:1.0.0'
 ```
 
+# Features
+**Cell Size**  
+![alt text](resources/gifs/cell_size.gif)  
+**Random Coloring**  
+![alt text](resources/gifs/random_coloring.gif)  
+
+# Examples
+**Navigation Panes**  
+![alt text](resources/gifs/navigation_pane.gif)  
+**Toolbars**  
+![alt text](resources/gifs/toolbar.gif)  
 # Latest Release
 * [Version 1.0.0](https://bintray.com/suyashmahar/trianglify/trianglify/1.0.0)
  | [Google Play](http://bit.ly/trianglifyDemo)  
