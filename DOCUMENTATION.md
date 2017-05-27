@@ -14,6 +14,7 @@ Welcome to the Trianglify documentation! Here's the ultimate guide to using Tria
     5. [Setting Palette using setPalette](#25-setting-palette-using-setpalette-method)
     6. [Using Custom Palettes](#26-using-custom-palettes)
     7. [Updating the View](#27-updating-the-view)
+    8. [Exporting Bitmap](#28-exporting-bitmap)
 3. [Performance Analysis](#3-performance-analysis)
 
 ## 1. Usages
@@ -184,7 +185,10 @@ This is used when the triangulation is to be generated from scratch. The method 
 
 The `generateAndInvalidate` method regenerates the whole triangulation irrespective of which parameters have been changed, carrying out steps that might not be necessary, hence causing hindrance to performance.
 
+### 2.8 Exporting Bitmap
+`TrianglifyView` can export Bitmap object of the triangulation plotted, to get a bitmap object use `getBitmap` method of trianglifyView. `getBitmap` returns a mutable bitmap object that is of `ARGB_8888` configuration. 
 
+Quality of the bitmap obtained can be set using `setQuality` method of TrianglifyView which accepts one of the three possible parameter `TrianglifyView.DRAWING_CACHE_QUALITY_HIGH`, `TrianglifyView.DRAWING_CACHE_QUALITY_LOW` and `TrianglifyView.DRAWING_CACHE_QUALITY_HIGH`.
 
 ## 3. Performance Analysis
 Few notes on performance of Trianglify
