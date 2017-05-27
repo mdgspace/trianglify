@@ -2,6 +2,7 @@ package com.sdsmdg.kd.trianglify.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -29,6 +30,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
     private Palette palette;
     private Triangulation triangulation;
     private Presenter presenter;
+    private int bitmapQuality;
 
     /**
      *This variable is used to know whether the user wants the view to completely fill the passed gridHeight
@@ -43,6 +45,8 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.TrianglifyView, 0, 0);
         attributeSetter(a);
         this.presenter = new Presenter(this);
+        this.setDrawingCacheEnabled(true);
+        this.setDrawingCacheQuality(DRAWING_CACHE_QUALITY_AUTO);
     }
 
     @Override
@@ -124,6 +128,16 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         this.gridWidth = gridWidth;
         presenter.viewState = Presenter.ViewState.GRID_PARAMETERS_CHANGED;
         return this;
+    }
+
+    @Override
+    public int getBitmapQuality() {
+        return bitmapQuality;
+    }
+
+    public void setBitmapQuality(int bitmapQuality) {
+        this.bitmapQuality = bitmapQuality;
+        setDrawingCacheQuality(bitmapQuality);
     }
 
     @Override
@@ -348,5 +362,11 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         if (bleedY <= cellSize || bleedX <= cellSize) {
             throw new IllegalArgumentException("bleedY and bleedX should be larger than cellSize for view to be completely filled.");
         }
+    }
+
+    public Bitmap getBitmap() {
+        Bitmap resultBitmap = getDrawingCache().copy(Bitmap.Config.ARGB_8888, true);
+        this.destroyDrawingCache();
+        return resultBitmap;
     }
 }
