@@ -19,6 +19,7 @@ public interface TrianglifyViewInterface {
     int getGridHeight();
     int getVariance();
     int getCellSize();
+    int getBitmapQuality();
     Presenter.ViewState getViewState();
     boolean isFillViewCompletely();
     boolean isFillTriangle();

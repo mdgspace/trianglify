@@ -1,6 +1,13 @@
 package com.sdsmdg.kd.trianglifyexample;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -34,7 +41,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         trianglifyView = (TrianglifyView) findViewById(R.id.trianglify_main_view);
+        trianglifyView.setBitmapQuality(TrianglifyView.DRAWING_CACHE_QUALITY_HIGH);
+
         customPalette = trianglifyView.getPalette();
 
         varianceSeekBar = (SeekBar) findViewById(R.id.variance_seekbar);
@@ -208,6 +218,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            // action with ID action_save was selected
+            case R.id.action_save:
+                exportImage();
+                break;
             // action with ID action_about was selected
             case R.id.action_about:
                 Intent aboutActivityIntent = new Intent(this, AboutActivity.class);
@@ -232,7 +246,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showColoringError() {
-        Toast.makeText(this, "view should at least be set to draw strokes or fill triangles or both.", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "view should at least be set to draw strokes or fill triangles or both.",
+                Toast.LENGTH_LONG).show();
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -244,5 +259,42 @@ public class MainActivity extends AppCompatActivity {
                 trianglifyView.smartUpdate();
             }
         }
+    }
+
+    private void exportImage() {
+        // Checks if permission is required for android version > 6
+        if (askForWritePermission() == 0) {
+            Bitmap bitmap = trianglifyView.getBitmap();
+            if (bitmap != null) {
+                addImageToGallery(bitmap, this);
+                Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Unable to generate image, please try again",
+                        Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(this, "Storage access failed, check permission",
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public static void addImageToGallery(Bitmap bitmap, Context context) {
+        MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "", "");
+    }
+
+    /**
+     * Returns 1 if permission dialog box is to be shown, if permission is granted
+     * returns 0
+     */
+    public int askForWritePermission() {
+        int result = 0;
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                result);
+        }
+        return result;
     }
 }
