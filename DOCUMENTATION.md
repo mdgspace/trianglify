@@ -188,7 +188,7 @@ The `generateAndInvalidate` method regenerates the whole triangulation irrespect
 ### 2.8 Exporting Bitmap
 `TrianglifyView` can export Bitmap object of the triangulation plotted, to get a bitmap object use `getBitmap` method of trianglifyView. `getBitmap` returns a mutable bitmap object that is of `ARGB_8888` configuration. 
 
-Quality of the bitmap obtained can be set using `setQuality` method of TrianglifyView which accepts one of the three possible parameter `TrianglifyView.DRAWING_CACHE_QUALITY_HIGH`, `TrianglifyView.DRAWING_CACHE_QUALITY_LOW` and `TrianglifyView.DRAWING_CACHE_QUALITY_HIGH`.
+Quality of the bitmap obtained can be set using `setQuality` method of TrianglifyView which accepts one of the three possible parameter `TrianglifyView.DRAWING_CACHE_QUALITY_HIGH`, `TrianglifyView.DRAWING_CACHE_QUALITY_LOW` and `TrianglifyView.DRAWING_CACHE_QUALITY_AUTO`.
 
 ## 3. Performance Analysis
 Few notes on performance of Trianglify

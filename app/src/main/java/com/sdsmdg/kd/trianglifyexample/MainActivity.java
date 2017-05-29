@@ -286,18 +286,14 @@ public class MainActivity extends AppCompatActivity {
      * Returns 1 if permission dialog box is to be shown, if permission is granted
      * returns 0
      */
-    public int askForWritePermission(){
+    public int askForWritePermission() {
         int result = 0;
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        result);
-            }
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                result);
         }
         return result;
     }
