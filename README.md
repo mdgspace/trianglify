@@ -38,8 +38,8 @@ compile 'com.sdsmdg.kd:trianglify:1.0.0'
 # Examples
 **Navigation Panes**  
 ![alt text](resources/gifs/navigation_pane.gif)  
-**Toolbars**  
-![alt text](resources/gifs/toolbar.gif)  
+**Action Bars**  
+![alt text](resources/gifs/actionBar.gif)  
 # Latest Release
 * [Version 1.0.0](https://bintray.com/suyashmahar/trianglify/trianglify/1.0.0)
  | [Google Play](http://bit.ly/trianglifyDemo)  
