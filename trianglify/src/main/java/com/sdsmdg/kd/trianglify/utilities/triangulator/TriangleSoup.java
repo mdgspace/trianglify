@@ -1,6 +1,7 @@
 package com.sdsmdg.kd.trianglify.utilities.triangulator;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -10,14 +11,14 @@ import java.util.List;
  */
 class TriangleSoup {
 
-    private List<Triangle2D> triangleSoup;
+    private HashSet<Triangle2D> triangleSoup;
 
     /**
      * Constructor of the triangle soup class used to create a new triangle soup
      * instance.
      */
     public TriangleSoup() {
-        this.triangleSoup = new ArrayList<Triangle2D>();
+        this.triangleSoup = new HashSet<>();
     }
 
     /**
@@ -46,7 +47,7 @@ class TriangleSoup {
      * @return The triangles from this triangle soup
      */
     public List<Triangle2D> getTriangles() {
-        return this.triangleSoup;
+        return new ArrayList<>(this.triangleSoup);
     }
 
     /**
