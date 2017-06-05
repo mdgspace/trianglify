@@ -40,8 +40,8 @@ public class Triangle2D {
      * @return Returns true iff the point lies inside this 2D triangle
      */
     public boolean contains(Vector2D point) {
-        double pab = point.sub(a).cross(b.sub(a));
-        double pbc = point.sub(b).cross(c.sub(b));
+        final double pab = point.sub(a).cross(b.sub(a));
+        final double pbc = point.sub(b).cross(c.sub(b));
 
         if (!hasSameSign(pab, pbc)) {
             return false;
@@ -71,19 +71,19 @@ public class Triangle2D {
      *         the three points a, b, and c of the triangle
      */
     public boolean isPointInCircumcircle(Vector2D point) {
-        double a11 = a.x - point.x;
-        double a21 = b.x - point.x;
-        double a31 = c.x - point.x;
+        final double a11 = a.x - point.x;
+        final double a21 = b.x - point.x;
+        final double a31 = c.x - point.x;
 
-        double a12 = a.y - point.y;
-        double a22 = b.y - point.y;
-        double a32 = c.y - point.y;
+        final double a12 = a.y - point.y;
+        final double a22 = b.y - point.y;
+        final double a32 = c.y - point.y;
 
-        double a13 = (a.x - point.x) * (a.x - point.x) + (a.y - point.y) * (a.y - point.y);
-        double a23 = (b.x - point.x) * (b.x - point.x) + (b.y - point.y) * (b.y - point.y);
-        double a33 = (c.x - point.x) * (c.x - point.x) + (c.y - point.y) * (c.y - point.y);
+        final double a13 = (a.x - point.x) * (a.x - point.x) + (a.y - point.y) * (a.y - point.y);
+        final double a23 = (b.x - point.x) * (b.x - point.x) + (b.y - point.y) * (b.y - point.y);
+        final double a33 = (c.x - point.x) * (c.x - point.x) + (c.y - point.y) * (c.y - point.y);
 
-        double det = a11 * a22 * a33 + a12 * a23 * a31 + a13 * a21 * a32 - a13 * a22 * a31 - a12 * a21 * a33
+        final double det = a11 * a22 * a33 + a12 * a23 * a31 + a13 * a21 * a32 - a13 * a22 * a31 - a12 * a21 * a33
                 - a11 * a23 * a32;
 
         if (isOrientedCCW()) {
@@ -105,13 +105,13 @@ public class Triangle2D {
      *         (CCW)
      */
     public boolean isOrientedCCW() {
-        double a11 = a.x - c.x;
-        double a21 = b.x - c.x;
+        final double a11 = a.x - c.x;
+        final double a21 = b.x - c.x;
 
-        double a12 = a.y - c.y;
-        double a22 = b.y - c.y;
+        final double a12 = a.y - c.y;
+        final double a22 = b.y - c.y;
 
-        double det = a11 * a22 - a12 * a21;
+        final double det = a11 * a22 - a12 * a21;
 
         return det > 0.0d;
     }
@@ -196,7 +196,7 @@ public class Triangle2D {
      * @return The closest point on the given edge to the specified point
      */
     private Vector2D computeClosestPoint(Edge2D edge, Vector2D point) {
-        Vector2D ab = edge.b.sub(edge.a);
+        final Vector2D ab = edge.b.sub(edge.a);
         float t = point.sub(edge.a).dot(ab) / ab.dot(ab);
 
         if (t < 0.0f) {

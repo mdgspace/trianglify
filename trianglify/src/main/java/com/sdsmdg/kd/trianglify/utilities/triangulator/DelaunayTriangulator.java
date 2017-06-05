@@ -55,11 +55,12 @@ public class DelaunayTriangulator {
 
         maxOfAnyCoordinate *= 16.0d;
 
-        Vector2D p1 = new Vector2D(0.0f, 3.0f * maxOfAnyCoordinate);
-        Vector2D p2 = new Vector2D(3.0f * maxOfAnyCoordinate, 0.0f);
-        Vector2D p3 = new Vector2D(-3.0f * maxOfAnyCoordinate, -3.0f * maxOfAnyCoordinate);
+        float newCoordinate = 3.0f * maxOfAnyCoordinate;
+        final Vector2D p1 = new Vector2D(0.0f, newCoordinate);
+        final Vector2D p2 = new Vector2D(newCoordinate, 0.0f);
+        final Vector2D p3 = new Vector2D(-newCoordinate, -newCoordinate);
 
-        Triangle2D superTriangle = new Triangle2D(p1, p2, p3);
+        final Triangle2D superTriangle = new Triangle2D(p1, p2, p3);
 
         triangleSoup.add(superTriangle);
 
@@ -75,21 +76,21 @@ public class DelaunayTriangulator {
                  * which is nearest to the point we try to add. This edge is
                  * removed and four new edges are added.
                  */
-                Edge2D edge = triangleSoup.findNearestEdge(pointSet.get(i));
+                final Edge2D edge = triangleSoup.findNearestEdge(pointSet.get(i));
 
-                Triangle2D first = triangleSoup.findOneTriangleSharing(edge);
-                Triangle2D second = triangleSoup.findNeighbour(first, edge);
+                final Triangle2D first = triangleSoup.findOneTriangleSharing(edge);
+                final Triangle2D second = triangleSoup.findNeighbour(first, edge);
 
-                Vector2D firstNoneEdgeVertex = first.getNoneEdgeVertex(edge);
-                Vector2D secondNoneEdgeVertex = second.getNoneEdgeVertex(edge);
+                final Vector2D firstNoneEdgeVertex = first.getNoneEdgeVertex(edge);
+                final Vector2D secondNoneEdgeVertex = second.getNoneEdgeVertex(edge);
 
                 triangleSoup.remove(first);
                 triangleSoup.remove(second);
 
-                Triangle2D triangle1 = new Triangle2D(edge.a, firstNoneEdgeVertex, pointSet.get(i));
-                Triangle2D triangle2 = new Triangle2D(edge.b, firstNoneEdgeVertex, pointSet.get(i));
-                Triangle2D triangle3 = new Triangle2D(edge.a, secondNoneEdgeVertex, pointSet.get(i));
-                Triangle2D triangle4 = new Triangle2D(edge.b, secondNoneEdgeVertex, pointSet.get(i));
+                final Triangle2D triangle1 = new Triangle2D(edge.a, firstNoneEdgeVertex, pointSet.get(i));
+                final Triangle2D triangle2 = new Triangle2D(edge.b, firstNoneEdgeVertex, pointSet.get(i));
+                final Triangle2D triangle3 = new Triangle2D(edge.a, secondNoneEdgeVertex, pointSet.get(i));
+                final Triangle2D triangle4 = new Triangle2D(edge.b, secondNoneEdgeVertex, pointSet.get(i));
 
                 triangleSoup.add(triangle1);
                 triangleSoup.add(triangle2);
@@ -104,15 +105,15 @@ public class DelaunayTriangulator {
                 /**
                  * The vertex is inside a triangle.
                  */
-                Vector2D a = triangle.a;
-                Vector2D b = triangle.b;
-                Vector2D c = triangle.c;
+                final Vector2D a = triangle.a;
+                final Vector2D b = triangle.b;
+                final Vector2D c = triangle.c;
 
                 triangleSoup.remove(triangle);
 
-                Triangle2D first = new Triangle2D(a, b, pointSet.get(i));
-                Triangle2D second = new Triangle2D(b, c, pointSet.get(i));
-                Triangle2D third = new Triangle2D(c, a, pointSet.get(i));
+                final Triangle2D first = new Triangle2D(a, b, pointSet.get(i));
+                final Triangle2D second = new Triangle2D(b, c, pointSet.get(i));
+                final Triangle2D third = new Triangle2D(c, a, pointSet.get(i));
 
                 triangleSoup.add(first);
                 triangleSoup.add(second);
@@ -143,7 +144,7 @@ public class DelaunayTriangulator {
      *            The new vertex
      */
     private void legalizeEdge(Triangle2D triangle, Edge2D edge, Vector2D newVertex) {
-        Triangle2D neighbourTriangle = triangleSoup.findNeighbour(triangle, edge);
+        final Triangle2D neighbourTriangle = triangleSoup.findNeighbour(triangle, edge);
 
         /**
          * If the triangle has a neighbor, then legalize the edge
@@ -153,10 +154,10 @@ public class DelaunayTriangulator {
                 triangleSoup.remove(triangle);
                 triangleSoup.remove(neighbourTriangle);
 
-                Vector2D noneEdgeVertex = neighbourTriangle.getNoneEdgeVertex(edge);
+                final Vector2D noneEdgeVertex = neighbourTriangle.getNoneEdgeVertex(edge);
 
-                Triangle2D firstTriangle = new Triangle2D(noneEdgeVertex, edge.a, newVertex);
-                Triangle2D secondTriangle = new Triangle2D(noneEdgeVertex, edge.b, newVertex);
+                final Triangle2D firstTriangle = new Triangle2D(noneEdgeVertex, edge.a, newVertex);
+                final Triangle2D secondTriangle = new Triangle2D(noneEdgeVertex, edge.b, newVertex);
 
                 triangleSoup.add(firstTriangle);
                 triangleSoup.add(secondTriangle);

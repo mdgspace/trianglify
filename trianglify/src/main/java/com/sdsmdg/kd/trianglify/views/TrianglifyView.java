@@ -334,7 +334,7 @@ public class TrianglifyView extends View implements TrianglifyViewInterface{
         } else {
             paint.setStyle(Paint.Style.FILL_AND_STROKE);
         }
-        paint.setAntiAlias(true);
+        paint.setAntiAlias(false);
 
         Path path = new Path();
         path.setFillType(Path.FillType.EVEN_ODD);
