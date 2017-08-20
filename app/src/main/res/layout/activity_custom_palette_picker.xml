@@ -7,10 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.sdsmdg.kd.trianglifyexample.CustomPalettePickerActivity">
-<!--<android.support.v7.widget.Toolbar-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:id="@+id/"-->
-    <!--android:layout_height="wrap_content"></android.support.v7.widget.Toolbar>-->
+
     <com.sdsmdg.kd.trianglify.views.TrianglifyView
         android:id="@+id/trianglify_custom_palette_view"
         android:layout_centerHorizontal="true"
