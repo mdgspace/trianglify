@@ -23,45 +23,15 @@
         app:fillStrokes="true"
         app:fillTriangle="true"
         />
-    <RelativeLayout
-        android:id="@+id/about_top_bar"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:background="#FFF"
-        android:elevation="12dp">
 
-        <ImageView
-            android:id="@+id/about_back_btn"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="false"
-            android:layout_alignParentTop="true"
-            android:clickable="true"
-            android:padding="12dp"
-            android:src="@drawable/back2" />
-
-        <TextView
-            android:id="@+id/about_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="ABOUT"
-            android:textColor="#000"
-            android:textSize="25sp" />
-
-    </RelativeLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="32dp"
-        android:layout_below="@id/about_top_bar"
         android:layout_alignParentTop="true">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-
 
             <ImageView
                 android:id="@+id/about_mdg_logo"
@@ -80,7 +50,7 @@
                 android:text="Trianglify"
                 android:textSize="18sp"
                 android:textAlignment="center"
-                android:textColor="#FFF"/>
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/about_version_text"
@@ -92,7 +62,7 @@
                 android:text="Version 1.1.0"
                 android:textSize="11sp"
                 android:textAlignment="center"
-                android:textColor="#FFF"/>
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/about_brought_by"
@@ -106,7 +76,7 @@
                 android:textSize="12sp"
                 android:textStyle="italic"
                 android:textAlignment="center"
-                android:textColor="#FFF"/>
+                android:textColor="@color/white"/>
 
             <ImageView
                 android:id="@+id/about_trianglify_logo"
@@ -117,7 +87,6 @@
                 android:src="@drawable/logo_mdg"
                 android:scaleType="centerCrop"
                 />
-
 
             <TextView
                 android:id="@+id/about_text"
@@ -131,7 +100,7 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/mdg_description"
                 android:textAlignment="center"
-                android:textColor="#FFF"
+                android:textColor="@color/white"
                 android:textSize="12dp" />
 
 
@@ -177,7 +146,7 @@
                 android:layout_marginBottom="32dp"
                 android:text="View license"
                 android:textAlignment="center"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/white"
                 android:autoLink="web"
                 android:clickable="true"
                 android:layout_below="@+id/about_share_link"
