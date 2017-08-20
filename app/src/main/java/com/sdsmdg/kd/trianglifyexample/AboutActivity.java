@@ -20,16 +20,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class AboutActivity extends AppCompatActivity {
-    ImageView githubLinkBtn, reviewLinkBtn, shareLink;
-    TextView openSourceLicense, versiontTextView;
-    PackageInfo pInfo;
-    String versionName;
-    int versionCode;
+    private ImageView githubLinkBtn;
+    private ImageView reviewLinkBtn;
+    private ImageView shareLink;
+    private TextView openSourceLicense;
+    private TextView versionTextView;
+    private PackageInfo pInfo;
+    private String versionName;
+    private int versionCode;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==android.R.id.home)
+        if (item.getItemId() == android.R.id.home) {
             finish();
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -54,7 +58,7 @@ public class AboutActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        versiontTextView = (TextView) this.findViewById(R.id.about_version_text);
+        versionTextView = (TextView) this.findViewById(R.id.about_version_text);
 
         openSourceLicense = (TextView) this.findViewById(R.id.about_license_text);
         openSourceLicense.setText(content);
@@ -62,7 +66,7 @@ public class AboutActivity extends AppCompatActivity {
         githubLinkBtn = (ImageView) this.findViewById(R.id.about_github_link);
         reviewLinkBtn = (ImageView) this.findViewById(R.id.about_rate_link);
         shareLink = (ImageView) this.findViewById(R.id.about_share_link);
-        versiontTextView.setText("Version " + versionName);
+        versionTextView.setText("Version " + versionName);
         openSourceLicense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,6 +114,7 @@ public class AboutActivity extends AppCompatActivity {
             }
         });
     }
+
     public void displayOpenSourceLicenses() {
         final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle(this.getApplicationInfo().name);
