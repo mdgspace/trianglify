@@ -5,27 +5,25 @@
     <item
         android:id="@+id/action_save"
         android:orderInCategory="100"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:icon="@drawable/ic_action_save"
-        android:title="Save"/>
+        android:title="@string/about_toolbar_menu_save"/>
     <item
         android:id="@+id/action_refresh"
         android:orderInCategory="100"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:icon="@drawable/ic_refresh"
-        android:title="Refresh"/>
+        android:title="@string/about_toolbar_menu_refresh"/>
     <item
         android:id="@+id/custom_palette_picker"
         android:orderInCategory="100"
-        app:showAsAction="always"
         android:icon="@drawable/palette_icon"
-        android:title="CustomPalettePicker"/>
+        android:title="@string/about_toolbar_menu_cust_palette_picker"/>
     <item
         android:id="@+id/action_about"
         android:orderInCategory="100"
-        app:showAsAction="always"
         android:icon="@drawable/ic_about_icon"
-        android:title="About"/>
+        android:title="@string/about_toolbar_menu_about"/>
 
 </menu>
 

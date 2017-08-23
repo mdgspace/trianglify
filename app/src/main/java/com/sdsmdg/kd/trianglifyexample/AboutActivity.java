@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,37 +20,32 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class AboutActivity extends AppCompatActivity {
-    ImageView githubLinkBtn, reviewLinkBtn, shareLink, backBtn;
-    TextView fragTitle, openSourceLicense, versiontTextView;
-    View bottomMarginLayout;
-    PackageInfo pInfo;
-    String versionName;
-    int versionCode;
+    private ImageView githubLinkBtn;
+    private ImageView reviewLinkBtn;
+    private ImageView shareLink;
+    private TextView openSourceLicense;
+    private TextView versionTextView;
+    private PackageInfo pInfo;
+    private String versionName;
+    private int versionCode;
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //Remove title bar
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        //Remove notification bar
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_about);
 
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("About Us");
 
-        // To add underline effect in open source license textView
         SpannableString content = new SpannableString("view license");
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
 
@@ -61,7 +58,7 @@ public class AboutActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        versiontTextView = (TextView) this.findViewById(R.id.about_version_text);
+        versionTextView = (TextView) this.findViewById(R.id.about_version_text);
 
         openSourceLicense = (TextView) this.findViewById(R.id.about_license_text);
         openSourceLicense.setText(content);
@@ -69,17 +66,7 @@ public class AboutActivity extends AppCompatActivity {
         githubLinkBtn = (ImageView) this.findViewById(R.id.about_github_link);
         reviewLinkBtn = (ImageView) this.findViewById(R.id.about_rate_link);
         shareLink = (ImageView) this.findViewById(R.id.about_share_link);
-
-        backBtn = (ImageView) this.findViewById(R.id.about_back_btn);
-        fragTitle = (TextView) this.findViewById(R.id.about_title);
-
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        versiontTextView.setText("Version " + versionName);
+        versionTextView.setText("Version " + versionName);
         openSourceLicense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,6 +114,7 @@ public class AboutActivity extends AppCompatActivity {
             }
         });
     }
+
     public void displayOpenSourceLicenses() {
         final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle(this.getApplicationInfo().name);
@@ -145,18 +133,5 @@ public class AboutActivity extends AppCompatActivity {
             }
         });
         alertDialog.show();
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus)
-            getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
 }
