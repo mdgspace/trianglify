@@ -18,4 +18,10 @@
     <string name="trianglify_store_short_link">http://bit.ly/musicDnaApp</string>
     <string name="license_text">Trianglify library and related material are distributed under \'MIT license\' a copy of which can be obtained from link provided.</string>
     <string name="license_link">https://github.com/sdsmdg/trianglify/blob/develop/LICENSE.md</string>
+
+    <!-- About toolbar menu strings -->
+    <string name="about_toolbar_menu_save">Save</string>
+    <string name="about_toolbar_menu_refresh">Refresh</string>
+    <string name="about_toolbar_menu_cust_palette_picker">Custom palette picker</string>
+    <string name="about_toolbar_menu_about">About</string>
 </resources>
