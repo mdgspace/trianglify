@@ -1,14 +1,17 @@
 package com.sdsmdg.kd.trianglifyexample;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.app.WallpaperManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -36,13 +39,14 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox randomColoringCheckbox;
     private CheckBox customPaletteCheckbox;
     private Palette customPalette;
+    private AlertDialog wallpaperConfirmationDialog;
     public static final String PALETTE_COLOR_ARRAY = "Palette Color Array";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        wallpaperConfirmationDialog = buildAlertDialog();
 
         trianglifyView = (TrianglifyView) findViewById(R.id.trianglify_main_view);
         trianglifyView.setBitmapQuality(TrianglifyView.DRAWING_CACHE_QUALITY_HIGH);
@@ -55,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         varianceSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                trianglifyView.setVariance(progress+1);
+                trianglifyView.setVariance(progress + 1);
                 trianglifyView.smartUpdate();
             }
 
@@ -78,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         cellSizeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                trianglifyView.setCellSize(progress+100);
+                trianglifyView.setCellSize(progress + 100);
                 trianglifyView.smartUpdate();
             }
 
@@ -173,6 +177,30 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //build confirmation dialog to set the home screen wallpaper as the generated trianglify view
+    private AlertDialog buildAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.set_wallpaper_confirmation_dialog_message));
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                WallpaperManager trianglifyWallpaper = WallpaperManager.getInstance(getApplicationContext());
+                try {
+                    trianglifyWallpaper.setBitmap(trianglifyView.getBitmap());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //perform inbuilt function
+            }
+        });
+        return builder.create();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -199,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
                 .setDrawStrokeEnabled(rnd.nextInt(2) == 0)
                 .setVariance(rnd.nextInt(60));
 
-        if ( !trianglifyView.isFillTriangle() && !trianglifyView.isDrawStrokeEnabled()) {
+        if (!trianglifyView.isFillTriangle() && !trianglifyView.isDrawStrokeEnabled()) {
             trianglifyView.setDrawStrokeEnabled(true);
             trianglifyView.setFillTriangle(true);
         }
@@ -240,14 +268,10 @@ public class MainActivity extends AppCompatActivity {
                 customPalettePickerIntent.putExtra(PALETTE_COLOR_ARRAY, trianglifyView.getPalette().getColors());
                 startActivityForResult(customPalettePickerIntent, 1);
                 break;
+            //action to set trianglify view as home screen wallpaper directly from app (shows confirmation dialog for the same)
             case R.id.action_set_wallpaper:
-                WallpaperManager trianglifyWallpaper=WallpaperManager.getInstance(getApplicationContext());
-                try {
-                    trianglifyWallpaper.setBitmap(trianglifyView.getBitmap());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;git 
+                wallpaperConfirmationDialog.show();
+                break;
             default:
                 break;
         }
@@ -300,10 +324,10 @@ public class MainActivity extends AppCompatActivity {
         int result = 0;
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
+                != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                result);
+                    result);
         }
         return result;
     }

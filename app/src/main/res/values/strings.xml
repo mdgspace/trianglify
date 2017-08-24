@@ -11,6 +11,7 @@
     <string name="custom_palette_option">Custom Palette</string>
     <string name="draw_strokes_option">Draw Strokes</string>
     <string name="fill_triangles_option">Fill Triangles</string>
+    <string name="set_wallpaper_confirmation_dialog_message">Are you sure you want to set the view generated as your home screen wallpaper?</string>
 
     <!-- About Fragment strings -->
     <string name="mdg_description">An Active students group at IIT Roorkee directed towards developing useful applications</string>
