@@ -1,6 +1,7 @@
 package com.sdsmdg.kd.trianglifyexample;
 
 import android.Manifest;
+import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import com.sdsmdg.kd.trianglify.views.TrianglifyView;
 import com.sdsmdg.kd.trianglify.models.Palette;
 
+import java.io.IOException;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -238,6 +240,14 @@ public class MainActivity extends AppCompatActivity {
                 customPalettePickerIntent.putExtra(PALETTE_COLOR_ARRAY, trianglifyView.getPalette().getColors());
                 startActivityForResult(customPalettePickerIntent, 1);
                 break;
+            case R.id.action_set_wallpaper:
+                WallpaperManager trianglifyWallpaper=WallpaperManager.getInstance(getApplicationContext());
+                try {
+                    trianglifyWallpaper.setBitmap(trianglifyView.getBitmap());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;git 
             default:
                 break;
         }
