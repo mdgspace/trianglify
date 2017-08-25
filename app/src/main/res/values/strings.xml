@@ -25,5 +25,5 @@
     <string name="about_toolbar_menu_refresh">Refresh</string>
     <string name="about_toolbar_menu_cust_palette_picker">Custom palette picker</string>
     <string name="about_toolbar_menu_about">About</string>
-    <string name="about_toolbar_menu_set_wallpaper">Set wallpaper</string>
+    <string name="about_toolbar_menu_set_wallpaper">Set as wallpaper</string>
 </resources>

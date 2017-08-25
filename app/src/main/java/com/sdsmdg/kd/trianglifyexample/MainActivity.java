@@ -187,8 +187,11 @@ public class MainActivity extends AppCompatActivity {
                 WallpaperManager trianglifyWallpaper = WallpaperManager.getInstance(getApplicationContext());
                 try {
                     trianglifyWallpaper.setBitmap(trianglifyView.getBitmap());
+                    Toast.makeText(MainActivity.this, "Wallpaper successfully set", Toast.LENGTH_SHORT).show();
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Toast.makeText(MainActivity.this, "Sorry the wallpaper couldn't be set", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
