@@ -25,5 +25,10 @@
         android:icon="@drawable/ic_about_icon"
         android:title="@string/about_toolbar_menu_about"/>
 
+    <item
+        android:id="@+id/action_set_wallpaper"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_about_icon"
+        android:title="@string/about_toolbar_menu_set_wallpaper"/>
 </menu>
 
