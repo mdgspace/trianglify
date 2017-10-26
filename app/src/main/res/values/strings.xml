@@ -1,16 +1,6 @@
 <resources>
     <string name="app_name">Trianglify Demo</string>
-    <string name="app_title">Trianglify</string>
-    <string name="version_no">Version 1.1.0</string>
-    <string name="dev_text">developed by</string>
-    <string name="license">View license</string>
-    <string name="variance_option">Variance:&#160;</string>
-    <string name="cell_size_option">Cell Size:&#160;</string>
-    <string name="palette_option">Palette:&#160;</string>
-    <string name="random_colouring_option">Random Coloring</string>
-    <string name="custom_palette_option">Custom Palette</string>
-    <string name="draw_strokes_option">Draw Strokes</string>
-    <string name="fill_triangles_option">Fill Triangles</string>
+
 
     <!-- About Fragment strings -->
     <string name="mdg_description">An Active students group at IIT Roorkee directed towards developing useful applications</string>
@@ -18,10 +8,4 @@
     <string name="trianglify_store_short_link">http://bit.ly/musicDnaApp</string>
     <string name="license_text">Trianglify library and related material are distributed under \'MIT license\' a copy of which can be obtained from link provided.</string>
     <string name="license_link">https://github.com/sdsmdg/trianglify/blob/develop/LICENSE.md</string>
-
-    <!-- About toolbar menu strings -->
-    <string name="about_toolbar_menu_save">Save</string>
-    <string name="about_toolbar_menu_refresh">Refresh</string>
-    <string name="about_toolbar_menu_cust_palette_picker">Custom palette picker</string>
-    <string name="about_toolbar_menu_about">About</string>
 </resources>
