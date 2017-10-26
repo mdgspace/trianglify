@@ -3,15 +3,16 @@ package com.sdsmdg.kd.trianglify.presenters;
 
 import android.os.AsyncTask;
 
+import com.sdsmdg.kd.trianglify.utilities.triangulator.DelaunayTriangulator;
 import com.sdsmdg.kd.trianglify.models.Triangulation;
-import com.sdsmdg.kd.trianglify.utilities.colorizers.Colorizer;
-import com.sdsmdg.kd.trianglify.utilities.colorizers.FixedPointsColorizer;
+import com.sdsmdg.kd.trianglify.utilities.triangulator.NotEnoughPointsException;
+import com.sdsmdg.kd.trianglify.utilities.triangulator.Vector2D;
 import com.sdsmdg.kd.trianglify.utilities.patterns.Circle;
 import com.sdsmdg.kd.trianglify.utilities.patterns.Patterns;
 import com.sdsmdg.kd.trianglify.utilities.patterns.Rectangle;
-import com.sdsmdg.kd.trianglify.utilities.triangulator.DelaunayTriangulator;
-import com.sdsmdg.kd.trianglify.utilities.triangulator.NotEnoughPointsException;
-import com.sdsmdg.kd.trianglify.utilities.triangulator.Vector2D;
+import com.sdsmdg.kd.trianglify.utilities.colorizers.Colorizer;
+import com.sdsmdg.kd.trianglify.utilities.colorizers.FixedPointsColorizer;
+import com.sdsmdg.kd.trianglify.views.TrianglifyView;
 import com.sdsmdg.kd.trianglify.views.TrianglifyViewInterface;
 
 import java.util.List;
