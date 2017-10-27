@@ -3,12 +3,23 @@
 
 
     <!-- About Fragment strings -->
-    <string name="mdg_description">An Active students group at IIT Roorkee directed towards developing useful applications</string>
+    <string name="mdg_description">A place where \nIdeas meet reality!</string>
     <string name="share_application_text">Check out trianglify a library to generate beautiful view for Android. Link: </string>
-    <string name="trianglify_store_short_link">http://bit.ly/musicDnaApp</string>
-    <string name="license_text">Trianglify library and related material are distributed under \'MIT license\' a copy of which can be obtained from link provided.</string>
+    <string name="trianglify_store_short_link">http://bit.ly/trianglifyDemo</string>
+    <string name="license_text">Trianglify library and all related material are distributed under \'MIT license\' a copy of which can be obtained from link provided.</string>
     <string name="license_link">https://github.com/sdsmdg/trianglify/blob/develop/LICENSE.md</string>
+
+    <!-- Main Activity overflow menu strings -->
+    <string name="menu_save">Save</string>
+    <string name="menu_refresh">Refresh</string>
+    <string name="menu_custom_color">Customize colors</string>
+    <string name="menu_about">About</string>
+    <string name="menu_set_as_wallpaper">Set as wallpaper</string>
 
     <!-- Main Activity strings -->
     <string name="wall_alert_dg_text">Set current art as wallpaper?</string>
+
+    <!-- About Activity strings -->
+    <string name="about_activity_title">About</string>
+    <string name="about_activity_version">Version</string>
 </resources>

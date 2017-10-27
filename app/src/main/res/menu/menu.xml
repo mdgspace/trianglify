@@ -3,32 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_save"
-        android:orderInCategory="100"
-        android:icon="@drawable/ic_action_save"
-        android:title="Save"/>
-    <item
         android:id="@+id/action_refresh"
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_refresh"
-        android:title="Refresh"/>
+        android:title="@string/menu_refresh"/>
+    <item
+        android:id="@+id/action_set_wall"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_about_icon"
+        android:title="@string/menu_set_as_wallpaper"/>
+    <item
+        android:id="@+id/action_save"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_action_save"
+        android:title="@string/menu_save"/>
     <item
         android:id="@+id/custom_palette_picker"
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
         android:icon="@drawable/palette_icon"
-        android:title="CustomPalettePicker"/>
-    <item
-        android:id="@+id/action_set_wall"
-        android:orderInCategory="100"
-        android:icon="@drawable/ic_about_icon"
-        android:title="Set as wallpaper"/>
+        android:title="@string/menu_custom_color"/>
     <item
         android:id="@+id/action_about"
         android:orderInCategory="100"
         android:icon="@drawable/ic_about_icon"
-        android:title="About"/>
+        android:title="@string/menu_about"/>
 
 </menu>
 

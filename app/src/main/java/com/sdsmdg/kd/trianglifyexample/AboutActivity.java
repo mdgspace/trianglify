@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class AboutActivity extends AppCompatActivity {
+    private static final String TAG = "AboutActivity";
+
     ImageView githubLinkBtn, reviewLinkBtn, shareLink, backBtn;
     TextView fragTitle, openSourceLicense, versiontTextView;
     View bottomMarginLayout;
@@ -29,7 +33,7 @@ public class AboutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-          setContentView(R.layout.activity_about);
+        setContentView(R.layout.activity_about);
 
         // To add underline effect in open source license textView
         SpannableString content = new SpannableString("view license");
@@ -42,6 +46,16 @@ public class AboutActivity extends AppCompatActivity {
             versionCode = pInfo.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
+        }
+
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(String.valueOf(R.string.about_activity_title));
+
+        try {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        } catch (java.lang.NullPointerException e) {
+            Log.e(TAG, "Null pointer exception in generating back action button");
         }
 
         versiontTextView = (TextView) this.findViewById(R.id.about_version_text);
@@ -62,7 +76,7 @@ public class AboutActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        versiontTextView.setText("Version " + versionName);
+        versiontTextView.setText(String.valueOf(R.string.about_activity_version) + versionName);
         openSourceLicense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
