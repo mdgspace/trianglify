@@ -13,11 +13,14 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import static com.sdsmdg.kd.trianglifyexample.CustomPalettePickerActivity.CUSTOM_PALETTE_COLOR_ARRAY;
 
 public class AboutActivity extends AppCompatActivity {
     private static final String TAG = "AboutActivity";
@@ -116,6 +119,7 @@ public class AboutActivity extends AppCompatActivity {
             }
         });
     }
+
     public void displayOpenSourceLicenses() {
         final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle(this.getApplicationInfo().name);
@@ -134,5 +138,16 @@ public class AboutActivity extends AppCompatActivity {
             }
         });
         alertDialog.show();
+    }
+
+    // Sets action for Action Bar Items
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

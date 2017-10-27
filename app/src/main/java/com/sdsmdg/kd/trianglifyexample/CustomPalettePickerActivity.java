@@ -35,17 +35,21 @@ public class CustomPalettePickerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_custom_palette_picker);
 
         ActionBar actionBar = getSupportActionBar();
+        setContentView(R.layout.activity_custom_palette_picker);
 
         try {
             actionBar.setDisplayHomeAsUpEnabled(true);
-        } catch (NullPointerException e) {
+        } catch (java.lang.NullPointerException e) {
             Log.e(TAG, "Null pointer exception in generating back action button");
         }
 
-        actionBar.setTitle("Custom Palette Picker");
+        try {
+            actionBar.setTitle("Custom Palette Picker");
+        } catch (java.lang.NullPointerException e) {
+            Log.e(TAG, "Null pointer exception on setting About activity title");
+        }
 
         colors = getIntent().getIntArrayExtra(MainActivity.PALETTE_COLOR_ARRAY);
 

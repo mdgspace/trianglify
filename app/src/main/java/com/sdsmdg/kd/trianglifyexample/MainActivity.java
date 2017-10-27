@@ -220,28 +220,26 @@ public class MainActivity extends AppCompatActivity {
         return Math.round(px / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
+    // Click handlers for action bar menu items
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // action with ID action_save was selected
             case R.id.action_save:
                 exportImage();
                 break;
-            // action with ID action_about was selected
             case R.id.action_about:
                 Intent aboutActivityIntent = new Intent(this, AboutActivity.class);
                 startActivity(aboutActivityIntent);
                 break;
-            // action with ID action_refresh was selected
             case R.id.action_refresh:
                 randomizeTrianglifyParameters(trianglifyView);
                 trianglifyView.generateAndInvalidate();
                 break;
-            // action with ID custom_palette_picker was selected
             case R.id.custom_palette_picker:
                 Intent customPalettePickerIntent = new Intent(this, CustomPalettePickerActivity.class);
                 customPalettePickerIntent.putExtra(PALETTE_COLOR_ARRAY, trianglifyView.getPalette().getColors());
                 startActivityForResult(customPalettePickerIntent, 1);
+                customPaletteCheckbox.setChecked(true);
                 break;
             case R.id.action_set_wall:
                 setWallpaper(MainActivity.this.trianglifyView);
