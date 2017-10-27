@@ -20,6 +20,11 @@
         android:icon="@drawable/palette_icon"
         android:title="CustomPalettePicker"/>
     <item
+        android:id="@+id/action_set_wall"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_about_icon"
+        android:title="Set as wallpaper"/>
+    <item
         android:id="@+id/action_about"
         android:orderInCategory="100"
         android:icon="@drawable/ic_about_icon"

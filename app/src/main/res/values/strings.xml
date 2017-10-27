@@ -8,4 +8,7 @@
     <string name="trianglify_store_short_link">http://bit.ly/musicDnaApp</string>
     <string name="license_text">Trianglify library and related material are distributed under \'MIT license\' a copy of which can be obtained from link provided.</string>
     <string name="license_link">https://github.com/sdsmdg/trianglify/blob/develop/LICENSE.md</string>
+
+    <!-- Main Activity strings -->
+    <string name="wall_alert_dg_text">Set current art as wallpaper?</string>
 </resources>
