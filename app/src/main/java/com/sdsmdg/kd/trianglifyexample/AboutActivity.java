@@ -50,7 +50,7 @@ public class AboutActivity extends AppCompatActivity {
 
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(String.valueOf(R.string.about_activity_title));
+        actionBar.setTitle(getString(R.string.about_activity_title));
 
         try {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -67,16 +67,8 @@ public class AboutActivity extends AppCompatActivity {
         reviewLinkBtn = (ImageView) this.findViewById(R.id.about_rate_link);
         shareLink = (ImageView) this.findViewById(R.id.about_share_link);
 
-        backBtn = (ImageView) this.findViewById(R.id.about_back_btn);
-        fragTitle = (TextView) this.findViewById(R.id.about_title);
 
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        versiontTextView.setText(String.valueOf(R.string.about_activity_version) + versionName);
+        versiontTextView.setText(getString(R.string.about_activity_version) + versionName);
         openSourceLicense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
