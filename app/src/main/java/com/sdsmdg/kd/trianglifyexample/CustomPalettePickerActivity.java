@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,6 +23,8 @@ import com.sdsmdg.kd.trianglify.models.Palette;
 import com.sdsmdg.kd.trianglify.views.TrianglifyView;
 
 public class CustomPalettePickerActivity extends AppCompatActivity {
+    private static final String TAG = "CustomPalleteActivity";
+
     private Palette palette;
     private TrianglifyView trianglifyView;
     private Context context;
@@ -32,11 +35,21 @@ public class CustomPalettePickerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_custom_palette_picker);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Custom Palette Picker");
+        setContentView(R.layout.activity_custom_palette_picker);
+
+        try {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        } catch (java.lang.NullPointerException e) {
+            Log.e(TAG, "Null pointer exception in generating back action button");
+        }
+
+        try {
+            actionBar.setTitle("Custom Palette Picker");
+        } catch (java.lang.NullPointerException e) {
+            Log.e(TAG, "Null pointer exception on setting About activity title");
+        }
 
         colors = getIntent().getIntArrayExtra(MainActivity.PALETTE_COLOR_ARRAY);
 

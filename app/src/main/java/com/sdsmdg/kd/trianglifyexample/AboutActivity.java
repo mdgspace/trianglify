@@ -6,18 +6,25 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import static com.sdsmdg.kd.trianglifyexample.CustomPalettePickerActivity.CUSTOM_PALETTE_COLOR_ARRAY;
+
 public class AboutActivity extends AppCompatActivity {
+    private static final String TAG = "AboutActivity";
+
     ImageView githubLinkBtn, reviewLinkBtn, shareLink, backBtn;
     TextView fragTitle, openSourceLicense, versiontTextView;
     View bottomMarginLayout;
@@ -29,24 +36,7 @@ public class AboutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Remove title bar
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        //Remove notification bar
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_about);
-
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
         // To add underline effect in open source license textView
         SpannableString content = new SpannableString("view license");
@@ -61,6 +51,16 @@ public class AboutActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(getString(R.string.about_activity_title));
+
+        try {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        } catch (java.lang.NullPointerException e) {
+            Log.e(TAG, "Null pointer exception in generating back action button");
+        }
+
         versiontTextView = (TextView) this.findViewById(R.id.about_version_text);
 
         openSourceLicense = (TextView) this.findViewById(R.id.about_license_text);
@@ -70,16 +70,8 @@ public class AboutActivity extends AppCompatActivity {
         reviewLinkBtn = (ImageView) this.findViewById(R.id.about_rate_link);
         shareLink = (ImageView) this.findViewById(R.id.about_share_link);
 
-        backBtn = (ImageView) this.findViewById(R.id.about_back_btn);
-        fragTitle = (TextView) this.findViewById(R.id.about_title);
 
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        versiontTextView.setText("Version " + versionName);
+        versiontTextView.setText(getString(R.string.about_activity_version) + versionName);
         openSourceLicense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,6 +119,7 @@ public class AboutActivity extends AppCompatActivity {
             }
         });
     }
+
     public void displayOpenSourceLicenses() {
         final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle(this.getApplicationInfo().name);
@@ -147,16 +140,14 @@ public class AboutActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus)
-            getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+    // Sets action for Action Bar Items
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

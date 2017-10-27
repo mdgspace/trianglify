@@ -1,16 +1,20 @@
 package com.sdsmdg.kd.trianglifyexample;
 
 import android.Manifest;
+import android.app.WallpaperManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,6 +26,7 @@ import android.widget.Toast;
 import com.sdsmdg.kd.trianglify.views.TrianglifyView;
 import com.sdsmdg.kd.trianglify.models.Palette;
 
+import java.io.IOException;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -215,28 +220,29 @@ public class MainActivity extends AppCompatActivity {
         return Math.round(px / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
+    // Click handlers for action bar menu items
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // action with ID action_save was selected
             case R.id.action_save:
                 exportImage();
                 break;
-            // action with ID action_about was selected
             case R.id.action_about:
                 Intent aboutActivityIntent = new Intent(this, AboutActivity.class);
                 startActivity(aboutActivityIntent);
                 break;
-            // action with ID action_refresh was selected
             case R.id.action_refresh:
                 randomizeTrianglifyParameters(trianglifyView);
                 trianglifyView.generateAndInvalidate();
                 break;
-            // action with ID custom_palette_picker was selected
             case R.id.custom_palette_picker:
                 Intent customPalettePickerIntent = new Intent(this, CustomPalettePickerActivity.class);
                 customPalettePickerIntent.putExtra(PALETTE_COLOR_ARRAY, trianglifyView.getPalette().getColors());
                 startActivityForResult(customPalettePickerIntent, 1);
+                customPaletteCheckbox.setChecked(true);
+                break;
+            case R.id.action_set_wall:
+                setWallpaper(MainActivity.this.trianglifyView);
                 break;
             default:
                 break;
@@ -246,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showColoringError() {
-        Toast.makeText(this, "view should at least be set to draw strokes or fill triangles or both.",
+        Toast.makeText(this, "View should at least be set to draw strokes or fill triangles or both.",
                 Toast.LENGTH_LONG).show();
     }
 
@@ -296,5 +302,31 @@ public class MainActivity extends AppCompatActivity {
                 result);
         }
         return result;
+    }
+
+    // Sets bitmap from trianglify view as wallpaper of device
+    public void setWallpaper(final TrianglifyView view) {
+        AlertDialog.Builder alertDgBuilder = new AlertDialog.Builder(this);
+        alertDgBuilder.setMessage(getString(R.string.wall_alert_dg_text));
+        alertDgBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                WallpaperManager trianglifyWallpaperManager = WallpaperManager.getInstance(getApplicationContext());
+                try {
+                    trianglifyWallpaperManager.setBitmap(view.getBitmap());
+                    Toast.makeText(MainActivity.this, "Wallpaper set successfuly", Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    Toast.makeText(MainActivity.this, "Something went wrong, please try again.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        alertDgBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Perform inbuilt functions
+            }
+        });
+
+        alertDgBuilder.create().show();
     }
 }
