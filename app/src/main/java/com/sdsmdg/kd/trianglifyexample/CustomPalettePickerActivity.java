@@ -40,13 +40,17 @@ public class CustomPalettePickerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_custom_palette_picker);
 
         try {
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
         } catch (java.lang.NullPointerException e) {
             Log.e(TAG, "Null pointer exception in generating back action button");
         }
 
         try {
-            actionBar.setTitle("Custom Palette Picker");
+            if (actionBar != null) {
+                actionBar.setTitle("Custom Palette Picker");
+            }
         } catch (java.lang.NullPointerException e) {
             Log.e(TAG, "Null pointer exception on setting About activity title");
         }
@@ -55,14 +59,14 @@ public class CustomPalettePickerActivity extends AppCompatActivity {
 
         context = this;
 
-        trianglifyView = (TrianglifyView) findViewById(R.id.trianglify_custom_palette_view);
+        trianglifyView = findViewById(R.id.trianglify_custom_palette_view);
         trianglifyView.setPalette(new Palette(colors));
         trianglifyView.smartUpdate();
 
         for (int i = 0; i < imageViews.length; i++) {
             String imageViewNumber = "custom_palette_c" + String.valueOf(i);
             int resID = getResources().getIdentifier(imageViewNumber, "id", getPackageName());
-            imageViews[i] = (ImageView) findViewById(resID);
+            imageViews[i] = findViewById(resID);
             imageViews[i].setBackgroundColor(colors[i] + 0xff000000);
 
             final int finalI = i;

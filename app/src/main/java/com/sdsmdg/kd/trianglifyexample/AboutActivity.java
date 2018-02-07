@@ -6,21 +6,18 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import static com.sdsmdg.kd.trianglifyexample.CustomPalettePickerActivity.CUSTOM_PALETTE_COLOR_ARRAY;
 
 public class AboutActivity extends AppCompatActivity {
     private static final String TAG = "AboutActivity";
@@ -53,22 +50,26 @@ public class AboutActivity extends AppCompatActivity {
 
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.about_activity_title));
+        if (actionBar != null) {
+            actionBar.setTitle(getString(R.string.about_activity_title));
+        }
 
         try {
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
         } catch (java.lang.NullPointerException e) {
             Log.e(TAG, "Null pointer exception in generating back action button");
         }
 
-        versiontTextView = (TextView) this.findViewById(R.id.about_version_text);
+        versiontTextView = this.findViewById(R.id.about_version_text);
 
-        openSourceLicense = (TextView) this.findViewById(R.id.about_license_text);
+        openSourceLicense = this.findViewById(R.id.about_license_text);
         openSourceLicense.setText(content);
 
-        githubLinkBtn = (ImageView) this.findViewById(R.id.about_github_link);
-        reviewLinkBtn = (ImageView) this.findViewById(R.id.about_rate_link);
-        shareLink = (ImageView) this.findViewById(R.id.about_share_link);
+        githubLinkBtn = this.findViewById(R.id.about_github_link);
+        reviewLinkBtn = this.findViewById(R.id.about_rate_link);
+        shareLink = this.findViewById(R.id.about_share_link);
 
 
         versiontTextView.setText(getString(R.string.about_activity_version) + versionName);
@@ -93,9 +94,11 @@ public class AboutActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Uri uri = Uri.parse("market://details?id=" + v.getContext().getPackageName());
                 Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-                goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
-                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
-                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                            Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                            Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                }
                 try {
                     startActivity(goToMarket);
                 } catch (ActivityNotFoundException e) {
