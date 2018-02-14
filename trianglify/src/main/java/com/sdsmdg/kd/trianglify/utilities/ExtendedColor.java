@@ -26,7 +26,7 @@ public class ExtendedColor extends android.graphics.Color {
         this(0xFF, r, g, b);
     }
 
-    public ExtendedColor(int a, int r, int g, int b) {
+    private ExtendedColor(int a, int r, int g, int b) {
         this.a = a;
         this.r = r;
         this.g = g;

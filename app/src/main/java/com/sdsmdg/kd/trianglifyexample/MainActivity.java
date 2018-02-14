@@ -7,14 +7,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,8 +22,8 @@ import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
-import com.sdsmdg.kd.trianglify.views.TrianglifyView;
 import com.sdsmdg.kd.trianglify.models.Palette;
+import com.sdsmdg.kd.trianglify.views.TrianglifyView;
 
 import java.io.IOException;
 import java.util.Random;
@@ -47,12 +46,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        trianglifyView = (TrianglifyView) findViewById(R.id.trianglify_main_view);
+        trianglifyView = findViewById(R.id.trianglify_main_view);
         trianglifyView.setBitmapQuality(TrianglifyView.DRAWING_CACHE_QUALITY_HIGH);
 
         customPalette = trianglifyView.getPalette();
 
-        varianceSeekBar = (SeekBar) findViewById(R.id.variance_seekbar);
+        varianceSeekBar = findViewById(R.id.variance_seekbar);
         varianceSeekBar.setMax(100);
         varianceSeekBar.setProgress(trianglifyView.getVariance());
         varianceSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -73,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        cellSizeSeekBar = (SeekBar) findViewById(R.id.cell_size_seekbar);
+        cellSizeSeekBar = findViewById(R.id.cell_size_seekbar);
         int maxCellSize = 150;
 
         cellSizeSeekBar.setMax(maxCellSize);
@@ -96,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        paletteSeekBar = (SeekBar) findViewById(R.id.palette_seekbar);
+        paletteSeekBar = findViewById(R.id.palette_seekbar);
         paletteSeekBar.setMax(Palette.DEFAULT_PALETTE_COUNT - 1);
         paletteSeekBar.setProgress(Palette.indexOf(trianglifyView.getPalette()));
         paletteSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -118,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        strokeCheckBox = (CheckBox) findViewById(R.id.draw_stroke_checkbox);
+        strokeCheckBox = findViewById(R.id.draw_stroke_checkbox);
         strokeCheckBox.setChecked(trianglifyView.isDrawStrokeEnabled());
         strokeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -134,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        fillCheckBox = (CheckBox) findViewById(R.id.draw_fill_checkbox);
+        fillCheckBox = findViewById(R.id.draw_fill_checkbox);
         fillCheckBox.setChecked(trianglifyView.isFillTriangle());
         fillCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -150,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        randomColoringCheckbox = (CheckBox) findViewById(R.id.random_coloring_checkbox);
+        randomColoringCheckbox = findViewById(R.id.random_coloring_checkbox);
         randomColoringCheckbox.setChecked(trianglifyView.isRandomColoringEnabled());
         randomColoringCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -160,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        customPaletteCheckbox = (CheckBox) findViewById(R.id.custom_palette_checkbox);
+        customPaletteCheckbox = findViewById(R.id.custom_palette_checkbox);
         customPaletteCheckbox.setChecked(false);
         customPaletteCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
