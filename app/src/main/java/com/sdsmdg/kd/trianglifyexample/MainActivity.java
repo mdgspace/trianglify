@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox randomColoringCheckbox;
     private CheckBox customPaletteCheckbox;
     private Palette customPalette;
+    private final int PERMISSION_CODE = 69;
     public static final String PALETTE_COLOR_ARRAY = "Palette Color Array";
 
     @Override
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         varianceSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                trianglifyView.setVariance(progress+1);
+                trianglifyView.setVariance(progress + 1);
                 trianglifyView.smartUpdate();
             }
 
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         cellSizeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                trianglifyView.setCellSize(progress+100);
+                trianglifyView.setCellSize(progress + 100);
                 trianglifyView.smartUpdate();
             }
 
@@ -201,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
                 .setDrawStrokeEnabled(rnd.nextInt(2) == 0)
                 .setVariance(rnd.nextInt(60));
 
-        if ( !trianglifyView.isFillTriangle() && !trianglifyView.isDrawStrokeEnabled()) {
+        if (!trianglifyView.isFillTriangle() && !trianglifyView.isDrawStrokeEnabled()) {
             trianglifyView.setDrawStrokeEnabled(true);
             trianglifyView.setFillTriangle(true);
         }
@@ -268,7 +270,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void exportImage() {
         // Checks if permission is required for android version > 6
-        if (askForWritePermission() == 0) {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    PERMISSION_CODE);
+        } else {
             Bitmap bitmap = trianglifyView.getBitmap();
             if (bitmap != null) {
                 addImageToGallery(bitmap, this);
@@ -277,10 +285,9 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Unable to generate image, please try again",
                         Toast.LENGTH_LONG).show();
             }
-        } else {
-            Toast.makeText(this, "Storage access failed, check permission",
-                    Toast.LENGTH_LONG).show();
         }
+
+
     }
 
     public static void addImageToGallery(Bitmap bitmap, Context context) {
@@ -293,13 +300,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public int askForWritePermission() {
         int result = 0;
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                result);
-        }
+
         return result;
     }
 
@@ -327,5 +328,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
         alertDgBuilder.create().show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_CODE:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    exportImage();
+                } else {
+                    Toast.makeText(this, "Storage access failed, check permission",
+                            Toast.LENGTH_LONG).show();
+                }
+                break;
+        }
     }
 }
