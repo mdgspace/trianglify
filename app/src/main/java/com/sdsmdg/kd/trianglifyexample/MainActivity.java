@@ -286,22 +286,10 @@ public class MainActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
             }
         }
-
-
     }
 
     public static void addImageToGallery(Bitmap bitmap, Context context) {
         MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "", "");
-    }
-
-    /**
-     * Returns 1 if permission dialog box is to be shown, if permission is granted
-     * returns 0
-     */
-    public int askForWritePermission() {
-        int result = 0;
-
-        return result;
     }
 
     // Sets bitmap from trianglify view as wallpaper of device
