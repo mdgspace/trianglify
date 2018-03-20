@@ -55,7 +55,7 @@ public class CustomPalettePickerActivity extends AppCompatActivity {
             Log.e(TAG, "Null pointer exception on setting About activity title");
         }
 
-        colors = getIntent().getIntArrayExtra(MainActivity.PALETTE_COLOR_ARRAY);
+        colors = getIntent().getIntArrayExtra(getResources().getString(R.string.palette_color_array));
 
         context = this;
 

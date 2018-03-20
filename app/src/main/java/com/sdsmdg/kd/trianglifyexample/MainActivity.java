@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox customPaletteCheckbox;
     private Palette customPalette;
     private final int PERMISSION_CODE = 69;
-    public static final String PALETTE_COLOR_ARRAY = "Palette Color Array";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -238,7 +237,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.custom_palette_picker:
                 Intent customPalettePickerIntent = new Intent(this, CustomPalettePickerActivity.class);
-                customPalettePickerIntent.putExtra(PALETTE_COLOR_ARRAY, trianglifyView.getPalette().getColors());
+                customPalettePickerIntent.putExtra(getResources().getString(R.string.palette_color_array),
+                        trianglifyView.getPalette().getColors());
                 startActivityForResult(customPalettePickerIntent, 1);
                 customPaletteCheckbox.setChecked(true);
                 break;
@@ -270,9 +270,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void exportImage() {
         // Checks if permission is required for android version > 6
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
+        boolean permissionStatus = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED;
+
+        if (permissionStatus) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     PERMISSION_CODE);
@@ -302,9 +303,11 @@ public class MainActivity extends AppCompatActivity {
                 WallpaperManager trianglifyWallpaperManager = WallpaperManager.getInstance(getApplicationContext());
                 try {
                     trianglifyWallpaperManager.setBitmap(view.getBitmap());
-                    Toast.makeText(MainActivity.this, "Wallpaper set successfuly", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Wallpaper set successfuly",
+                            Toast.LENGTH_SHORT).show();
                 } catch (IOException e) {
-                    Toast.makeText(MainActivity.this, "Something went wrong, please try again.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Something went wrong, please try again.",
+                            Toast.LENGTH_LONG).show();
                 }
             }
         });

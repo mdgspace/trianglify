@@ -18,6 +18,7 @@
 
     <!-- Main Activity strings -->
     <string name="wall_alert_dg_text">Set current art as wallpaper?</string>
+    <string name="palette_color_array">Palette Color Array</string>
 
     <!-- About Activity strings -->
     <string name="about_activity_title">About</string>
