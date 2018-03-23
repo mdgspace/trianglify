@@ -7,7 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -26,7 +28,14 @@ import android.widget.Toast;
 import com.sdsmdg.kd.trianglify.models.Palette;
 import com.sdsmdg.kd.trianglify.views.TrianglifyView;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -225,7 +234,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
-                exportImage();
+                try {
+                    exportImage();
+                } catch (IOException ignored) {
+                }
                 break;
             case R.id.action_about:
                 Intent aboutActivityIntent = new Intent(this, AboutActivity.class);
@@ -268,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void exportImage() {
+    private void exportImage() throws IOException {
         // Checks if permission is required for android version > 6
         boolean permissionStatus = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED;
@@ -279,18 +291,22 @@ public class MainActivity extends AppCompatActivity {
                     PERMISSION_CODE);
         } else {
             Bitmap bitmap = trianglifyView.getBitmap();
-            if (bitmap != null) {
+            if (bitmap != null)
                 addImageToGallery(bitmap, this);
-                Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
-            } else {
+            else
                 Toast.makeText(this, "Unable to generate image, please try again",
                         Toast.LENGTH_LONG).show();
-            }
+
         }
     }
 
-    public static void addImageToGallery(Bitmap bitmap, Context context) {
-        MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "", "");
+    public static void addImageToGallery(Bitmap bitmap, Context context) throws IOException {
+        String timeStamp = "IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date()) + ".png";
+        OutputStream os = new FileOutputStream(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator + timeStamp);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
+        os.flush();
+        os.close();
+        Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show();
     }
 
     // Sets bitmap from trianglify view as wallpaper of device
@@ -328,7 +344,11 @@ public class MainActivity extends AppCompatActivity {
             case PERMISSION_CODE:
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    exportImage();
+                    try {
+                        exportImage();
+                    } catch (IOException ignored) {
+
+                    }
                 } else {
                     Toast.makeText(this, "Storage access failed, check permission",
                             Toast.LENGTH_LONG).show();
