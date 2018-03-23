@@ -236,7 +236,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_save:
                 try {
                     exportImage();
-                } catch (IOException ignored) {
+                } catch (IOException e) {
+                    Toast.makeText(MainActivity.this,
+                            "Storage access failed!",Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.action_about:
@@ -346,8 +348,9 @@ public class MainActivity extends AppCompatActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     try {
                         exportImage();
-                    } catch (IOException ignored) {
-
+                    } catch (IOException e) {
+                        Toast.makeText(MainActivity.this,
+                                "Storage access failed!",Toast.LENGTH_LONG).show();
                     }
                 } else {
                     Toast.makeText(this, "Storage access failed, check permission",
