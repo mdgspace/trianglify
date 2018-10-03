@@ -69,7 +69,7 @@ Trianglify uses Sputnik for performing style checks on the codebase, which helps
 ## MDG Chat Room
 
 If you want to ask any questions in real-time, or get a feel for what's going on
-then please drop into our [MDG public chat room](https://mdg.sdslabs.co/chat).
+then please drop into our [MDG public chat room](https://mdg.iitr.ac.in/chat).
 If no one is online then you can still leave a message that will hopefully get a reply
 when we return.
 
@@ -77,6 +77,6 @@ when we return.
 
 Please do not publish security vulnerabilities publicly until we've had a chance
 to address them. All security related issues/patches should be sent directly to
-[sdsmobilelabs@gmail.com](mailto:sdsmobilelabs@gmail.com) where we will attempt to address them quickly. If you're
-unsure whether something is a security issue or not, then please be cautious and contact us at [sdsmobilelabs@gmail.com](mailto:sdsmobilelabs@gmail.com) first.
+[mdg@iitr.ac.in](mailto:mdg@iitr.ac.in) where we will attempt to address them quickly. If you're
+unsure whether something is a security issue or not, then please be cautious and contact us at [mdg@iitr.ac.in](mailto:mdg@iitr.ac.in) first.
 
