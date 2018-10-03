@@ -69,7 +69,7 @@ Trianglify uses Sputnik for performing style checks on the codebase, which helps
 ## MDG Chat Room
 
 If you want to ask any questions in real-time, or get a feel for what's going on
-then please drop into our [MDG public chat room](https://mdg.sdslabs.co/chat).
+then please drop into our [MDG public chat room](https://mdg.iitr.ac.in/chat).
 If no one is online then you can still leave a message that will hopefully get a reply
 when we return.
 
